@@ -1,0 +1,18 @@
+---
+permalink: san-host/concept_preparing_windows_guest_operating_systems_for_transition.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, windows, guest, operating, systems 
+summary: 'Se le macchine virtuali Windows utilizzano dispositivi RDM (PTRDM) fisici compatibili, è necessario portare i dischi offline sulla macchina virtuale Windows prima della transizione. È possibile utilizzare Gestione disco per portare i dischi offline.' 
+---
+= Preparazione dei sistemi operativi guest Windows per la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se le macchine virtuali Windows utilizzano dispositivi RDM (PTRDM) fisici compatibili, è necessario scollegare i dischi sulla macchina virtuale Windows prima della transizione. È possibile utilizzare Gestione disco per portare i dischi offline.
+
+* Per le transizioni basate sulla copia, eseguire questi passaggi prima di avviare l'operazione Storage Cutover nel 7-Mode Transition Tool (7MTT).
+* Per le transizioni senza copia, eseguire questi passaggi prima di avviare l'operazione Export & Halt 7-Mode Systems nel 7MTT.
+

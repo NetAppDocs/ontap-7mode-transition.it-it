@@ -1,0 +1,28 @@
+---
+permalink: san-host/concept_linux_host_remediation.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, rhel, host, remediation 
+summary: 'Se si utilizza lo strumento di transizione 7-Mode (7MTT) per passare da Data ONTAP in 7-Mode a Clustered Data ONTAP in un ambiente SAN, Devi eseguire una serie di passaggi sugli host Red Hat Enterprise Linux (RHEL) in base al tipo di LUN prima e dopo la transizione per evitare complicazioni di transizione.' 
+---
+= Correzione dell'host RHEL
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si utilizza 7-Mode Transition Tool (7MTT) per passare da Data ONTAP in 7-Mode a Clustered Data ONTAP in un ambiente SAN, Prima e dopo la transizione, è necessario eseguire una serie di passaggi sugli host Red Hat Enterprise Linux (RHEL) in base al tipo di LUN, per evitare complicazioni di transizione.
+
+Le transizioni 7MTT supportano solo RHEL 5 e RHEL 6.
+
+*Informazioni correlate*
+
+xref:concept_transitioning_rhel_dmmp_devices_without_file_systems.adoc[Transizione di dispositivi DMMP RHEL senza file system]
+
+xref:concept_transitioning_luns_with_mount_points_using_dmmp_devices_names.adoc[Transizione dei LUN con i punti di montaggio utilizzando i nomi dei dispositivi DMMP]
+
+xref:concept_transitioning_luns_with_mount_points_using_dmmp_alias_names.adoc[Transizione di LUN con punti di montaggio utilizzando nomi alias DMMP]
+
+xref:concept_transitioning_linux_host_file_systems_on_lvm_devices.adoc[Transizione dei file system host Linux su dispositivi LVM]
+
+xref:concept_transition_of_san_boot_luns.adoc[Transizione delle LUN di avvio SAN]

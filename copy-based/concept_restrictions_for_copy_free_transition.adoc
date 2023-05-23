@@ -1,0 +1,61 @@
+---
+permalink: copy-based/concept_restrictions_for_copy_free_transition.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, restrictions, 7, mode, volumes 
+summary: 'È necessario conoscere alcune limitazioni per la transizione dei volumi 7-Mode. Alcune limitazioni sono dovute a funzionalità non supportate in ONTAP. Per alcune limitazioni, è possibile eseguire un"azione correttiva che consente di continuare con la transizione.' 
+---
+= Restrizioni per la transizione di volumi 7-Mode
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario conoscere alcune limitazioni per la transizione dei volumi 7-Mode. Alcune limitazioni sono dovute a funzionalità non supportate in ONTAP. Per alcune limitazioni, è possibile eseguire un'azione correttiva che consente di continuare con la transizione.
+
+
+
+== Tipi di volume
+
+I seguenti tipi di volumi non sono supportati per la transizione:
+
+* Volumi tradizionali
++
+È possibile utilizzare metodi di transizione basati su host per la transizione dei volumi tradizionali.
+
++
+http://www.netapp.com/us/media/tr-4052.pdf["Report tecnico di NetApp 4052: Passaggio riuscito a Clustered Data ONTAP (Data ONTAP 8.2.x e 8.3)"]
+
+* Volumi FlexCache
+
+
+
+
+== Stati del volume
+
+La transizione viene bloccata se uno dei volumi 7-Mode selezionati per la transizione si trova in uno dei seguenti stati:
+
+* Offline
+* Limitato
+* Incoerente (`wafl inconsistent`)
+
+
+
+
+== Volume con qtree che appartengono a un'unità vFiler diversa
+
+Non è possibile eseguire la transizione di volumi con qtree, in cui i qtree sono di proprietà di un'unità vFiler diversa da quella del volume. Prima della transizione, è necessario assicurarsi che ciascun volume e tutti i relativi qtree appartengano alla stessa unità vFiler eseguendo una delle seguenti operazioni:
+
+* Spostare i qtree nell'unità vFiler proprietaria del volume.
+* Eliminare i qtree.
+
+
+
+
+== Impostazione di conversione inode to pathname padre
+
+Le traduzioni inode to pathname padre devono essere attivate su ciascun volume. È possibile abilitare l'origine per le traduzioni dei nomi di percorso disattivando `no_i2p` opzione:
+
+`*vol options _vol_name_ no_i2p off*`
+
+Non è necessario attendere il completamento della scansione i2p ed è possibile continuare con la preparazione della transizione.

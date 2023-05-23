@@ -1,0 +1,30 @@
+---
+permalink: copy-free/reference_required_tools_and_documentation.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, tools, documentation, required 
+summary: Config Advisor è lo strumento necessario per la transizione senza copia. Utilizzare Config Advisor per verificare il cablaggio degli shelf di dischi. È inoltre disponibile documentazione aggiuntiva per il ripristino degli host SAN. 
+---
+= Strumenti e documentazione necessari per la transizione senza copia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Config Advisor è lo strumento necessario per la transizione senza copia. Utilizzare Config Advisor per verificare il cablaggio degli shelf di dischi. È inoltre disponibile documentazione aggiuntiva per il ripristino degli host SAN.
+
+
+
+== Config Advisor
+
+Utilizzare il profilo di esecuzione "`Transition`" in Config Advisor per verificare il cablaggio dopo che gli shelf di dischi 7-Mode sono collegati ai nodi del cluster di destinazione.
+
+https://mysupport.netapp.com/site/tools/tool-eula/activeiq-configadvisor["Download NetApp: Config Advisor"]
+
+
+
+== Documentazione
+
+Descrive le fasi pre-transizione e post-transizione che devono essere eseguite sugli host SAN durante la transizione utilizzando una transizione senza copia.
+
+http://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-7mtt-sanspl/home.html["Transizione e correzione degli host SAN"]

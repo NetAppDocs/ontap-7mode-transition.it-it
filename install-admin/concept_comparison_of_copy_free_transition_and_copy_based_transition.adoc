@@ -1,0 +1,68 @@
+---
+permalink: install-admin/concept_comparison_of_copy_free_transition_and_copy_based_transition.html 
+sidebar: sidebar 
+keywords: ontap, 7, mode, install, copy, free, transition, based 
+summary: È possibile utilizzare lo strumento di transizione 7-Mode per migrare i dati e le configurazioni da 7-Mode a ONTAP utilizzando una transizione basata su copia o una transizione senza copia. È importante comprendere le differenze tra i due metodi prima della transizione. 
+---
+= Confronto tra la transizione senza copia e la transizione basata sulla copia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile utilizzare lo strumento di transizione 7-Mode per migrare i dati e le configurazioni da 7-Mode a ONTAP utilizzando una transizione basata su copia o una transizione senza copia. È importante comprendere le differenze tra i due metodi prima della transizione.
+
+|===
+| Parametro | Transizione senza copia | Transizione basata sulla copia 
+
+
+ a| 
+Unità di transizione
+ a| 
+Coppia HA
+ a| 
+Gruppo di volumi
+
+
+
+ a| 
+Requisiti hardware
+ a| 
+Gli shelf di dischi vengono riutilizzati
+ a| 
+Nuovi shelf di dischi e dischi per ospitare i volumi in transizione
+
+
+
+ a| 
+Requisiti della piattaforma
+ a| 
+Supportato solo su piattaforme di livello medio e alto https://mysupport.netapp.com/matrix["Tool di matrice di interoperabilità NetApp"]
+ a| 
+Supportato su tutte le piattaforme
+
+
+
+ a| 
+Durata della transizione
+ a| 
+Durata complessiva della transizione più breve (nessuna copia dei dati richiesta)
+ a| 
+Durata maggiore (il tempo di trasferimento iniziale di base e aggiornamento varia in base al carico di lavoro, alla larghezza di banda della rete e alla capacità dei dati migrati)
+
+
+
+ a| 
+Interruzione dell'accesso ai dati
+ a| 
+Nell'intervallo di ore
+
+
+IMPORTANT: Nella maggior parte dei casi, il tempo di cutover dello storage può essere compreso tra 3 e 8 ore. Il tempo di cutover include il tempo impiegato dallo strumento per eseguire due operazioni automatizzate, ovvero l'esportazione e l'interruzione delle operazioni e l'importazione, nonché il tempo impiegato per collegare manualmente gli shelf di dischi ai nuovi controller. L'operazione di esportazione e interruzione e l'operazione di importazione insieme possono richiedere fino a 2 ore. Il cablaggio degli shelf di dischi può richiedere da 1 ora a 6 ore.
+
+Questa guida sui tempi di cutover non include il tempo necessario per i test di pre-produzione richiesti e presuppone una transizione priva di errori senza guasti imprevisti, come un guasto al disco.
+ a| 
+Nell'intervallo di minuti
+
+|===

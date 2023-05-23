@@ -1,0 +1,404 @@
+---
+permalink: copy-based/reference_commands_for_managing_transition_sessions.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, cbt, command, manage 
+summary: 'È possibile utilizzare il comando cbt di transizione per gestire funzioni come la creazione, la modifica, l"eliminazione e la visualizzazione di progetti di transizione.' 
+---
+= Comandi per la gestione della transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile utilizzare `transition cbt` comando per gestire funzioni come la creazione, la modifica, l'eliminazione e la visualizzazione di progetti di transizione.
+
+Con tutti i comandi è possibile utilizzare la seguente opzione:
+
+`-r no`: Disattiva la natura interattiva del comando. Per impostazione predefinita, questa opzione è attivata.
+
+È inoltre possibile utilizzare `-v` che attiva la modalità dettagliata con `transition version` e. `transition cbt menu` comandi.
+
+
+
+== Comandi per gestire le operazioni di transizione
+
+|===
+| Se si desidera... | Utilizzare questo comando... 
+
+
+ a| 
+Creare un progetto di transizione
+ a| 
+`transition cbt create`
+
+
+
+ a| 
+Aggiungere le informazioni del cluster al progetto specificato
+ a| 
+`transition cbt add-cluster-info`
+
+
+
+ a| 
+Modificare un progetto di transizione
+ a| 
+`transition cbt modify`
+
+
+
+ a| 
+Completare la transizione a un sistema storage ONTAP
+ a| 
+`transition cbt cutover`
+
+
+
+ a| 
+Eseguire il controllo preliminare sul progetto
+ a| 
+`transition cbt precheck`
+
+
+
+ a| 
+Applicare le configurazioni a un sistema storage ONTAP
+ a| 
+`transition cbt precutover`
+
+
+
+ a| 
+Attivare la risincronizzazione di SnapMirror tra i volumi 7-Mode e i volumi ONTAP nel progetto
+ a| 
+`transition cbt resync`
+
+
+
+ a| 
+Attivare l'operazione di aggiornamento di SnapMirror per i volumi ONTAP
+ a| 
+`transition cbt update`
+
+
+
+ a| 
+Visualizza la versione di 7-Mode Transition Tool
+ a| 
+`transition cbt version`
+
+
+
+ a| 
+Avviare la copia dei dati di riferimento dai volumi 7-Mode ai volumi ONTAP in un progetto
+ a| 
+`transition cbt start`
+
+
+
+ a| 
+Mettere in pausa la copia dei dati dai volumi 7-Mode ai volumi ONTAP in un progetto
+ a| 
+`transition cbt pause`
+
+
+
+ a| 
+Riprendere i trasferimenti delle copie dei dati dai volumi 7-Mode ai volumi ONTAP di un progetto in pausa
+ a| 
+`transition cbt resume`
+
+
+
+ a| 
+Interrompere un progetto di transizione
+ a| 
+`transition cbt abort`
+
+
+
+ a| 
+Eliminare un progetto di transizione
+ a| 
+`transition cbt delete`
+
+
+
+ a| 
+Visualizza l'elenco dei progetti di transizione o visualizza le informazioni su un progetto
+ a| 
+`transition cbt show`
+
+|===
+
+
+== Comandi per gestire le relazioni SnapMirror del volume
+
+|===
+| Se si desidera... | Utilizzare questo comando... 
+
+
+ a| 
+Aggiungere informazioni su un sistema primario 7-Mode a un progetto secondario
+ a| 
+`transition cbt add-primary-seven-mode-system ``
+
+https://kb.netapp.com/Advice_and_Troubleshooting/Data_Protection_and_Security/SnapMirror/CBT_%3A_How_to_provide_all_the_required_primary_7-Mode_details_for_a_given_secondary_project["CBT : come fornire tutti i dettagli principali 7-Mode richiesti per un determinato progetto secondario"]
+
+
+
+ a| 
+Aggiungere informazioni su un sistema secondario ONTAP a un progetto primario
+ a| 
+`transition cbt add-secondary-cluster-mode-system`
+
+https://kb.netapp.com/Advice_and_Troubleshooting/Data_Storage_Software/ONTAP_OS/CBT%3A_How_to_add_the_required_secondary_cluster_details_to_the_primary_project["CBT: Come aggiungere i dettagli del cluster secondario richiesti al progetto primario"]
+
+
+
+ a| 
+Rimuovere le informazioni su un sistema primario 7-Mode da un progetto secondario
+ a| 
+`transition cbt remove-primary-seven-mode-system`
+
+
+
+ a| 
+Rimuovere le informazioni su un sistema secondario ONTAP da un progetto primario
+ a| 
+`transition cbt remove-secondary-cluster-mode-system`
+
+
+
+ a| 
+Elencare i sistemi primari 7-Mode aggiunti a un progetto secondario
+ a| 
+`transition cbt show-primary-seven-mode-systems`
+
+
+
+ a| 
+Elencare i sistemi secondari ONTAP aggiunti a un progetto primario
+ a| 
+`transition cbt show-secondary-cluster-mode-systems`
+
+|===
+
+
+== Comandi per gestire le credenziali dei sistemi Data ONTAP
+
+|===
+| Se si desidera... | Utilizzare questo comando... 
+
+
+ a| 
+Salvare le credenziali (nome utente e password) di un host nel server di transizione
+ a| 
+`transition credentials add`
+
+
+
+ a| 
+Recuperare il nome utente di un host
+ a| 
+`transition credentials get`
+
+
+
+ a| 
+Modificare il nome utente o la password di un host
+ a| 
+`transition credentials modify`
+
+
+
+ a| 
+Eliminare le credenziali di un host dal server di transizione
+ a| 
+`transition credentials remove`
+
+|===
+
+
+== Comandi per gestire le coppie di volumi in un progetto
+
+|===
+| Se si desidera... | Utilizzare questo comando... 
+
+
+ a| 
+Aggiungere il volume 7-Mode e il volume ONTAP (coppia di volumi) a un progetto
+ a| 
+`transition cbt volumepair add`
+
+
+
+ a| 
+Modificare il volume ONTAP di un progetto
+ a| 
+`transition cbt volumepair modify`
+
+
+
+ a| 
+Rimuovere una coppia di volumi da un progetto
+ a| 
+`transition cbt volumepair remove`
+
+
+
+ a| 
+Elencare le coppie di volumi in un progetto
+ a| 
+`transition cbt volumepair show`
+
+|===
+
+
+== Comandi per gestire i dettagli LIF
+
+
+NOTE: Le LIF FC e iSCSI non vengono effettuate dal 7-Mode Transition Tool.
+
+|===
+| Se si desidera... | Utilizzare questo comando... 
+
+
+ a| 
+Aggiunta di una LIF di dati SVM a un progetto
+ a| 
+`transition cbt lif add`
+
+
+
+ a| 
+Modificare la LIF dei dati SVM di un progetto
+ a| 
+`transition cbt lif modify`
+
+
+
+ a| 
+Rimuovere le LIF da un progetto
+ a| 
+`transition cbt lif remove`
+
+
+
+ a| 
+Elencare tutti i LIF aggiunti a un progetto
+ a| 
+`transition cbt lif show`
+
+|===
+
+
+== Comandi per gestire le proprietà del progetto
+
+|===
+| Se si desidera... | Utilizzare questo comando... 
+
+
+ a| 
+Impostare il valore per una proprietà di progetto specifica
+ a| 
+`transition cbt property-set`
+
+
+
+ a| 
+Deselezionare il valore di una specifica proprietà di progetto
+ a| 
+`transition cbt property-reset`
+
+
+
+ a| 
+Ottenere il valore di una specifica proprietà di progetto
+ a| 
+`transition cbt property-get`
+
+|===
+
+
+== Comandi per gestire i lavori di transizione
+
+|===
+| Se si desidera... | Utilizzare questo comando... 
+
+
+ a| 
+Elencare i job eseguiti o in esecuzione nel progetto e nell'operazione indicati
+ a| 
+`transition jobs`
+
+
+
+ a| 
+Visualizzare lo stato di un lavoro
+ a| 
+`transition job-status`
+
+
+
+ a| 
+Visualizzare i risultati di un lavoro
+ a| 
+`transition job-results`
+
+|===
+
+
+== Comandi per gestire le pianificazioni delle transizioni
+
+|===
+| Se si desidera... | Utilizzare questo comando... 
+
+
+ a| 
+Aggiungi una pianificazione per gestire i trasferimenti SnapMirror insieme alla larghezza di banda
+ a| 
+`transition cbt schedule add`
+
+
+
+ a| 
+Modificare una pianificazione SnapMirror del progetto
+ a| 
+`transition cbt schedule modify`
+
+
+
+ a| 
+Rimuovere le pianificazioni di SnapMirror dal progetto
+ a| 
+`transition cbt schedule remove`
+
+
+
+ a| 
+Elencare tutte le pianificazioni di SnapMirror in un progetto
+ a| 
+`transition cbt schedule show`
+
+|===
+
+
+== Comando per raccogliere i log degli strumenti
+
+|===
+| Se si desidera... | Utilizzare questo comando... 
+
+
+ a| 
+Raccogli i file di log dei 7-Mode Transition Tool Log vengono salvati sul server in `asup` Directory del percorso di installazione di 7-Mode Transition Tool.
+ a| 
+`transition bundle-tool-logs`
+
+|===
+Per ulteriori informazioni su questi comandi, vedere le pagine man della CLI 7-Mode Transition Tool.
+
+*Informazioni correlate*
+
+xref:task_transitioning_volumes_using_7mtt.adoc[Migrazione di dati e configurazione da volumi 7-Mode]

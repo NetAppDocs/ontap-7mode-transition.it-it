@@ -1,0 +1,68 @@
+---
+permalink: san-host/task_preparing_for_cutover_when_transitioning_linux_host_file_systems_on_lvm_devices.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, cutover, phase, host, lvm, device 
+summary: Se si sta eseguendo la transizione di un file system host Linux su un dispositivo Logical Volume Manager, è necessario eseguire alcuni passaggi prima della fase di cutover. 
+---
+= Preparazione per la fase di cutover durante la transizione dei file system host Linux su dispositivi LVM
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si sta eseguendo la transizione di un file system host Linux su un dispositivo Logical Volume Manager (LVM), è necessario eseguire alcuni passaggi prima della fase di cutover.
+
+* Per le configurazioni FC, è necessario disporre di connettività fabric e zoning per i controller Data ONTAP in cluster.
+* Per le configurazioni iSCSI, è necessario rilevare le sessioni iSCSI e accedere ai controller Data ONTAP in cluster.
+* È necessario ottenere le seguenti informazioni di pre-transizione dal _Workbook per la valutazione dell'inventario_:
++
+** I nomi dei dispositivi DMMP utilizzati da LVM
+** Il nome del gruppo di volumi
+** Il nome del volume logico
+** Il file system configurato sul dispositivo del volume logico
+** La directory in cui sono montati i volumi logici
+
+
+* Per le transizioni basate sulla copia, eseguire questi passaggi prima di avviare l'operazione Storage Cutover nel 7-Mode Transition Tool (7MTT).
+* Per le transizioni senza copia, eseguire questi passaggi prima di avviare l'operazione Export & Halt 7-Mode nel 7MTT.
+
+
+.Fasi
+. Arrestare i/o sui punti di montaggio LV.
+. Arrestare le applicazioni che accedono alle LUN in base alle raccomandazioni del vendor dell'applicazione.
+. Smontare il punto di montaggio LV:
++
+`*umount _dir_name_*`
+
+. Disattivare il volume logico:
++
+`*vgchange -an _vg_name_*`
+
+. Verificare lo stato del volume logico:
++
+`*lvdisplay _dir_name_*`
+
++
+Lo stato LV dovrebbe visualizzare "`NON disponibile`".
+
+. Esportare il gruppo di volumi:
++
+`*vgexport _vg_name_*`
+
+. Verificare lo stato VG:
++
+`*vgdisplay _vg_name_*`
+
++
+Lo stato VG dovrebbe visualizzare "`exported`".
+
+. Eliminare gli ID dei dispositivi DDMP 7-Mode:
++
+`*multipath -f _device_name_*`
+
+
+
+*Informazioni correlate*
+
+xref:task_gathering_pretransition_information_from_inventory_assessment_workbook.adoc[Raccolta di informazioni pre-transizione dal Workbook per la valutazione dell'inventario]

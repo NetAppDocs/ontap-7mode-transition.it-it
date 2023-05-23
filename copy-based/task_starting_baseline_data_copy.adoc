@@ -1,0 +1,53 @@
+---
+permalink: copy-based/task_starting_baseline_data_copy.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, start, baseline, copy 
+summary: 'Dopo aver creato un progetto e aver completato l"operazione di verifica preliminare, è necessario avviare la copia dei dati dai volumi 7-Mode a ONTAP. È possibile avviare un"operazione di copia dei dati di riferimento per singoli progetti. Durante la copia dei dati, è necessario interrompere i processi di sistema e l"attività di rete non necessari.' 
+---
+= Avvio della copia dei dati di riferimento
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dopo aver creato un progetto e aver completato l'operazione di verifica preliminare, è necessario avviare la copia dei dati dai volumi 7-Mode a ONTAP. È possibile avviare un'operazione di copia dei dati di riferimento per singoli progetti. Durante la copia dei dati, è necessario interrompere i processi di sistema e l'attività di rete non necessari.
+
+È necessario aver creato almeno un programma di copia dei dati.
+
+È possibile stimare il tempo necessario per completare i trasferimenti di riferimento e valutare le performance ottenute dai trasferimenti di volume SnapMirror nel proprio ambiente eseguendo una migrazione di test. Di seguito sono riportati alcuni dei fattori che possono influire sulle prestazioni:
+
+* Opzioni di pianificazione della copia dei dati di transizione selezionate
++
+Questa pianificazione controlla sia il numero massimo di trasferimenti simultanei di SnapMirror che la larghezza di banda massima da utilizzare per i trasferimenti.
+
+* Numero massimo di trasferimenti simultanei di volumi SnapMirror supportati dai controller di origine 7-Mode
+* Larghezza di banda della rete tra i controller di origine 7-Mode e di destinazione ONTAP
++
+Il traffico di rete non correlato all'attività di migrazione deve essere ridotto al minimo in modo da massimizzare il throughput e ridurre al minimo i tempi di risposta tra i sistemi di origine e di destinazione.
+
+* Capacità di performance dei controller di origine e di destinazione
++
+I sistemi di origine e di destinazione devono disporre di un utilizzo ottimale della CPU e della memoria disponibile.
+
+* Numero di trasferimenti SnapMirror del volume 7-Mode che si verificano durante la copia dei dati
+
+
+.Fasi
+. Da Dashboard, selezionare il progetto per cui si desidera avviare la copia dei dati di riferimento.
+. Fare clic su *Start Baseline*.
++
+Il controllo preliminare viene eseguito nuovamente in background e, se non vengono rilevati errori, il trasferimento di riferimento viene avviato in base al programma di copia dei dati. La finestra di dialogo Operation Progress (avanzamento operazione) visualizza le informazioni sullo stato delle operazioni di pre-controllo eseguite durante la copia dei dati di riferimento.
+
+. Fare clic sulla scheda *Volumes* (volumi) per visualizzare lo stato e l'avanzamento del trasferimento di riferimento.
++
+Per visualizzare i dettagli di SnapMirror di ciascun volume, fare clic su *View Transition Details* (Visualizza dettagli transizione). Il numero di trasferimenti simultanei di SnapMirror si basa sull'input fornito nella pianificazione attualmente attiva. È possibile tenere traccia della pianificazione attiva dalla scheda Data Copy Schedule (Pianificazione copia dati) del Dashboard.
+
++
+Una volta completata l'operazione di copia dei dati di riferimento, gli aggiornamenti incrementali di SnapMirror iniziano in base alla pianificazione fornita durante la creazione del progetto.
+
+
+
+*Informazioni correlate*
+
+xref:task_creating_schedule_for_snapmirror_transfers.adoc[Creazione di una pianificazione di copia dei dati per i trasferimenti SnapMirror]

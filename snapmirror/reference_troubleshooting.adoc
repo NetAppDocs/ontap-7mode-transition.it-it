@@ -1,0 +1,14 @@
+---
+permalink: snapmirror/reference_troubleshooting.html 
+sidebar: sidebar 
+keywords: ontap, 7, mode, troubleshoot, transition, snapmirror, issues, problems 
+summary: Le informazioni per la risoluzione dei problemi consentono di identificare e risolvere i problemi che si verificano durante la transizione dei dati 7-Mode utilizzando i comandi SnapMirror. 
+---
+= Risoluzione dei problemi di transizione durante l'utilizzo di SnapMirror
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Le informazioni per la risoluzione dei problemi consentono di identificare e risolvere i problemi che si verificano durante la transizione dei dati 7-Mode utilizzando i comandi SnapMirror.

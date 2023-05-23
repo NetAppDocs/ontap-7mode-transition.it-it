@@ -1,0 +1,62 @@
+---
+permalink: copy-free/reference_failed_to_boot_7_mode_controller_in_maintenance_mode.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, failed, boot, controller, maintenance, mode 
+summary: 'L"operazione di esportazione e interruzione non riesce e viene visualizzato il messaggio di errore Impossibile avviare il controller 7-Mode in modalità di manutenzione. È necessario arrestare e avviare manualmente il controller in modalità di manutenzione ed eseguire nuovamente l"operazione.' 
+---
+= Impossibile avviare il controller 7-Mode in modalità di manutenzione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+L'operazione di esportazione e interruzione non riesce e viene visualizzato il messaggio di errore: `Failed to boot the 7-Mode controller in maintenance mode`. È necessario arrestare e avviare manualmente il controller in modalità di manutenzione ed eseguire nuovamente l'operazione.
+
+
+
+== Soluzione alternativa
+
+. Arrestare il sistema di storage 7-Mode:
++
+`*halt -f -t 0*`
+
+. Al prompt DEL CARICATORE, registrare i valori impostati per `*bootarg.init.console_muted*` e. `*bootarg.init.console_level boot*` parametri di boot:
++
+`*printenv bootarg.init.console_muted*`
+
++
+`*printenv bootarg.init.console_level*`
+
+. Disattivare i messaggi della console impostando i seguenti parametri di avvio:
++
+`*setenv bootarg.init.console_muted "true"*`
+
++
+`*setenv bootarg.init.console_level "-1"*`
+
+. Dallo strumento di transizione 7-Mode, eseguire nuovamente l'esportazione e interrompere l'operazione.
+. Dal sistema di storage 7-Mode, impostare i parametri di avvio sui valori originali, come indicato nella fase 2:
++
+|===
+| Se i parametri di avvio sono... | Immettere i seguenti comandi... 
+
+
+ a| 
+Non impostato in precedenza con alcun valore (non definito)
+ a| 
+`*unsetenv bootarg.init.console_muted*`
+
+`*unsetenv bootarg.init.console_level*`
+
+
+
+ a| 
+Impostato in precedenza con un valore
+ a| 
+`*unsetenv bootarg.init.console_muted "_original_value_"*`
+
+`*unsetenv bootarg.init.console_level "_original_value_"*`
+
+|===
+

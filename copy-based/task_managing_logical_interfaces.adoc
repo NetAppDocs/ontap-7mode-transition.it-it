@@ -1,0 +1,77 @@
+---
+permalink: copy-based/task_managing_logical_interfaces.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, manage, logical, interfaces 
+summary: È possibile aggiungere, modificare o rimuovere indirizzi IP 7-Mode da un progetto. 
+---
+= Gestione delle interfacce logiche
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile aggiungere, modificare o rimuovere indirizzi IP 7-Mode da un progetto.
+
+Le LIF vengono configurate sulla macchina virtuale di storage (SVM) nella fase di applicazione della configurazione (pre-over):
+
+* Gli indirizzi IP 7-Mode esistenti vengono creati nello stato amministrativo "`dproprio`".
+* I nuovi indirizzi IP vengono creati nello stato amministrativo "`up`".
+
+
+
+IMPORTANT: Le LIF FC e iSCSI non vengono effettuate dal 7-Mode Transition Tool.
+
+.Fasi
+. Eseguire una delle seguenti operazioni:
++
+|===
+| Se si desidera... | Quindi... 
+
+
+ a| 
+Modificare una LIF esistente
+ a| 
+.. Fare clic su image:../media/edit_schedule.gif[""] .
+.. Nella finestra di dialogo Modify LIF (Modifica LIF), apportare le modifiche desiderate, quindi fare clic su *Save* (Salva).
+
+
+
+
+ a| 
+Rimuovere una LIF esistente
+ a| 
+.. Fare clic su image:../media/delete_schedule.gif[""] nella tabella.
++
+
+NOTE: È possibile rimuovere una LIF solo quando il progetto si trova nello stato di preparazione, copia dei dati di riferimento, pausa, pre-elaborazione o aggiornamento. Tuttavia, non è possibile rimuovere una LIF se l'operazione di cutover non è riuscita.
+
+.. Fare clic su *Select 7-Mode LIF* (Seleziona LIF 7-Mode*).
+.. Selezionare gli indirizzi IP 7-Mode per la transizione.
+.. Inserire i dettagli del nodo di destinazione e della porta di destinazione.
+.. Fare clic su *Save* (Salva).
+
+
+
+
+ a| 
+Aggiungere un indirizzo IP 7-Mode
+ a| 
+** Fare clic su *Select 7-Mode LIF* (Seleziona LIF 7-Mode*).
+** Selezionare gli indirizzi IP 7-Mode per la transizione.
+** Inserire i dettagli del nodo di destinazione e della porta di destinazione.
+** Fare clic su *Save* (Salva).
+
+
+
+
+ a| 
+Aggiungere una nuova LIF
+ a| 
+.. Fare clic su *Add New LIF* (Aggiungi nuovo LIF) sotto la tabella.
+.. Inserire i valori richiesti.
+.. Fare clic su *Save* (Salva).
+
+
+|===
+

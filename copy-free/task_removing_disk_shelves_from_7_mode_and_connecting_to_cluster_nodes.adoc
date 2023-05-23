@@ -1,0 +1,123 @@
+---
+permalink: copy-free/task_removing_disk_shelves_from_7_mode_and_connecting_to_cluster_nodes.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, disconnect, disk, shelves, connect, cluster, node 
+summary: Il collegamento dei shelf di dischi 7-Mode ai nodi del cluster di destinazione è un processo manuale. Dopo aver cablato gli shelf di dischi, è consigliabile verificare il cablaggio utilizzando Config Advisor. È quindi possibile verificare il cablaggio utilizzando 7-Mode Transition Tool. Lo strumento esegue solo un sottoinsieme dei controlli eseguiti da Config Advisor. 
+---
+= Disconnessione degli shelf di dischi dal sistema 7-Mode e connessione ai nodi del cluster
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il collegamento dei shelf di dischi 7-Mode ai nodi del cluster di destinazione è un processo manuale. Dopo aver cablato gli shelf di dischi, è consigliabile verificare il cablaggio utilizzando Config Advisor. È quindi possibile verificare il cablaggio utilizzando 7-Mode Transition Tool. Lo strumento esegue solo un sottoinsieme dei controlli eseguiti da Config Advisor.
+
+È necessario aver registrato le informazioni relative alla connettività dello shelf di dischi alle porte del controller 7-Mode.
+
+È necessario conoscere alcune considerazioni relative alla connessione degli shelf di dischi SAS:
+
+* Seguire le regole per il cablaggio delle porte SAS quadrate e circolari.
+* Gli shelf IOM6 e IOM3 possono essere combinati nello stesso stack, ma non dovrebbe esserci più di una singola transizione tra shelf che utilizzano tipi di IOM diversi.
++
+Ad esempio, IOM6e (controller)--IOM6 (shelf)--IOM3 (shelf)--IOM3 (shelf) è una configurazione supportata. Ma IOM6e (controller)--IOM3 (shelf)--IOM6 (shelf)--IOM3 (shelf) non è una configurazione supportata.
+
+
+
+.Fasi
+. Controllare gli ID dello shelf di dischi nella coppia ha 7-Mode e i nodi del cluster di destinazione:
++
+.. Se sono presenti ID shelf duplicati (se gli ID shelf di dischi 7-Mode sono utilizzati per gli shelf di dischi nei nodi del cluster di destinazione), modificare gli ID shelf di dischi.
++
+*** Per gli shelf di dischi SAS, un ID shelf valido va da 00 a 99.
+*** Gli shelf ID SAS devono essere univoci all'interno della coppia ha.https://library.netapp.com/ecm/ecm_download_file/ECMP1119629["Guida all'installazione e al servizio degli shelf di dischi SAS per DS4243, DS2246, DS4486 e DS4246"]
+*** Per gli shelf di dischi FC, un ID shelf valido va da 1 a 7.
+*** Gli ID shelf FC devono essere univoci all'interno di ciascun loop FC.https://library.netapp.com/ecm/ecm_download_file/ECMP1112854["DS14mk2 FC e DS14mk4 FC hardware Service Guide"]
+
+
+.. Spegnere e riaccendere gli shelf di dischi per rendere effettive le nuove ID.
+
+
+. Spegnere gli shelf di dischi 7-Mode.
+. A seconda che siano disponibili porte aggiuntive sui nodi del cluster di destinazione, scegliere una delle seguenti opzioni:
++
+|===
+| Se... | Quindi... 
+
+
+ a| 
+Sono disponibili porte aggiuntive per collegare gli shelf di dischi
+ a| 
+Collegare gli shelf di dischi in un nuovo stack ai nodi del cluster di destinazione in una configurazione multipath.
+
+
+NOTE: È consigliabile collegare gli shelf di dischi a uno stack separato. 7-Mode Transition Tool rileva la disponibilità del numero richiesto di porte sui nodi del cluster di destinazione quando vengono eseguiti i controlli preliminari.
+
+
+
+ a| 
+Le porte non sono disponibili per collegare gli shelf di dischi
+ a| 
+Eseguire una delle seguenti operazioni:
+
+** Aggiungere una nuova scheda di espansione e collegare gli shelf di dischi in un nuovo stack ai nodi del cluster di destinazione in una configurazione multipath.
++
+È necessario verificare che la scheda di espansione sia supportata sulla piattaforma di destinazione.
+
+** Collegare gli shelf di dischi a uno stack esistente in una configurazione multipath.
+
+
+|===
++
+https://library.netapp.com/ecm/ecm_download_file/ECMP1119629["Guida all'installazione e al servizio degli shelf di dischi SAS per DS4243, DS2246, DS4486 e DS4246"]
+
++
+https://library.netapp.com/ecm/ecm_download_file/ECMM1280273["DiskShelf14mk2 AT hardware Service Guide"]
+
++
+https://library.netapp.com/ecm/ecm_download_file/ECMP1112854["DS14mk2 FC e DS14mk4 FC hardware Service Guide"]
+
+. Accendere gli shelf di dischi.
++
+
+IMPORTANT: Prima di procedere, attendere almeno 70 secondi.
+
+. Utilizzare Config Advisor per verificare le connessioni.
++
+È necessario risolvere eventuali problemi di cablaggio identificati da Config Advisor.
+
++
+https://mysupport.netapp.com/site/tools/tool-eula/activeiq-configadvisor["Download NetApp: Config Advisor"]
+
+. Da 7-Mode Transition Tool, fare clic su *Verify cabling* (verifica cablaggio).
++
+Viene visualizzato un messaggio che elenca le considerazioni importanti per questa operazione.
+
++
+*Risoluzione dei problemi:* se in un aggregato sono presenti dischi mancanti, l'aggregato diventa degradato e la verifica del cablaggio non riesce. Se il numero di dischi mancanti rientra nel limite consentito, è possibile continuare la transizione con gli aggregati degradati eseguendo il seguente comando dalla CLI 7-Mode Transition Tool:
+
++
+`*transition cft aggregate degraded-transition -p _project_name_ -n 7-__mode_host_name__ -a _7-mode_aggregate_name_ -i acknowledge*`
+
++
+È quindi possibile rieseguire l'operazione di verifica del cablaggio e continuare con la transizione. È necessario assicurarsi che nel nodo del cluster di destinazione siano presenti dischi di riserva sufficienti per ricostruire questi gruppi RAID dopo la transizione degli aggregati.
+
+. Fare clic su *Sì* per continuare.
+. Attendere il completamento dell'operazione ed eseguire le seguenti operazioni per salvare i risultati dell'operazione e raccogliere i log degli strumenti:
++
+.. Fare clic su *Save as CSV* (Salva come CSV) per salvare i risultati dell'operazione in un file.
+.. Fare clic su *Collect Tool Logs* (Raccogli log strumento) per creare un backup di tutti i file di log della transizione.
++
+Si consiglia di salvare i file di log dopo ogni operazione di transizione.
+
+.. Fare clic su *Chiudi*.
+
+
++
+Se il completamento dell'operazione richiede molto tempo, fare clic su *Esegui in background* per uscire dalla finestra dei risultati dell'operazione. Non modificare il progetto o eseguire altre attività quando l'operazione è in esecuzione in background. È quindi possibile visualizzare i risultati delle operazioni dalla scheda Operation History (Cronologia operazioni).
+
+
+
+*Informazioni correlate*
+
+xref:task_gathering_cabling_information_for_transition.adoc[Raccolta di informazioni sul cablaggio per la transizione]

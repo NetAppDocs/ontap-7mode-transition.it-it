@@ -1,0 +1,35 @@
+---
+permalink: snapmirror/concept_unsupported_7_mode_san_functions.html 
+sidebar: sidebar 
+keywords: ontap, 7, mode, transition, snapmirror, san, clustered, data 
+summary: È necessario conoscere le funzionalità SAN 7-Mode non supportate in Clustered Data ONTAP, in modo da poter intraprendere le azioni necessarie prima della transizione. 
+---
+= Funzionalità non supportate per la transizione SAN
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario conoscere le funzionalità SAN 7-Mode non supportate in Clustered Data ONTAP, in modo da poter intraprendere le azioni necessarie prima della transizione.
+
+Le seguenti funzionalità SAN 7-Mode non sono supportate in Clustered Data ONTAP:
+
+* Cloni LUN snapshot con copia di backup
++
+I cloni LUN snapshot con copia di backup presenti nelle copie Snapshot non sono supportati per alcuna operazione di ripristino. Queste LUN non sono accessibili in Clustered Data ONTAP. È necessario dividere o eliminare i cloni LUN supportati dalla copia Snapshot 7-Mode prima della transizione.
+
+* LUN con ostipe di `vld`, `image`, o. `any user-defined string LUNs`
++
+È necessario modificare l'ostipe di tali LUN o eliminare le LUN prima della transizione.
+
+* Suddivisione del clone del LUN
++
+Prima della transizione, è necessario attendere il completamento delle operazioni di split del clone LUN attivo oppure interrompere la split del clone LUN ed eliminare il LUN.
+
+* Il `lun share` comando
++
+La condivisione di un LUN su protocolli NAS non è supportata in Clustered Data ONTAP.
+
+* SnapValidator
+

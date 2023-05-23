@@ -1,0 +1,26 @@
+---
+permalink: copy-based/concept_considerations_for_chain_of_custody_verification_for_7_mode_snaplock_volumes.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, chain, custody, verification, snaplock, volumes, considerations 
+summary: 'È necessario conoscere le considerazioni per l"utilizzo della verifica della catena di custodia per i volumi SnapLock 7-Mode.' 
+---
+= Considerazioni sull'utilizzo della verifica della catena di custodia per volumi SnapLock 7-Mode
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario conoscere le considerazioni per l'utilizzo della verifica della catena di custodia per i volumi SnapLock 7-Mode.
+
+* La verifica della catena di custodia SnapLock deve essere eseguita solo se è un requisito per la transizione dei volumi SnapLock.
++
+È possibile eseguire la verifica della catena di custodia per tutti o un sottoinsieme di volumi SnapLock nel progetto.
+
+* La verifica della catena di custodia SnapLock può richiedere molto tempo in base al numero di file presenti nei volumi SnapLock 7-Mode.
+* La verifica della catena di custodia è supportata solo per volumi SnapLock in lettura/scrittura 7-Mode
++
+La verifica della catena di custodia non è supportata per i volumi di sola lettura.
+
+* La verifica della catena di custodia non è supportata per i volumi SnapLock contenenti file con nomi con caratteri non ASCII.
+

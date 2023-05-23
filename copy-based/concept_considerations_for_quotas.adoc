@@ -1,0 +1,26 @@
+---
+permalink: copy-based/concept_considerations_for_quotas.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, quotas 
+summary: 'È necessario conoscere la modalità di transizione delle quote quando si esegue "Apply Configuration" (Applica configurazione) in modalità di sola lettura e lettura/scrittura.' 
+---
+= Considerazioni sulle quote
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario conoscere la modalità di transizione delle quote quando "`Apply Configuration`" (precutover) viene eseguito in modalità di sola lettura e lettura/scrittura.
+
+Le quote vengono applicate nei seguenti modi durante la fase di pre-consegna:
+
+* Modalità di sola lettura
++
+Le quote non vengono applicate in modalità di sola lettura pre-over sul sistema ONTAP, ma vengono applicate solo durante la fase di cutover dello storage.
+
+* Modalità di lettura/scrittura
++
+Le quote vengono applicate in modalità di lettura/scrittura precutover sul sistema ONTAP, in modo da poterle testare in ONTAP. Tuttavia, le quote vengono rimosse durante la risincronizzazione (al termine del test) dei volumi ONTAP. Le quote vengono nuovamente applicate durante la fase di cutover dello storage.
+
+

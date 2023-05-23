@@ -1,0 +1,59 @@
+---
+permalink: copy-based/concept_considerations_for_using_snapmirror_for_transition.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, snapmirror 
+summary: È possibile creare pianificazioni di copia dei dati e personalizzare i trasferimenti di dati SnapMirror per le operazioni di transizione senza influire sulle operazioni esistenti da 7-Mode a 7-Mode SnapMirror o SnapVault. 
+---
+= Considerazioni sull'utilizzo di SnapMirror per la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile creare pianificazioni di copia dei dati e personalizzare i trasferimenti di dati SnapMirror per le operazioni di transizione senza influire sulle operazioni esistenti da 7-Mode a 7-Mode SnapMirror o SnapVault.
+
+
+
+== Numero massimo di trasferimenti SnapMirror simultanei
+
+Durante la transizione, il numero massimo di trasferimenti simultanei di SnapMirror supportati sui sistemi 7-Mode e ONTAP dipende dal numero di operazioni di replica di SnapMirror consentite per un modello di sistema storage specifico.
+
+Per informazioni sul numero massimo di trasferimenti SnapMirror di volumi simultanei per il modello di sistema in uso, consultare la link:https://library.netapp.com/ecm/ecm_get_file/ECMP1635994["Guida al backup e ripristino online della protezione dei dati di Data ONTAP per 7-Mode"].
+
+
+
+== Pianificazioni delle copie dei dati
+
+* Il numero di trasferimenti simultanei di SnapMirror utilizzati dallo strumento per eseguire le operazioni di SnapMirror (baseline, aggiornamento o risincronizzazione) si basa sulle pianificazioni configurate durante la creazione del progetto.
+* Se progetti diversi stanno eseguendo la transizione di volumi dallo stesso controller 7-Mode, è necessario assicurarsi che le pianificazioni delle copie dei dati non si sovrappongano tra progetti diversi.
+* È possibile garantire che le operazioni di backup e disaster recovery (DR) esistenti non vengano influenzate dalle operazioni di transizione di 7-Mode Transition Tool nei seguenti modi:
++
+** È necessario creare pianificazioni di copia dei dati SnapMirror per un progetto in modo che non si sovrapponga alle pianificazioni SnapMirror 7-Mode o SnapVault esistenti.
+** È necessario configurare il numero di trasferimenti simultanei di SnapMirror in modo che le pianificazioni di SnapMirror o SnapVault 7-Mode esistenti non funzionino.
++
+È inoltre possibile rilasciare alcuni trasferimenti modificando la pianificazione attiva e modificando il numero massimo di trasferimenti simultanei di SnapMirror su zero.
+
+
+
+* È necessario assicurarsi che il numero di trasferimenti SnapMirror simultanei e l'accelerazione configurata per le operazioni (pre-cutover, cutover e aggiornamento on-demand) siano disponibili sul sistema di storage 7-Mode per l'intera durata dell'operazione.
++
+L'operazione di cutover non riesce se l'operazione di aggiornamento incrementale finale non riesce anche per uno dei volumi nel progetto.
+
+* Per i progetti secondari, dopo il cutover, gli aggiornamenti incrementali di SnapMirror per la relazione di SnapMirror tra i volumi primari 7-Mode e il volume secondario ONTAP si basano sulla pianificazione delle relazioni da 7-Mode a 7-Mode di SnapMirror.
++
+È necessario assicurarsi che sul controller primario 7-Mode siano disponibili trasferimenti SnapMirror simultanei sufficienti per eseguire questi aggiornamenti.
+
+
+
+
+
+== Utilizzo di percorsi multipli per la transizione
+
+È possibile specificare due percorsi per la transizione utilizzando un indirizzo IP per la copia dei dati e un indirizzo IP multipath. Tuttavia, entrambi i percorsi possono essere utilizzati solo per il bilanciamento del carico, non per il failover.
+
+*Informazioni correlate*
+
+xref:concept_guidelines_for_creating_a_data_copy_schedule.adoc[Considerazioni per la creazione di una pianificazione di copia dei dati]
+
+xref:task_creating_schedule_for_snapmirror_transfers.adoc[Creazione di una pianificazione di copia dei dati per i trasferimenti SnapMirror]

@@ -1,0 +1,126 @@
+---
+permalink: copy-based/task_applying_7_mode_configurations.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, apply, 7, mode, configuration 
+summary: 'Una volta completata la copia dei dati di riferimento, è possibile copiare e applicare tutte le configurazioni dal sistema 7-Mode (inclusa la configurazione di protocolli e servizi) ai volumi ONTAP. Se il cluster di destinazione esegue qualsiasi versione da ONTAP 8.3.2 e versioni successive supportate, la configurazione SAN viene eseguita in questa fase.' 
+---
+= Applicazione di configurazioni 7-Mode
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Una volta completata la copia dei dati di riferimento, è possibile copiare e applicare tutte le configurazioni dal sistema 7-Mode (inclusa la configurazione di protocolli e servizi) ai volumi ONTAP. Se il cluster di destinazione esegue qualsiasi versione da ONTAP 8.3.2 e versioni successive supportate, la configurazione SAN viene eseguita in questa fase.
+
+Se si stanno effettuando la transizione di volumi SAN, è necessario aver creato almeno un LIF di dati del protocollo appropriato (iSCSI o FC) per ogni nodo del cluster.
+
+* Le configurazioni vengono applicate nella fase di applicazione della configurazione (precutover), che prevede due modalità: Modalità di sola lettura di pretutover e modalità di lettura/scrittura di pretutover.
+
+
+La modalità di lettura/scrittura pre-over non è supportata quando il progetto contiene:
+
+* I volumi SAN e il cluster di destinazione eseguono Data ONTAP 8.3.1 o versioni precedenti. In questa situazione, le seguenti configurazioni non vengono applicate nella fase di pre-cutover, ma vengono applicate durante la fase di cutover:
++
+** Configurazioni SAN
+** Configurazioni di Snapshot Schedule
+
+
+* Volumi di conformità SnapLock.
++
+Se il progetto contiene volumi di conformità SnapLock, le configurazioni della pianificazione Snapshot non vengono applicate nella fase di pre-consegna, ma vengono applicate durante la fase di cutover.
+
++
+Vedere xref:concept_considerations_for_transitioning_of_snaplock_compliance_volumes.adoc[Considerazioni per la transizione dei volumi di conformità SnapLock].
+
+
+
+.Fasi
+. Dalla dashboard, selezionare il progetto.
+. Applicare le configurazioni:
++
+|===
+| Se si desidera applicare tutte le configurazioni in... | Quindi... 
+
+
+ a| 
+Modalità di sola lettura
+ a| 
+Fare clic su *Apply Configuration* (Applica configurazione).
+
+
+
+ a| 
+Modalità di lettura/scrittura
+ a| 
+.. Selezionare la casella di controllo *Test Mode* (modalità test).
+.. Fare clic su *Apply Configuration* (Applica configurazione).
++
+I volumi ONTAP vengono eseguiti in lettura/scrittura ed è possibile testare le configurazioni e le operazioni di accesso ai dati.
+
+.. Selezionare *Apply Configuration in test mode* (Applica configurazione in modalità test) nella finestra di dialogo Apply Configuration (Precutover) (Applica configurazione).
+
+
+|===
+. Selezionare la casella di controllo *Personalizza il numero di trasferimenti SnapMirror simultanei e il limite di accelerazione per questa operazione* per specificare il numero di operazioni di copia dei dati SnapMirror e il limite di accelerazione:
++
+.. Immettere il numero massimo di trasferimenti SnapMirror simultanei da eseguire durante la transizione.
+.. Immettere la percentuale di flussi disponibili che è possibile utilizzare per i trasferimenti SnapMirror.
++
+Per impostazione predefinita, lo strumento utilizza il 50% dei trasferimenti SnapMirror del volume disponibile.
+
+.. Immettere un limite di accelerazione o selezionare *massimo* per utilizzare la larghezza di banda massima.
++
+Per impostazione predefinita, lo strumento utilizza la massima accelerazione per la transizione della configurazione.
+
+
+
+. Selezionare la casella di controllo *Transition Kerberos Configuration* (Configurazione Kerberos transizione) per fornire i dettagli di configurazione del server Kerberos basato su UNIX o Microsoft ad per la transizione.
++
+
+NOTE: Questa opzione è abilitata solo quando Kerberos è configurato sul sistema di storage 7-Mode di origine.
+
++
+.. Immettere i dettagli del server Kerberos, ad esempio il nome host, l'indirizzo IP, il nome utente e la password.
++
+
+NOTE: Per eseguire la transizione della configurazione Kerberos, è necessario eseguire la transizione di almeno una LIF come parte del progetto e la LIF deve essere risolutibile in un nome host.
+
+
+
+. Fare clic su *continua*.
++
+Viene visualizzata la finestra di dialogo Operation Progress (avanzamento operazione) e viene avviata l'operazione di copia della configurazione.
+
+. Se la transizione di configurazione viene eseguita in modalità di lettura/scrittura, fare clic su *Finish Testing* (fine test) al termine del test e della verifica delle configurazioni.
++
+Questa modalità deve essere utilizzata solo a scopo di test. Tutti i dati scritti nel cluster sui volumi migrati durante la modalità di test vengono persi.
+
++
+Lo strumento ristabilita la relazione di SnapMirror e risincronizza (in base alla pianificazione attiva del progetto in quel momento) i volumi ONTAP. Tutti i dati scritti in 7-Mode vengono risincronizzati con i volumi ONTAP.
+
++
+
+NOTE: Per una risincronizzazione corretta, deve esistere una copia Snapshot comune tra i volumi 7-Mode e Clustered Data ONTAP. Non eliminare manualmente la copia Snapshot comune; in caso contrario, la risincronizzazione non riesce.
+
+
+
+Gli indirizzi IP 7-Mode rimangono operativi. Le LIF vengono configurate sulla SVM (Storage Virtual Machine) nei seguenti modi:
+
+* Gli indirizzi IP 7-Mode esistenti vengono creati nello stato di inattività amministrativa.
++
+Durante il cutover dello storage, questi indirizzi IP vengono rimossi dal sistema 7-Mode e le corrispondenti LIF delle macchine virtuali di storage (SVM) vengono portate allo stato amministrativo. Se si seleziona la modalità di lettura/scrittura pre-over, è necessario utilizzare una LIF diversa per accedere ai volumi migrati nel cluster.
+
+* I nuovi indirizzi IP vengono creati nello stato di configurazione amministrativa.
++
+Se si seleziona la modalità di lettura/scrittura pre-over, è possibile utilizzare queste LIF per verificare l'accesso ai volumi migrati nel cluster.
+
+
+
+*Informazioni correlate*
+
+xref:task_managing_logical_interfaces.adoc[Gestione delle interfacce logiche]
+
+xref:concept_considerations_for_quotas.adoc[Considerazioni sulle quote]
+
+https://kb.netapp.com/Advice_and_Troubleshooting/Data_Storage_Software/ONTAP_OS/7MTT_v2.0%2F%2FTransitioned_Data_ONTAP_features["7MTT v2.0/funzionalità Data ONTAP con transizione"]

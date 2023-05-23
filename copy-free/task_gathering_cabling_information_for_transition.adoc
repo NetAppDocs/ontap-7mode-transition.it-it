@@ -1,0 +1,103 @@
+---
+permalink: copy-free/task_gathering_cabling_information_for_transition.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, gather, cabling, information 
+summary: Prima di iniziare la transizione senza copia, è necessario raccogliere informazioni su adattatori, porte, shelf di dischi e connettività dello storage dei controller 7-Mode, quindi pianificare come collegare gli shelf di dischi 7-Mode ai nodi del cluster di destinazione. 
+---
+= Raccolta di informazioni sul cablaggio per la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Prima di iniziare la transizione senza copia, è necessario raccogliere informazioni su adattatori, porte, shelf di dischi e connettività dello storage dei controller 7-Mode, quindi pianificare come collegare gli shelf di dischi 7-Mode ai nodi del cluster di destinazione.
+
+È necessario aver stampato il foglio di lavoro dei cavi di transizione senza copia.
+
+xref:reference_copy_free_transition_cabling_worksheet.adoc[Foglio di lavoro per il cablaggio della transizione senza copia]
+
+. Utilizzare Config Advisor per eseguire un controllo dello stato di salute dello storage e del cablaggio 7-Mode e raccogliere i dati di cablaggio.
++
+Utilizzare il `7-Mode Install Checks` Opzione dal profilo di esecuzione "`Data ONTAP 7 and 8 (7-Mode)`".
+
+. Raccogliere le informazioni necessarie su ciascun controller 7-Mode utilizzando il seguente comando:
++
+`*sysconfig _slot_number_*`
+
++
+È possibile utilizzare l'output di questo comando per identificare le porte utilizzate per la connettività dello shelf di dischi.
+
++
+[listing]
+----
+host1> sysconfig 3
+        slot 3: SAS Host Adapter 3a
+                24 Disks:            13440.0GB
+                1 shelf with IOM3
+        slot 3: SAS Host Adapter 3b
+                24 Disks:            13440.0GB
+                1 shelf with IOM3
+        slot 3: SAS Host Adapter 3c
+                24 Disks:            13440.0GB
+                1 shelf with IOM3
+        slot 3: SAS Host Adapter 3d
+                24 Disks:            13440.0GB
+                1 shelf with IOM3
+----
+. Dal cluster, eseguire il seguente comando nodeshell su ciascun nodo:
++
+`*system node run -node _node_name_ -command sysconfig -a*`
+
++
+È possibile utilizzare l'output di questo comando per ottenere informazioni sulle porte disponibili e sugli slot delle schede di espansione.
+
+. Sui nodi del cluster di destinazione, pianificare le porte da utilizzare per la connessione degli shelf di dischi 7-Mode:
++
+.. Esaminare le porte disponibili (aperte).
+.. Esaminare gli slot delle schede di espansione.
+.. Pianificare la configurazione della scheda di espansione.
++
+È possibile pianificare lo spostamento delle schede di espansione dai sistemi 7-Mode se sono supportate anche sulla piattaforma di destinazione e sulla versione di ONTAP. È inoltre possibile pianificare le schede PAM, se necessario.
+
++
+https://hwu.netapp.com["NetApp Hardware Universe"]
+
+.. Pianificare le porte di destinazione da utilizzare per il cablaggio dello shelf di dischi.
++
+La selezione delle porte di destinazione dipende da alcuni dei seguenti fattori:
+
++
+*** Stack di shelf di dischi separati o esistenti
+*** Disponibilità delle porte
+*** Connessioni SAS o FC
+*** Disponibilità di porte integrate o schede di espansione
+
+
+
+
+. Accedere al data center per registrare fisicamente le connessioni delle porte sui controller 7-Mode e sui nodi del cluster di destinazione nel foglio di lavoro:
++
+.. Registrare le porte utilizzate sui controller 7-Mode nel foglio di lavoro relativo ai cavi.
+.. Registrare le porte utilizzate sui nodi del cluster di destinazione nel foglio di lavoro relativo al cablaggio.
+.. Registrare le porte di destinazione da utilizzare per il collegamento degli shelf di dischi 7-Mode, come pianificato nella fase <<STEP_D0CFE719A0384F7FA5D9E73C8EA6C2E7,STEP_D0CFE719A0384F7FA5D9E73C8EA6C2E7>>.
+.. Assicurarsi di disporre dei cavi appropriati per il collegamento degli shelf di dischi.
++
+È necessario identificare eventuali problemi relativi al cablaggio in base alla posizione del nuovo shelf di dischi.
+
+.. Pianificare cavi di lunghezza maggiore a causa dei requisiti di rack per scale o data center.
+.. Etichettare ogni stack di shelf di dischi e cavo sui controller 7-Mode.
++
+La procedura migliore consiste nell'etichettare gli stack di shelf di dischi 7-Mode nel caso in cui si desideri eseguire il rollback della transizione e si debbano ricollegare gli shelf di dischi ai controller 7-Mode.
+
+
+
+
+
+*Informazioni correlate*
+
+https://library.netapp.com/ecm/ecm_download_file/ECMP1119629["Guida all'installazione e al servizio degli shelf di dischi SAS per DS4243, DS2246, DS4486 e DS4246"]
+
+https://library.netapp.com/ecm/ecm_download_file/ECMM1280273["DiskShelf14mk2 AT hardware Service Guide"]
+
+https://library.netapp.com/ecm/ecm_download_file/ECMP1112854["DS14mk2 FC e DS14mk4 FC hardware Service Guide"]

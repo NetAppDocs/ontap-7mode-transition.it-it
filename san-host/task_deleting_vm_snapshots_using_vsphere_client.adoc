@@ -1,0 +1,25 @@
+---
+permalink: san-host/task_deleting_vm_snapshots_using_vsphere_client.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, delete, vm, snapshots, copy, vsphere, client 
+summary: Se non si ha familiarità con ESXi CLI o se è più conveniente per il proprio ambiente, è possibile eliminare le istantanee della macchina virtuale utilizzando vSphere Client. 
+---
+= Eliminazione delle copie delle istantanee delle macchine virtuali con vSphere Client
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se non si ha familiarità con ESXi CLI o se è più conveniente per il proprio ambiente, è possibile eliminare le istantanee della macchina virtuale (VM) utilizzando vSphere Client.
+
+* Per le transizioni basate sulla copia, eseguire questi passaggi prima di avviare l'operazione Storage Cutover nel 7-Mode Transition Tool (7MTT).
+* Per le transizioni senza copia, eseguire questi passaggi prima di avviare l'operazione Export & Halt 7-Mode Systems nel 7MTT.
+
+
+.Fasi
+. Aprire l'host ESXi o vCenter Server che gestisce l'host ESXi.
+. Fare clic con il pulsante destro del mouse sulla macchina virtuale da cui rimuovere le snapshot.
+. Aprire la finestra *Snapshot* > *Snapshot Manager*.
+. Fare clic su *Delete All* (Elimina tutto).
+

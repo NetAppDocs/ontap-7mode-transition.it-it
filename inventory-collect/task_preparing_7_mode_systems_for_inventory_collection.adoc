@@ -1,0 +1,94 @@
+---
+permalink: inventory-collect/task_preparing_7_mode_systems_for_inventory_collection.html 
+sidebar: sidebar 
+keywords: ontap, 7, mode, transition, prepare, system, host, inventory, collection 
+summary: È necessario assicurarsi che i sistemi 7-Mode e gli host soddisfino determinati requisiti di rete e protocollo per la corretta generazione di un report di inventario. 
+---
+= Preparazione dei sistemi 7-Mode e degli host per la raccolta dell'inventario
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario assicurarsi che i sistemi 7-Mode e gli host soddisfino determinati requisiti di rete e protocollo per la corretta generazione di un report di inventario.
+
+.Fasi
+. Abilitare HTTPS sul sistema 7-Mode:
++
+`*options httpd.admin.ssl.enable on*`
+
+. Abilitare TLS sul sistema 7-Mode:
++
+`*options tls.enable on*`
+
++
+
+IMPORTANT: La procedura consigliata consiste nell'attivare TLS a causa delle vulnerabilità di sicurezza in SSLv3.
+
+. Abilitare SSL e disabilitare SSLv2 e SSLv3 sul sistema 7-Mode:
++
+.. Configurazione e avvio di SSL:
++
+`*secureadmin setup ssl*`
+
+.. Attiva SSL:
++
+`*options ssl.enable on*`
+
+.. Disattivare SSLv2 e SSLv3: +
+`*options ssl.v2.enable off*`
++
+`*options ssl.v3.enable off*`
+
++
+
+IMPORTANT: La procedura consigliata consiste nel disattivare SSLv2 e SSLv3 per evitare vulnerabilità di sicurezza.
+
+
+
+. Abilitare SSH sul sistema 7-Mode:
++
+.. Configurare SSH sul sistema 7-Mode:
++
+`*secureadmin setup -f ssh*`
+
++
+L'opzione -f forza l'esecuzione dell'installazione anche se il server SSH è già configurato.
+
+.. Abilitare SSH:
++
+`*secureadmin enable ssh2*`
+
+.. Abilitare l'autenticazione della password sul server SSH:
++
+`*options ssh.passwd_auth.enable*`
+
+.. Abilitare l'accesso SSH all'host:
++
+`*options ssh.access*`
+
+
+
+. Preparazione dei sistemi host Windows:
++
+** Abilitare l'accesso WMI.
++
+Per ulteriori informazioni sull'abilitazione dell'accesso WMI, consultare la documentazione dell'host.
+
+** Se si dispone di Windows Server 2003, verificare di aver installato il pacchetto Microsoft Fibre Channel Information Tool (fcinfo) ed eseguire lo strumento una volta sul sistema host Windows.
++
+Questo strumento consente di raccogliere le informazioni di configurazione HBA dell'host.
+
+
+
+. Abilitare SSH sull'host Linux o ESXi.
++
+Per ulteriori informazioni sull'abilitazione di SSH, consultare la documentazione dell'host.
+
+. Verificare di aver installato la versione più recente del software NetApp host Utilities per ciascun host.
++
+Per informazioni sul download e l'installazione del software NetApp host Utilities, consultare il NetApp Support Site.
+
+. Verificare che tutti gli host e i sistemi di storage possano essere raggiunti dal sistema Windows da cui viene eseguito Inventory Collect Tool.
+

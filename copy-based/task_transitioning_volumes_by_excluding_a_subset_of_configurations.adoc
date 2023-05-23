@@ -1,0 +1,63 @@
+---
+permalink: copy-based/task_transitioning_volumes_by_excluding_a_subset_of_configurations.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, customize, cli 
+summary: Per impostazione predefinita, tutte le configurazioni 7-Mode sono passate a ONTAP. È possibile scegliere di escludere dalla transizione alcune o tutte le configurazioni di volume, NFS, CIFS, SAN e name service utilizzando 7-Mode Transition Tool CLI. È inoltre possibile scegliere di consolidare le regole di esportazione NFS 7-Mode e le pianificazioni Snapshot e riutilizzare una policy di esportazione NFS e Snapshot esistenti sulla SVM di destinazione. 
+---
+= Personalizzare la transizione delle configurazioni 7-Mode utilizzando la CLI
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Per impostazione predefinita, tutte le configurazioni 7-Mode sono passate a ONTAP. È possibile scegliere di escludere dalla transizione alcune o tutte le configurazioni di volume, NFS, CIFS, SAN e name service utilizzando 7-Mode Transition Tool CLI. È inoltre possibile scegliere di consolidare le regole di esportazione NFS 7-Mode e le pianificazioni Snapshot e riutilizzare una policy di esportazione NFS e Snapshot esistenti sulla SVM di destinazione.
+
+È necessario eseguire questa attività prima di applicare la configurazione, dopodiché qualsiasi modifica verrà ignorata.
+
+7-Mode Transition Tool non esegue controlli preliminari per la configurazione esclusa.
+
+Per impostazione predefinita, tutte le configurazioni 7-Mode sono selezionate per la transizione.
+
+Si consiglia di eseguire prima i controlli preliminari con tutte le configurazioni, quindi di escludere una o più configurazioni nell'esecuzione successiva dei controlli preliminari. In questo modo è possibile capire quali configurazioni sono escluse dalla transizione e quali controlli preliminari vengono ignorati successivamente.
+
+.Fasi
+* Escludere e verificare le configurazioni:
++
+.. Escludere le configurazioni: +
+`*transition cbt property-set -p _project_name_ -n _config_property_name_ -v true*`
++
+`_config_property_name_` è la configurazione che si desidera escludere.
+
++
+xref:reference_configurations_that_can_be_excluded.adoc[Configurazioni che possono essere escluse dalla transizione]
+
+.. Verificare il valore della proprietà impostata per escludere la configurazione:
++
+`*transition cbt property-get -p _project_name_ -n _config_property_name_*`
+
+
+
+* Consolidare le regole di esportazione NFS per la transizione:
++
+** Consolida regole di esportazione NFS 7-Mode simili in una singola policy di esportazione in Clustered Data ONTAP, che può quindi essere applicata al volume o al qtree in transizione: +
+`*transition cbt property-set -p _project_name_ -n _nfs-consolidate-similiar-7mode-exports_ -v true*`
++
+Se il `nfs-consolidate-similiar-7mode-exports` la proprietà è impostata su `false`, Lo strumento di transizione 7-Mode crea un nuovo criterio di esportazione NFS in ONTAP per ogni regola di esportazione NFS 7-Mode.
+
+** Riutilizzare una policy di esportazione NFS esistente sulla SVM che corrisponda alla policy di esportazione che verrà creata dallo strumento, che può essere applicata ai volumi o ai qtree in transizione: +
+`*transition cbt property-set -p _project_name_ -n _nfs-reuse-matching-svm-export-policies_ -v true*`
+
+
+* Consolidare le pianificazioni Snapshot per la transizione:
++
+** Consolidare pianificazioni Snapshot 7-Mode simili in una singola policy Snapshot in ONTAP, che può essere applicata al volume in transizione: +
+`*transition cbt property-set -p _project_name_ -n _consolidate-similar-7mode-snapshot-policies_ -v true*`
++
+Se il `consolidate-similar-7mode-snapshot-policies` La proprietà è impostata su false, lo strumento di transizione 7-Mode crea una nuova policy Snapshot in ONTAP per ogni pianificazione Snapshot.
+
+** Riutilizzare una policy Snapshot esistente sulla SVM che corrisponda alla policy Snapshot che verrà creata dallo strumento, che può essere applicata ai volumi in transizione: +
+`*transition cbt property-set -p _project_name_ -n _reuse-matching-svm-snapshot-policies_ -v true*`
+
+
+

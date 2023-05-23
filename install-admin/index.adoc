@@ -1,0 +1,14 @@
+---
+permalink: install-admin/index.html 
+sidebar: sidebar 
+keywords: ontap, 7, mode, install, index 
+summary: Descrive come installare e configurare 7-Mode Transition Tool per una transizione senza copia o basata su copia. 
+---
+= Guida all'installazione e all'installazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Questa guida descrive come installare e configurare 7-Mode Transition Tool per una transizione senza copia o basata su copia.

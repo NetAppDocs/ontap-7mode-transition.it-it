@@ -1,0 +1,93 @@
+---
+permalink: copy-free/task_applying_svm_configurations.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, apply, svm, configurations 
+summary: 'È necessario applicare manualmente alcune configurazioni prima della fase di provisioning di SVM. È quindi possibile applicare tutte le configurazioni definite nel controller 7-Mode (file nella directory /etc) o a livello di unità vFiler alle SVM mappate utilizzando il tool.' 
+---
+= Applicazione delle configurazioni SVM
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario applicare manualmente alcune configurazioni prima della fase di provisioning di SVM. È quindi possibile applicare tutte le configurazioni definite nel controller 7-Mode (file in `/etc` Directory) o a livello di unità vFiler rispetto alle SVM mappate utilizzando il tool.
+
+Se non si desidera trasferire tutte le configurazioni alle SVM di destinazione, è necessario impostare le proprietà per le configurazioni da escludere sulle SVM.
+
+xref:task_customizing_configurations_for_transition.adoc[Personalizzazione della transizione delle configurazioni 7-Mode]
+
+* Configurazioni come le esportazioni NFS, le condivisioni CIFS e la mappatura LUN non vengono applicate a SVM nella fase di provisioning di SVM.
+* Le seguenti configurazioni vengono applicate dallo strumento sulle SVM nella fase di provisioning di SVM:
++
+** *Nome servizi*
++
+*** Configurazione DNS
+*** Configurazione LDAP
+*** Configurazione NIS
+*** Configurazione dello switch name service
+*** Configurazione degli host
+*** Utenti e gruppi UNIX
+*** Configurazione dei netgroup
+
+
+** *Rete*
++
+*** Gli indirizzi IP 7-Mode esistenti selezionati per la transizione vengono creati nello stato di inattività amministrativa.
++
+Durante la fase di importazione, questi indirizzi IP vengono configurati nello stato di configurazione amministrativa.
+
+*** I nuovi indirizzi IP vengono creati nello stato di configurazione amministrativa.
+
+
+** *NFS*
++
+Opzioni NFS
+
+** *CIFS*
++
+*** Configurazione CIFS preferita DC
+*** Configurazione del mapping dell'utente
+*** Configurazione di Widelinks
+*** Opzioni CIFS
+*** Controllare la configurazione
+
+
+** *SAN*
++
+Servizi FC e iSCSI
+
++
+[IMPORTANT]
+====
+Non è possibile rieseguire questa operazione una volta completata correttamente.
+
+Pertanto, se si apportano modifiche alle configurazioni a livello di controller 7-Mode dopo questa operazione, è necessario trasferire manualmente le configurazioni alle SVM di destinazione prima della fase di esportazione. Ad esempio, se si aggiunge una nuova unità vFiler al controller 7-Mode e la si mappa a una SVM dopo questa operazione, è necessario trasferire manualmente le configurazioni di tale unità vFiler alla SVM mappata. Un altro esempio è rappresentato dall'aggiunta di alcuni utenti UNIX sul controller 7-Mode dopo la fase di provisioning di SVM, che devono essere creati manualmente sulle SVM mappate.
+
+====
+
+
+
+
+.Fasi
+. Fare clic su *Apply SVM Config* (Applica configurazione SVM) per applicare le configurazioni 7-Mode alle SVM di destinazione.
++
+Viene visualizzato un messaggio di conferma che elenca importanti considerazioni per questa operazione.
+
+. Fare clic su *Sì* per continuare.
+. Al termine dell'operazione, attenersi alla seguente procedura:
++
+.. Fare clic su *Save as CSV* (Salva come CSV) per salvare i risultati dell'operazione in un file.
+.. Fare clic su *Collect Project Logs* (Raccogli log di progetto) per creare un backup di tutti i file di log della transizione.
++
+Si consiglia di salvare i file di log dopo ogni operazione di transizione.
+
+.. Fare clic su *Close* (Chiudi) per chiudere la finestra dei risultati dell'operazione.
+
+
++
+Se il completamento dell'operazione richiede molto tempo, fare clic su *Esegui in background* per uscire dalla finestra dei risultati dell'operazione. Non modificare il progetto o eseguire altre attività quando l'operazione è in esecuzione in background. È quindi possibile visualizzare i risultati delle operazioni dalla scheda Operation History (Cronologia operazioni).
+
+. Verificare e verificare manualmente le configurazioni applicate alle SVM di destinazione ed apportare le modifiche richieste.
+. Verificare manualmente la connettività ai server dei nomi esterni.
+

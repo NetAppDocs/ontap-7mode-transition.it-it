@@ -1,0 +1,36 @@
+---
+permalink: san-host/task_preparing_for_cutover_when_transitioning_windows_hosts.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, cutover, phase, windows, hosts 
+summary: 'Se si sta passando un host Windows da Data ONTAP in modalità 7 a Clustered Data ONTAP, è necessario eseguire alcuni passaggi dopo l"inizio della transizione, ma prima dell"inizio della fase di cutover.' 
+---
+= Preparazione per la fase di cutover durante la transizione degli host Windows
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si sta passando un host Windows da Data ONTAP in modalità 7 a Clustered Data ONTAP, è necessario eseguire alcuni passaggi dopo l'inizio della transizione, ma prima dell'inizio della fase di cutover.
+
+Se si esegue Data ONTAP DSM, la versione di Data ONTAP DSM installata sul server deve essere supportata per la versione di Data ONTAP in esecuzione sul nodo Clustered Data ONTAP di destinazione.
+
+Se si utilizza MSDSM, la versione delle utilità host di Windows installata sul server deve essere supportata per la versione di Data ONTAP in esecuzione sul nodo Clustered Data ONTAP di destinazione.
+
+* Per le transizioni basate sulla copia, eseguire questi passaggi prima di avviare l'operazione Storage Cutover nel 7-Mode Transition Tool (7MTT).
+* Per le transizioni senza copia, eseguire questi passaggi prima di avviare l'operazione Export & Halt 7-Mode nel 7MTT.
+
+
+.Fasi
+. Utilizza Gestione disco per portare offline i dischi da migrare.
+. Se l'host viene avviato dalla SAN e il LUN di avvio viene sottoposto a transizione, arrestare l'host di avvio.
+. Se l'host è in cluster, utilizzare failover Cluster Manager per disattivare i dischi in cluster, incluso il disco quorum.
+. Se l'host esegue Windows Server 2003 ed è necessario migrare il dispositivo quorum, arrestare i servizi cluster su tutti i nodi del cluster.
+. Se si stanno effettuando la transizione dei LUN su un server con Hyper-V attivato, eseguire le procedure di transizione lato host appropriate per il sistema operativo guest.
+. Se si stanno effettuando la transizione delle LUN su un server con Hyper-V attivato e il dispositivo di avvio del sistema operativo guest risiede su un LUN Data ONTAP in fase di transizione, procedere come segue:
++
+.. Arrestare il sistema operativo guest.
+.. Portare offline il disco corrispondente sul sistema padre.
+
+
+

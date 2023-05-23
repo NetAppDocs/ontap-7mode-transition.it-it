@@ -1,0 +1,22 @@
+---
+permalink: copy-based/concept_managing_snapmirror_transfers_and_schedule.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, manage, snapmirror, transfer, schedule 
+summary: Nella fase di copia dei dati, i volumi Data ONTAP in cluster vengono aggiornati periodicamente con i dati dei volumi 7-Mode in base a una pianificazione di copia dei dati. È possibile creare, modificare ed eliminare il programma di copia dei dati da utilizzare per le operazioni di copia, aggiornamento e risincronizzazione di base di SnapMirror. 
+---
+= Gestione dei trasferimenti e della pianificazione di SnapMirror
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Nella fase di copia dei dati, i volumi Data ONTAP in cluster vengono aggiornati periodicamente con i dati dei volumi 7-Mode in base a una pianificazione di copia dei dati. È possibile creare, modificare ed eliminare il programma di copia dei dati da utilizzare per le operazioni di copia, aggiornamento e risincronizzazione di base di SnapMirror.
+
+È possibile gestire le operazioni di copia per tutti i volumi selezionati per la transizione specificando più pianificazioni di copia dei dati, che comprendono dettagli quali l'ora di inizio, la durata, la frequenza di aggiornamento, il numero di trasferimenti SnapMirror simultanei da eseguire durante tale pianificazione e il limite di accelerazione.
+
+È possibile fornire il numero di trasferimenti simultanei multipli e il limite di accelerazione per diversi periodi di tempo, ad esempio giorni feriali, fine settimana, ore di lavoro, ore non lavorative, Pianificazioni DR e pianificazioni non DR.
+
+*Informazioni correlate*
+
+xref:task_creating_a_transition_project.adoc[Creazione di un progetto di transizione]

@@ -1,0 +1,165 @@
+---
+permalink: copy-free/task_rehosting_volumes_from_different_svms_to_a_single_svm.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, rehost, volumes, svm 
+summary: 'Il rehost del volume consente di migrare un volume in transizione da una SVM a un"altra SVM senza copiare i dati. L"operazione di rehost consente di consolidare tutti i volumi con LUN FC in una singola SVM, preservando così la semantica dell"immagine di sistema singolo 7-Mode. È inoltre possibile eseguire il rehosting dei volumi NAS in transizione.' 
+---
+= Eseguire il rehosting dei volumi in transizione su una SVM diversa
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il rehost del volume consente di migrare un volume in transizione da una SVM a un'altra SVM senza copiare i dati. L'operazione di rehost consente di consolidare tutti i volumi con LUN FC in una singola SVM, preservando così la semantica dell'immagine a sistema singolo (SSI) 7-Mode. È inoltre possibile eseguire il rehosting dei volumi NAS in transizione.
+
+* Il volume che si desidera reospitare deve essere in linea.
+* Le operazioni di gestione dei volumi, ad esempio lo spostamento del volume o del LUN, non devono essere in esecuzione.
+* L'accesso ai dati al volume che viene reospitato deve essere interrotto.
++
+Il rehosting è un'operazione che interrompe.
+
+
+
+I seguenti criteri, regole dei criteri e configurazioni del volume vengono persi dal volume di origine e devono essere riconfigurati manualmente sul volume rehosted dopo l'operazione di rehosting:
+
+* Policy di esportazione di volumi e qtree
+* Policy antivirus
+* Policy di efficienza dei volumi
+* Policy sulla qualità del servizio (QoS)
+* Policy di Snapshot
+* Regole di quota
+* Condivisioni CIFS
+* igroups associati a un portset
+
+
+.Fasi
+* *Rehosting di volumi FC e iSCSI*
++
+.. Passare al livello di privilegio avanzato: +
+`*set -privilege advanced*`
+.. Eseguire nuovamente l'hosting del volume sulla SVM di destinazione:
++
+|===
+| Se si desidera... | Eseguire il seguente comando... 
+
+
+ a| 
+Annullare la mappatura dei LUN dopo il rehosting
+ a| 
+`*volume rehost -vserver _source_svm_ -volume _vol_name_ -destination-vserver _destination_svm_ -force–unmap-luns true*`
+
+
+
+ a| 
+Rimappare i LUN agli stessi igroups dopo il rehosting
+ a| 
+`*volume rehost -vserver _source_svm_ -volume _vol_name_ -destination-vserver _destination_svm_ -auto-remap-luns true*`
+
+|===
+
+
+* *Rehosting dei volumi NFS*
++
+.. Registrare le informazioni relative ai criteri di esportazione NFS.
+.. Smontare il volume dal volume principale: +
+`*volume unmount*`
+.. Passare al livello di privilegio avanzato:
+`*set -privilege advanced*`
+.. Eseguire nuovamente l'hosting del volume sulla SVM di destinazione: +
+`*volume rehost -vserver _source_svm_ -volume _vol_name_ -destination-vserver _destination_svm_*`
++
+Il criterio di esportazione predefinito della SVM di destinazione viene applicato al volume rehosted.
+
+.. Creare la policy di esportazione: +
+`*vserver export-policy create*`
+.. Aggiornare il criterio di esportazione del volume reospitato in un criterio di esportazione definito dall'utente: +
+`*volume modify*`
+.. Montare il volume sotto il percorso di giunzione appropriato nella SVM di destinazione: +
+`*volume mount*`
+.. Verificare che il servizio NFS sia in esecuzione sulla SVM di destinazione: +
+`*vserver nfs status*`
+.. Riprendere l'accesso NFS al volume reospitato.
++
+Poiché il percorso di accesso al volume (LIF e percorso di giunzione) è stato modificato, è necessario aggiornare le credenziali del client NFS e le configurazioni LIF per riflettere le LIF SVM di destinazione.
+
+
+
++
+https://docs.netapp.com/ontap-9/topic/com.netapp.doc.cdot-famg-nfs/home.html["Gestione NFS"]
+
+* *Rehosting dei volumi CIFS*
++
+.. Registrare le informazioni sulle condivisioni CIFS.
+.. Smontare il volume dal volume principale: +
+`*volume unmount*`
+.. Passare al livello di privilegio avanzato: +
+`*set -privilege advanced*`
+.. Eseguire nuovamente l'hosting del volume sulla SVM di destinazione: +
+`*volume rehost -vserver _source_svm_ -volume _vol_name_ -destination-vserver _destination_svm_*`
+.. Montare il volume sotto il percorso di giunzione appropriato nella SVM di destinazione: +
+`*volume mount*`
+.. Creare condivisioni CIFS per il volume reospitato: +
+`*vserver cifs share create*`
+.. Se i domini DNS differiscono tra le SVM di origine e di destinazione, creare nuovi utenti e gruppi.
+.. Aggiornare il client CIFS con i nuovi LIF SVM di destinazione e il percorso di giunzione per il volume rehosted.
+
+
++
+http://docs.netapp.com/ontap-9/topic/com.netapp.doc.cdot-famg-cifs/home.html["Gestione SMB/CIFS"]
+
+* *Rehosting dei volumi nelle relazioni SnapMirror*
++
+.. Registrare il tipo di relazione SnapMirror: +
+`*snapmirror show*`
+.. Dal cluster di destinazione, eliminare la relazione SnapMirror: +
+`*snapmirror delete*`
++
+
+IMPORTANT: Non interrompere la relazione di SnapMirror; in caso contrario, la funzionalità di protezione dei dati del volume di destinazione viene persa e la relazione non può essere ristabilita dopo l'operazione di rehosting.
+
+.. Dal cluster di origine, rilasciare le informazioni sulle relazioni di SnapMirror: +
+`*snapmirror release*`
++
+Impostare il parametro -relationship-info-only su true in modo che le copie Snapshot non vengano eliminate e vengano rimosse solo le informazioni di relazione di origine.
+
+.. Passare al livello di privilegio avanzato: +
+`*set -privilege advanced*`
+.. Eseguire nuovamente l'hosting del volume sulla SVM di destinazione: +
+`*volume rehost -vserver _source_svm_ -volume _vol_name_ -destination-vserver _destination_svm_*`
+.. Creare la relazione peer SVM tra le SVM di origine e di destinazione: +
+`*vserver peer create*`
+.. Creare la relazione di SnapMirror tra i volumi di origine e di destinazione: +
+`*snapmirror create*`
++
+Il volume rehosted può essere l'origine o la destinazione della relazione SnapMirror.
+
+.. Risincronizzare la relazione di protezione dei dati: +
+`*snapmirror resync*`
+
+
++
+http://docs.netapp.com/ontap-9/topic/com.netapp.doc.pow-dap/home.html["Protezione dei dati"]
+
+
+
+È necessario creare manualmente i carichi di lavoro del volume automatico per i volumi reospitati eseguendo le seguenti operazioni:
+
+. Creare un gruppo di criteri definito dall'utente per SVM:
++
+`*qos policy-group create -vserver _destination-vserver_ -policy-group _policy-group-name_*`
+
+. Assegnare il gruppo di criteri QoS al volume reospitato:
++
+`*volume modify -vserver _destination-vserver_ -volume _rehosted-volume_ -qos-policy-_group policy-group-name_*`
+
+
+
+È necessario riconfigurare manualmente i criteri e le regole associate sul volume rehosted.
+
+
+NOTE: Se l'operazione di rehosting non riesce, potrebbe essere necessario riconfigurare i criteri del volume e le regole associate sul volume di origine.
+
+*Informazioni correlate*
+
+http://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-cm-cmpr/GUID-5CB10C70-AC11-41C0-8C16-B4D0DF916E9B.html["Comandi di ONTAP 9"]

@@ -1,0 +1,223 @@
+---
+permalink: copy-free/reference_copy_free_transition_cabling_worksheet.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, cabling, worksheet 
+summary: Per pianificare il cablaggio, è possibile utilizzare il foglio di lavoro dei cavi di transizione senza copia. È necessario registrare le informazioni relative alle porte e agli shelf di dischi collegati ai controller 7-Mode e ai nodi del cluster di destinazione. È inoltre necessario registrare le porte da utilizzare per collegare gli shelf di dischi 7-Mode ai nodi del cluster di destinazione. 
+---
+= Foglio di lavoro per il cablaggio della transizione senza copia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Per pianificare il cablaggio, è possibile utilizzare il foglio di lavoro dei cavi di transizione senza copia. È necessario registrare le informazioni relative alle porte e agli shelf di dischi collegati ai controller 7-Mode e ai nodi del cluster di destinazione. È inoltre necessario registrare le porte da utilizzare per collegare gli shelf di dischi 7-Mode ai nodi del cluster di destinazione.
+
+image::../media/cft_cabling_plan_worksheet.gif[foglio di lavoro del piano di cablaggio cft]
+
+* Porte modulo A/B: Connessioni delle porte per il modulo A/B.
+* Tipo di shelf/etichetta asset: Tipo di shelf di dischi
+* ID shelf: ID shelf di dischi
+
+
+
+
+== Esempio di foglio di lavoro per il cablaggio
+
+|===
+4+| Cablaggio 7-Mode 4+| Cablaggio Clustered Data ONTAP 
+
+
+4+| Controller A (nome host): 7hostA 4+| Nodo A (nome host): Cluster1-01 
+
+
+4+| Ubicazione: Colorado Floor: Terzo rack: 8 4+| Ubicazione: Colorado Floor: Quinto rack: 3 
+
+
+| Porte del modulo A. | Porte del modulo B. | Tipo di shelf/etichetta asset | ID shelf | Porte del modulo A. | Porte del modulo B. | Tipo di shelf/etichetta asset | ID shelf 
+
+
+ a| 
+1a
+ a| 
+0a
+ a| 
+DS4243/150254-7
+ a| 
+10-13
+ a| 
+1a
+ a| 
+0a
+ a| 
+DS4243/174243-2
+ a| 
+10-11
+
+
+
+ a| 
+1b
+ a| 
+0b
+ a| 
+DS4243/151205-2
+ a| 
+30-37
+ a| 
+1b
+ a| 
+0b
+ a| 
+DS4243/150254-7
+ a| 
+20-23
+
+
+
+ a| 
+1c (offline)
+ a| 
+0c (offline)
+ a| 
+n/a.
+ a| 
+n/a.
+ a| 
+1c
+ a| 
+0c
+ a| 
+DS4243/151205-2
+ a| 
+30-37
+
+
+
+ a| 
+1d
+ a| 
+0d
+ a| 
+DS4243/143921-4
+ a| 
+14-15
+ a| 
+1d
+ a| 
+0d
+ a| 
+DS4243/143921-4
+ a| 
+14-15
+
+
+
+ a| 
+*Controller B (nome host): 7hostB*
+ a| 
+*Nodo B (nome host):cluster1-02*
+
+
+
+ a| 
+*Ubicazione: Piano Colorado: Terzo rack: 8*
+ a| 
+*Ubicazione: Piano Colorado: Quinto rack: 3*
+
+
+
+ a| 
+*Porte del modulo A*
+ a| 
+*Porte del modulo B*
+ a| 
+*Tipo di shelf/etichetta risorsa*
+ a| 
+*ID shelf*
+ a| 
+*Porte del modulo A*
+ a| 
+*Porte del modulo B*
+ a| 
+*Tipo di shelf/etichetta risorsa*
+ a| 
+*ID shelf*
+
+
+
+ a| 
+1a
+ a| 
+0a
+ a| 
+DS4243/174263-6
+ a| 
+10-13
+ a| 
+1a
+ a| 
+0a
+ a| 
+DS4243/174233-2
+ a| 
+10-11
+
+
+
+ a| 
+1b (offline)
+ a| 
+0b (offline)
+ a| 
+n/a.
+ a| 
+n/a.
+ a| 
+1b
+ a| 
+0b
+ a| 
+DS4243/174263-6
+ a| 
+20-23
+
+
+
+ a| 
+1c
+ a| 
+0c
+ a| 
+DS4243/174274-9
+ a| 
+30-37
+ a| 
+1c
+ a| 
+0c
+ a| 
+DS4243/174274-9
+ a| 
+30-37
+
+
+
+ a| 
+1d
+ a| 
+0d
+ a| 
+DS4243/174285-6
+ a| 
+14-15
+ a| 
+1d
+ a| 
+0d
+ a| 
+DS4243/174285-6
+ a| 
+14-15
+
+|===

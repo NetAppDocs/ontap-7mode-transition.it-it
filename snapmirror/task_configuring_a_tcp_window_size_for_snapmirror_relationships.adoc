@@ -1,0 +1,56 @@
+---
+permalink: snapmirror/task_configuring_a_tcp_window_size_for_snapmirror_relationships.html 
+sidebar: sidebar 
+keywords: ontap, 7, mode, configure, tcp, window, size, snapmirror, relationship 
+summary: È possibile configurare una dimensione della finestra TCP per le relazioni di SnapMirror tra il volume 7-Mode e il volume ONTAP per migliorare il throughput di trasferimento di SnapMirror in modo che le operazioni di replica vengano completate più rapidamente. 
+---
+= Configurazione delle dimensioni di una finestra TCP per le relazioni SnapMirror
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile configurare una dimensione della finestra TCP per le relazioni di SnapMirror tra il volume 7-Mode e il volume ONTAP per migliorare il throughput di trasferimento di SnapMirror in modo che le operazioni di replica vengano completate più rapidamente.
+
+Il `window-size-for-tdp-mirror` Viene fornita con il comando del criterio snapmirror per configurare le dimensioni della finestra TCP per le relazioni di SnapMirror tra 7-Mode e ONTAP Volumes (TDP). Questa opzione consente di configurare una finestra TCP di dimensioni maggiori o inferiori. Quando si imposta questa opzione, è necessario tenere presente le seguenti considerazioni:
+
+* Il `window-size-for-tdp-mirror` l'opzione può essere configurata solo per criteri di tipo `async-mirror`.
+* Il `window-size-for-tdp-mirror` l'opzione può essere configurata nell'intervallo di `256 KB` a. `7 MB`. In caso contrario, la configurazione non riesce.
+* Il valore predefinito per `window-size-for-tdp-mirror` l'opzione è `2 MB`.
+
+
+
+NOTE: Il `window-size-for-tdp-mirror` l'opzione è nascosta e la scheda completa non funziona. Assicurarsi di digitare l'opzione completa per utilizzarla.
+
+Nell'esempio seguente viene illustrato come configurare una dimensione della finestra TCP di `5 MB` Per una relazione SnapMirror di tipo `TDP`:
+
+.Fasi
+. Creare un tipo di criterio SnapMirror `async-mirror` Con una dimensione della finestra TCP di `5 MB`:
++
+`*snapmirror policy create*`
+
++
+[listing]
+----
+cluster01::> snapmirror policy create -vserver vserverA –policy tdp_window_size_policy -window-size-for-tdp-mirror 5MB -type async-mirror
+----
+. Creare una relazione SnapMirror di tipo `TDP` e applicare la policy:
++
+`*snapmirror create*`
+
++
+[listing]
+----
+cluster01::> snapmirror create -source-path filerA:volA -destination-path vserverA:volA -type TDP -policy tdp_window_size_policy
+----
+. Visualizzare le dimensioni della finestra configurate nel criterio SnapMirror:
++
+`*snapmirror policy show*`
+
++
+[listing]
+----
+cluster01::> snapmirror policy show -vserver vserverA -policy tdp_window_size_policy -fields window-size-for-tdp-mirror
+----
+

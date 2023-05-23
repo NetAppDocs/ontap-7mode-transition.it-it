@@ -1,0 +1,88 @@
+---
+permalink: copy-free/task_performing_a_transition_rollback.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, roll, back, project 
+summary: 'È possibile eseguire il rollback di una transizione se si desidera tornare a 7-Mode in qualsiasi fase della transizione senza copia prima che gli aggregati in transizione vengano impegnati. Il rollback è un"operazione manuale. È possibile utilizzare 7-Mode Transition Tool per generare i passaggi manuali da eseguire per un rollback.' 
+---
+= Eseguire il rollback di un progetto di transizione senza copia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile eseguire il rollback di una transizione se si desidera tornare a 7-Mode in qualsiasi fase della transizione senza copia prima che gli aggregati in transizione vengano impegnati. Il rollback è un'operazione manuale. È possibile utilizzare 7-Mode Transition Tool per generare i passaggi manuali da eseguire per un rollback.
+
+* È necessario assicurarsi che nel cluster non siano in esecuzione operazioni di transizione di volumi o aggregati.
++
+È possibile utilizzare `job show -jobtype transition` comando.
+
+* Nessuno degli aggregati 7-Mode deve essere impegnato.
++
+
+NOTE: Non è possibile eseguire il rollback se viene eseguito anche un aggregato 7-Mode.
+
+* I nodi del cluster di destinazione non devono essere in modalità Takeover.
+
+
+.Fasi
+. Fare clic su *Rollback Prechecks* per verificare che il progetto sia idoneo per un rollback.
++
+Se il controllo preliminare segnala problemi, è necessario correggerli manualmente ed eseguire nuovamente l'operazione di controllo preliminare. Ad esempio, se sono stati creati nuovi volumi o LUN durante il test di preproduzione, è necessario eliminarli manualmente.
+
+. Fare clic su *generate Rollback Steps* (genera operazioni di ripristino) per generare l'elenco delle operazioni manuali da eseguire per un rollback corretto.
+. Fare clic su *Save as CSV* (Salva come CSV) per salvare le operazioni manuali in un file.
++
+È possibile copiare i comandi di rollback dal file ed eseguirli.
+
+. A seconda della fase di transizione da cui si decide di eseguire il rollback, eseguire i passaggi manuali richiesti:
++
+** *Fase di test di importazione o preproduzione*
++
+... Eseguire i comandi di rollback sul cluster e fare clic su *Confirm* (Conferma).
+... Collegare gli shelf di dischi 7-Mode ai controller 7-Mode, verificare manualmente il cablaggio e fare clic su *Confirm* (Conferma).
+... Eseguire i comandi di rollback sui controller 7-Mode e fare clic su *Confirm* (Conferma).
+... Visualizzare le configurazioni applicate alle SVM dalla scheda Operations History (Cronologia operazioni).
+... Rimuovere manualmente tutte le configurazioni applicate dallo strumento dalle SVM.
+
+
+** *Fase di cablaggio*
++
+... Collegare gli shelf di dischi 7-Mode ai controller 7-Mode, verificare manualmente il cablaggio e fare clic su *Confirm* (Conferma).
++
+È necessario assicurarsi che il cablaggio 7-Mode corrisponda al modo in cui si trovava all'inizio del progetto.
+
++
+
+NOTE: Utilizzare Config Advisor per verificare il cablaggio.
+
+... Eseguire i comandi di rollback sui controller 7-Mode e fare clic su *Confirm* (Conferma).
+... Rimuovere manualmente tutte le configurazioni applicate dallo strumento dalle SVM.
++
+È possibile visualizzare le configurazioni applicate alle SVM dalla scheda Operations History (Cronologia operazioni).
+
+
+
+** *Fase di esportazione*
++
+... Eseguire i comandi di rollback sui controller 7-Mode e fare clic su *Confirm* (Conferma).
+... Rimuovere manualmente tutte le configurazioni applicate dallo strumento dalle SVM.
++
+È possibile visualizzare le configurazioni applicate alle SVM dalla scheda Operations History (Cronologia operazioni).
+
+
+
+** *Fase di provisioning SVM*
++
+Rimuovere manualmente tutte le configurazioni applicate dallo strumento dalle SVM.
+
++
+È possibile visualizzare le configurazioni applicate alle SVM dalla scheda Operations History (Cronologia operazioni).
+
+
+
++
+xref:task_running_manual_steps_for_rolling_back_transition.adoc[Procedura manuale per il rollback della transizione]
+
+. Dopo aver completato tutti i passaggi manuali, fare clic su *Verify 7-Mode* (verifica 7-Mode) dal 7-Mode Transition Tool per verificare che i controller 7-Mode siano pronti per la distribuzione dei dati.
+

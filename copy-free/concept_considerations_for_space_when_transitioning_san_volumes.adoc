@@ -1,0 +1,26 @@
+---
+permalink: copy-free/concept_considerations_for_space_when_transitioning_san_volumes.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, space, considerations, san, volumes 
+summary: 'Durante la transizione, è necessario assicurarsi che sia disponibile spazio sufficiente nei volumi. Oltre allo spazio necessario per memorizzare i dati e le copie Snapshot, il processo di transizione richiede anche 1 MB di spazio per LUN per l"aggiornamento di alcuni metadati del file system.' 
+---
+= Considerazioni sullo spazio durante la transizione dei volumi SAN
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Durante la transizione, è necessario assicurarsi che sia disponibile spazio sufficiente nei volumi. Oltre allo spazio necessario per memorizzare i dati e le copie Snapshot, il processo di transizione richiede anche 1 MB di spazio per LUN per l'aggiornamento di alcuni metadati del file system.
+
+È possibile utilizzare `df -h` Sul volume 7-Mode per verificare se nel volume è disponibile uno spazio libero di 1 MB per LUN. Il volume deve inoltre disporre di spazio libero equivalente alla quantità di dati che si prevede vengano scritti nel volume prima che gli host vengano disattivati. Se il volume non dispone di spazio libero sufficiente, è necessario aggiungere la quantità di spazio richiesta al volume 7-Mode.
+
+Se la transizione non riesce durante la fase di importazione a causa della mancanza di spazio sul volume, viene generato il seguente messaggio EMS: `LUN.vol.proc.fail.no.space: Processing for LUNs in volume vol_name failed due to lack of space`.
+
+Se sono presenti volumi contenenti LUN con spazio riservato, l'aumento del volume di 1 MB per LUN potrebbe non fornire spazio sufficiente. In questi casi, la quantità di spazio da aggiungere è la dimensione della riserva Snapshot per il volume. Una volta aggiunto spazio al volume, è possibile utilizzare `lun transition start` Comando per la transizione dei LUN.
+
+*Informazioni correlate*
+
+xref:task_recovering_from_a_failed_lun_transition.adoc[Ripristino da una transizione LUN non riuscita]
+
+http://docs.netapp.com/ontap-9/index.jsp["Documentazione NetApp: ONTAP 9"]

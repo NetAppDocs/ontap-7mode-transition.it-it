@@ -1,0 +1,35 @@
+---
+permalink: copy-based/task_completing_chain_of_custody_verification.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, complete, chain, custody, verification 
+summary: 'Se si selezionano uno o più volumi SnapLock per la verifica della catena di custodia, è necessario eseguire l"operazione catena di custodia per generare un report della catena di custodia.' 
+---
+= Completamento della verifica della catena di custodia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si selezionano uno o più volumi SnapLock per la verifica della catena di custodia, è necessario eseguire l'operazione catena di custodia per generare un report della catena di custodia.
+
+Devi aver completato la transizione del progetto.
+
+Il funzionamento della catena di custodia di SnapLock è supportato per i volumi con file che hanno nomi di file con solo caratteri ASCII.
+
+. Dalla dashboard di migrazione, fare clic su *Start Chain of Custody* (Avvia catena di custodia).
++
+Se si desidera mantenere online i volumi 7-Mode SnapLock dopo la verifica della catena di custodia, deselezionare la casella di controllo *Take 7-Mode SnapLock Volumes Selected for Chain of Custody Verisation offline after Chain of Custody Verisation is Completed* (Take 7-Mode volumi selezionati per la verifica della catena di custodia offline dopo il completamento dell'operazione
+
+. Fare clic su *continua*.
++
+Viene avviata l'operazione di verifica della catena di custodia. Questa operazione può richiedere molto tempo in base al numero di file presenti nei volumi SnapLock. È possibile fare clic su *Esegui in background* per eseguire l'operazione in background.
+
++
+Puoi tenere traccia dell'avanzamento dell'operazione di verifica della catena di custodia facendo clic sulla scheda catena di custodia SnapLock nella finestra della dashboard di migrazione. Questa scheda visualizza l'avanzamento per volume dell'operazione Chain of Custody.
+
+. Una volta completata l'operazione di gestione della catena di custodia, fare clic su *Scarica report* nella scheda catena di custodia di SnapLock per scaricare il report di verifica della catena di custodia.
++
+Il report di verifica della catena di custodia contiene dettagli sull'esito della verifica della catena di custodia SnapLock. Il report mostra il numero totale di file e il numero di file non WORM in ciascuno dei volumi SnapLock 7-Mode selezionati per l'operazione Chain of Custody. È inoltre possibile verificare il numero di file per i quali le impronte digitali corrispondono e non corrispondono. Il report mostra anche il numero di file WORM per i quali la verifica della Chain of Custody non è riuscita e il motivo dell'errore.
+
+

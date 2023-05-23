@@ -1,0 +1,39 @@
+---
+permalink: san-host/task_preparing_windows_hosts_for_transition.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, windows, host 
+summary: Prima di passare da Data ONTAP in 7-Mode a Clustered Data ONTAP, è necessario eseguire alcuni passaggi. 
+---
+= Preparazione degli host Windows per la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Prima di passare da Data ONTAP in 7-Mode a Clustered Data ONTAP, è necessario eseguire alcuni passaggi.
+
+Questa procedura si applica alle transizioni basate sulla copia e alle transizioni senza copia.
+
+
+NOTE: Se si utilizza Windows 2003, è necessario eseguire l'aggiornamento a Windows 2008. Host Remediation Tool (HRT) non è supportato in Windows 2003 e richiede Windows 2008 o versione successiva per funzionare correttamente.
+
+.Fasi
+. Identificare i numeri di serie del LUN, gli ID LUN e i corrispondenti numeri di dischi fisici Windows delle LUN in fase di transizione.
++
+** Se nel sistema è in esecuzione Data ONTAP DSM, utilizzare lo snap-in estensione gestione DSM di Data ONTAP (accessibile da Gestione server o da `get-sandisk` Cmdlet di Windows PowerShell).
+** Se il sistema esegue MSDSM, utilizzare Inventory Collect Tool (ICT).
+
+
+. Prepararsi a rendere le LUN visibili all'host al termine della transizione.
++
+** Se le LUN in transizione sono LUN FC o FCoE, creare o modificare lo zoning fabric.
+** Se i LUN sottoposti a transizione sono LUN iSCSI, creare sessioni iSCSI che si connettono al controller Data ONTAP in cluster.
+
+
+. Utilizzare ICT per generare il manuale di valutazione dell'inventario.
+
+
+*Informazioni correlate*
+
+https://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-cm-sanconf/home.html["Configurazione SAN"]

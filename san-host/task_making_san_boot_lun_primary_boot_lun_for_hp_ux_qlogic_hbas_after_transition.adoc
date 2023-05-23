@@ -1,0 +1,116 @@
+---
+permalink: san-host/task_making_san_boot_lun_primary_boot_lun_for_hp_ux_qlogic_hbas_after_transition.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, boot, lun, primary, hp, ux, logic, hbas 
+summary: 'Se il Data ONTAP in uso nell"host HP-UX 7-Mode è stato avviato CON SAN, è necessario impostare il LUN di avvio SAN come LUN di avvio primario dopo la transizione a Clustered Data ONTAP.' 
+---
+= Rendere un LUN di boot SAN il LUN di boot primario per gli HBA QLogic HP-UX dopo la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se il Data ONTAP in uso nell'host HP-UX 7-Mode è stato avviato CON SAN, è necessario impostare il LUN di avvio SAN come LUN di avvio primario dopo la transizione a Clustered Data ONTAP.
+
+* La migrazione dei dati deve essere completata.
+* Il LUN di avvio deve essere mappato all'host dal nodo Clustered Data ONTAP.
+
+
+L'avvio SAN è supportato per HP-UX 11,3x sui sistemi HP 9000 utilizzando il menu BCH e sui server HP Integrity utilizzando il caricatore HP-UX (EFI).
+
+Per le transizioni basate sulla copia, eseguire questi passaggi dopo aver completato l'operazione Storage Cutover nello strumento di transizione 7-Mode. Le transizioni senza copia non sono supportate sugli host HP-UX.
+
+.Fasi
+. Aprire il prompt della shell:
++
+`*Ctrl B*`
+
+. Eseguire l'avvio dalla shell EFI.
++
+La shell EFI è disponibile solo sui sistemi HP Integrity.
+
+. Utilizzare una console seriale per accedere all'accesso al processore di servizio (MP).
+. Accedere all'elenco della console: `CO`
++
+Viene visualizzato il menu di EFI Boot Manager.
+
+. Dal menu di EFI Boot Manager, selezionare l'opzione di menu della shell EFI per accedere all'ambiente della shell EFI.
+. Identificare i numeri dei driver QLogic:
++
+`*drivers*`
+
++
+I numeri dei driver si trovano nella colonna DRV.
+
+. Identificare il numero del controller corrispondente per ciascun driver:
++
+`*drvcfg _driver_number_*`
+
++
+Nell'esempio seguente, `27` è il numero del controller corrispondente per il driver `23` e. `26` è il numero del controller corrispondente per il driver `24`:
+
++
+[listing]
+----
+Shell> drvcfg 23
+Configurable Components
+		Drv[23]		Ctrl[27]			Lang[eng]
+
+Shell> drvcfg 24
+Configurable Components
+		Drv[24]		Ctrl[26]			Lang[eng]
+----
+. Aprire il BIOS del driver:
++
+`*drvcfg _drv_number ctrl_number_ -s*`
+
+. Invio `*4*` per selezionare *4. Modifica impostazioni di avvio*.
+. In Edit Boot Settings (Modifica impostazioni di avvio), immettere `6` per selezionare *6. Variabile EFI EFIFCScanLevel*.
+. Invio `*1*` Per modificare il valore della variabile EFI EFIFCScanLevel da 0 a 1.
+. Invio `*7*` per selezionare *7. Attiva World Login*.
+. Invio `*y*` per attivare world login.
+. Invio `*0*` per passare al menu precedente.
+. Nel menu principale, immettere `*11*` per salvare le modifiche.
+. Invio `*12*` per uscire.
+. Nel prompt della shell, eseguire nuovamente la scansione dei dispositivi:
++
+`*reconnect -r*`
+
+. Visualizzare il LUN per ottenere il percorso del LUN da cui si desidera eseguire l'avvio:
++
+`*map -r*`
+
++
+I percorsi LUN sono elencati nella colonna Device (dispositivo). I dischi SAN avviabili vengono visualizzati sotto la colonna della tabella di mappatura e presentano "`WWN`" e "`Part 1`" nella stringa di output.
+
+. Immettere il percorso LUN del LUN di avvio SAN.
++
+Un esempio di percorso LUN è fs0.
+
+. Uscire dalla shell EFI:
++
+`*cd efi*`
+
+. Inserire la directory HPUX:
++
+`*cd hpux*`
+
+. Fare in modo che il nuovo LUN di avvio SAN di Clustered Data ONTAP sia il LUN di avvio primario:
++
+`*bcfg boot add 1 hpux.efi "HP-UX-Primary Boot"*`
+
+. Aggiornare manualmente il BIOS HBA inserendo una voce in EFI per IL LUN di avvio SAN.
+. Creare un percorso di boot alternativo:
++
+`*bcfg boot add 2 hpux.efi “HPUX alternate boot”*`
+
+. Creare un terzo percorso di boot:
++
+`*bcfg boot add 2 hpux.efi “HPUX third boot”*`
+
+. Creare un quarto percorso di boot:
++
+`*bcfg boot add 2 hpux.efi “HPUX fourth boot”*`
+
+

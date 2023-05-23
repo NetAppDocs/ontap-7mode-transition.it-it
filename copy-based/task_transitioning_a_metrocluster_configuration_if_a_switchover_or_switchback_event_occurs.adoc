@@ -1,0 +1,23 @@
+---
+permalink: copy-based/task_transitioning_a_metrocluster_configuration_if_a_switchover_or_switchback_event_occurs.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, metrocluster, configuration, failed, switchover, switchback 
+summary: Operazioni di transizione, come preparazione, avvio, pausa, ripresa o completamento della transizione, Errore durante uno switchover MetroCluster o dopo uno switchback MetroCluster. È quindi necessario ristabilire manualmente le relazioni di SnapMirror per riprendere la transizione. 
+---
+= Transizione di una configurazione MetroCluster non riuscita a causa di switchover o switchback
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Operazioni di transizione, come preparazione, avvio, pausa, ripresa o completamento della transizione, Errore durante uno switchover MetroCluster o dopo uno switchback MetroCluster. È quindi necessario ristabilire manualmente le relazioni di SnapMirror per riprendere la transizione.
+
+.Fasi
+. Attendere il completamento dello switchback.
+. Dalla CLI del cluster, utilizzare `snapmirror create` Comando per ristabilire le relazioni di SnapMirror tra i volumi 7-Mode e i volumi Data ONTAP in cluster che facevano parte della transizione.
+. Dallo strumento di transizione 7-Mode, eseguire nuovamente l'operazione di transizione.
++
+Le operazioni di copia dei dati iniziano quando si attiva la pianificazione successiva.
+
+

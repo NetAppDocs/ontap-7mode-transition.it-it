@@ -1,0 +1,465 @@
+---
+permalink: copy-based/task_creating_schedule_for_snapmirror_transfers.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, create, data, copy, schedule, snapmirror, transfer 
+summary: È possibile creare pianificazioni di copia dei dati per gestire in modo efficace le operazioni di copia dei dati di transizione per i volumi di un progetto. È inoltre possibile specificare il numero di trasferimenti SnapMirror simultanei da eseguire durante tale pianificazione per garantire che qualsiasi operazione di replica non abbia esito negativo a causa del raggiungimento del limite massimo dei trasferimenti SnapMirror simultanei. 
+---
+= Creazione di una pianificazione di copia dei dati per i trasferimenti SnapMirror
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile creare pianificazioni di copia dei dati per gestire in modo efficace le operazioni di copia dei dati di transizione per i volumi di un progetto. È inoltre possibile specificare il numero di trasferimenti SnapMirror simultanei da eseguire durante tale pianificazione per garantire che qualsiasi operazione di replica non abbia esito negativo a causa del raggiungimento del limite massimo dei trasferimenti SnapMirror simultanei.
+
+* Il progetto deve essere in fase di preparazione, copia dei dati o applicazione della configurazione (pre-over).
+* Il servizio 7-Mode Transition Tool deve essere sempre in esecuzione affinché le pianificazioni siano effettive.
+
+
+
+NOTE: La pianificazione delle copie dei dati viene utilizzata per le operazioni di copia, aggiornamento e risincronizzazione di base di SnapMirror.
+
+* È necessario creare almeno una pianificazione di copia dei dati per ogni progetto.
+* È possibile creare un massimo di 7 pianificazioni per progetto; tuttavia, le pianificazioni non possono sovrapporsi all'interno di un progetto.
++
+Ad esempio, è possibile creare pianificazioni personalizzate per ore di lavoro e non di lavoro, ore DR e ore non DR, giorni feriali e fine settimana.
+
++
+
+NOTE: Se i progetti utilizzano lo stesso controller o cluster 7-Mode, assicurarsi che le pianificazioni delle copie dei dati non si sovrappongano tra progetti diversi.
+
+* Le pianificazioni configurate vengono applicate in base al fuso orario del controller 7-Mode.
+* Il numero di trasferimenti SnapMirror simultanei da utilizzare durante la pianificazione viene determinato in fase di esecuzione in base alla percentuale di flussi SnapMirror simultanei da utilizzare e al limite massimo configurato.
+* Il numero di trasferimenti SnapMirror simultanei da utilizzare durante la pianificazione deve essere fornito in modo che le pianificazioni di DR 7-Mode esistenti non vengano influenzate a causa del tool che utilizza i trasferimenti SnapMirror specificati con la pianificazione.
+* Se il numero di trasferimenti SnapMirror simultanei utilizzati dallo strumento è inferiore al numero configurato di trasferimenti SnapMirror simultanei da utilizzare durante la pianificazione, lo strumento pianifica nuovi trasferimenti per utilizzare i trasferimenti rimanenti.
+* Se la pianificazione sta per terminare o si verifica una riduzione del numero di trasferimenti SnapMirror simultanei sul sistema di storage 7-Mode, lo strumento interrompe i trasferimenti extra per garantire che utilizzi solo il numero di trasferimenti configurato in qualsiasi momento.
++
+
+NOTE: Se è in corso una linea di base e il checkpoint Snapshot non è ancora stato creato, lo strumento non interrompe il trasferimento ma attende la creazione del checkpoint Snapshot prima di interrompere il trasferimento.
+
+
+
+.Fasi
+. Creare le pianificazioni dalla pagina Data Copy Schedule (Pianificazione copia dati) della dashboard facendo clic su *Edit Project* (Modifica progetto), quindi selezionando *Configure Schedule* (Configura pianificazione).
+. Immettere un nome per il nuovo piano di lavoro.
+. Nel riquadro giorni ricorrenti, selezionare i giorni in cui deve essere eseguita l'operazione di copia dei dati.
++
+|===
+| Se si desidera eseguire le operazioni di copia dei dati... | Quindi... 
+
+
+ a| 
+Ogni giorno
+ a| 
+Selezionare *giornaliero*. Questo è il valore predefinito.
+
+
+
+ a| 
+Solo in determinati giorni
+ a| 
+.. Selezionare *Seleziona giorni*.
+.. Selezionare i giorni della settimana.
+
+
+|===
+. Nel riquadro intervallo di tempo, specificare l'ora di inizio, la durata e la frequenza del programma di copia dei dati.
++
+.. Inserire l'ora di inizio delle operazioni di copia dei dati selezionando le ore e i minuti dall'elenco a discesa *ora di inizio*.
++
+I valori validi vanno dalle 00:00 alle 23:30.
+
+.. Inserire il periodo di tempo per il quale si desidera eseguire le operazioni di copia dei dati, selezionare le ore e i minuti dall'elenco a discesa *durata*.
++
+
+NOTE: La durata di un programma non deve superare una settimana (167 ore e 30 minuti).
+
++
+Ad esempio, se si specifica 20:30, le operazioni SnapMirror vengono eseguite per le successive 20 ore e 30 minuti dall'ora di inizio.
+
+.. Selezionare la frequenza con cui eseguire i trasferimenti incrementali (entro la durata della pianificazione creata) dopo il completamento del trasferimento di riferimento, effettuando una delle seguenti operazioni:
++
+*** Selezionare le ore e i minuti dall'elenco a discesa *frequenza aggiornamento*.
+*** Selezionare *aggiornamenti continui*.
++
+Il ritardo minimo tra due aggiornamenti consecutivi sarà di 5 minuti.
+
+
+
+
+
++
+Per impostazione predefinita, gli aggiornamenti di SnapMirror vengono eseguiti ogni 30 minuti.
+
+. Nel riquadro Parameters for Transition Data Copy Operations (parametri per le operazioni di copia dei dati di transizione), immettere i parametri SnapMirror.
++
+.. Specificare il numero massimo di trasferimenti SnapMirror simultanei da utilizzare per la copia dei dati eseguendo una o tutte le seguenti operazioni:
++
+*** Specificare la percentuale dei trasferimenti SnapMirror del volume disponibili da utilizzare per la copia dei dati (quando la pianificazione è attiva), inserendo la percentuale nel campo *numero massimo di trasferimenti VSM simultanei*.
++
+I trasferimenti SnapMirror del volume disponibili vengono calcolati in fase di esecuzione.
+
++
+
+NOTE: In questo riquadro viene visualizzato il numero massimo di trasferimenti SnapMirror simultanei supportati dalla piattaforma.
+
+*** Specificare il numero massimo di trasferimenti SnapMirror di volumi simultanei che possono essere eseguiti durante questa pianificazione nel campo *non eccedente*. Se si immettono entrambi i valori, il valore più basso viene utilizzato come numero di trasferimenti simultanei.
+
+
+
+
++
+Il numero di trasferimenti simultanei da utilizzare per la transizione viene calcolato in fase di esecuzione in base alla pianificazione e al numero di trasferimenti simultanei configurati.
+
++
+La piattaforma supporta un massimo di 100 trasferimenti SnapMirror di volumi simultanei, 60 sono attualmente disponibili e sono stati specificati i seguenti valori:
+
++
+** La percentuale dell'opzione di trasferimento SnapMirror del volume disponibile è del 50%.
++
+Il numero massimo di trasferimenti simultanei in base all'opzione percentuale è 50% di 60 = 30.
+
+** Il numero massimo di trasferimenti simultanei di un volume SnapMirror è 25. In questo scenario, lo strumento imposta il numero massimo di trasferimenti simultanei di SnapMirror del volume su 25, che è il valore più basso tra i due.
++
+... Specificare la larghezza di banda massima in MB/s (acceleratore) effettuando una delle seguenti operazioni:
++
+|===
+| Se si desidera... | Quindi... 
+
+
+ a| 
+Utilizzare tutta la larghezza di banda disponibile
+ a| 
+Selezionare *massimo*. Questo è il valore predefinito.
+
+
+
+ a| 
+Specificare il valore dell'acceleratore
+ a| 
+Inserire il valore nel campo *non eccedente*. Il valore di input massimo consentito è 4194303.
+
++
+
+|===
++
+Il valore del gas viene equamente distribuito tra tutti i trasferimenti attivi nel progetto.
+
++
+
+NOTE: La riduzione per ogni trasferimento viene determinata in fase di esecuzione in base al numero di trasferimenti SnapMirror di volume simultanei disponibili.
+
++
+Se la pianificazione attiva è configurata con il valore di accelerazione di 200 Mbps e sono disponibili solo 10 trasferimenti simultanei, ogni trasferimento utilizza una larghezza di banda di 20 Mbps.
+
+
+
+
+
+
+
+Le pianificazioni diventano effettive solo quando il progetto si trova nella fase di copia dei dati o di applicazione della configurazione (pre-over).
+
+
+
+== Esempio di pianificazione di una copia dei dati
+
+Si consideri un controller 7-Mode che supporta 100 trasferimenti SnapMirror simultanei con 75 relazioni DR. I requisiti di business richiedono l'esecuzione delle operazioni SnapMirror nei seguenti orari:
+
+|===
+| Giorni | Ora | Trasferimenti SnapMirror attualmente utilizzati 
+
+
+ a| 
+Dal lunedì al venerdì
+ a| 
+9:00 alle 17:00
+ a| 
+50% dei trasferimenti disponibili
+
+
+
+ a| 
+Dal lunedì al venerdì
+ a| 
+11:30 alle 2:30
+ a| 
+75 trasferimenti utilizzati per il DR
+
+
+
+ a| 
+Dal lunedì al venerdì
+ a| 
+2:30 alle 9:00 e.
+
+17:00 alle 11:30
+ a| 
+25% dei trasferimenti disponibili
+
+
+
+ a| 
+Da sabato a lunedì
+ a| 
+2:30 (Sabato) alle 9:00 (Lunedì)
+ a| 
+10% dei trasferimenti disponibili
+
+|===
+È possibile creare i seguenti programmi di copia dei dati per gestire le operazioni di copia dei dati di transizione:
+
+|===
+| Pianificazione | Opzione | Valore 
+
+
+ a| 
+ore_di_punta
+ a| 
+Intervallo di giorni
+ a| 
+Dal lunedì al venerdì
+
+
+
+ a| 
+Ora di inizio
+ a| 
+09:30
+
+
+
+ a| 
+Durata
+ a| 
+8:00
+
+
+
+ a| 
+Percentuale del numero massimo di trasferimenti simultanei
+ a| 
+50
+
+
+
+ a| 
+Numero massimo di trasferimenti simultanei
+ a| 
+
+
+
+ a| 
+Acceleratore (Mbps)
+ a| 
+100
+
+
+
+ a| 
+Frequenza di aggiornamento
+ a| 
+0:00
+
+
+
+ a| 
+dr_active
+ a| 
+Intervallo di giorni
+ a| 
+Dal lunedì al venerdì
+
+
+
+ a| 
+Ora di inizio
+ a| 
+23:30
+
+
+
+ a| 
+Durata
+ a| 
+3:00
+
+
+
+ a| 
+Percentuale del numero massimo di trasferimenti simultanei
+ a| 
+
+
+
+ a| 
+Numero massimo di trasferimenti simultanei
+ a| 
+25
+
+
+
+ a| 
+Acceleratore (Mbps)
+ a| 
+200
+
+
+
+ a| 
+Frequenza di aggiornamento
+ a| 
+0:30
+
+
+
+ a| 
+non_peak_non_dr1
+ a| 
+Intervallo di giorni
+ a| 
+Dal lunedì al venerdì
+
+
+
+ a| 
+Ora di inizio
+ a| 
+17:00
+
+
+
+ a| 
+Durata
+ a| 
+6:30
+
+
+
+ a| 
+Percentuale del numero massimo di trasferimenti simultanei
+ a| 
+75
+
+
+
+ a| 
+Numero massimo di trasferimenti simultanei
+ a| 
+
+
+
+ a| 
+Acceleratore (Mbps)
+ a| 
+300
+
+
+
+ a| 
+Frequenza di aggiornamento
+ a| 
+1:00
+
+
+
+ a| 
+non_peak_non_dr2
+ a| 
+Intervallo di giorni
+ a| 
+Dal lunedì al venerdì
+
+
+
+ a| 
+Ora di inizio
+ a| 
+02:30
+
+
+
+ a| 
+Durata
+ a| 
+6:30
+
+
+
+ a| 
+Percentuale del numero massimo di trasferimenti simultanei
+ a| 
+75
+
+
+
+ a| 
+Numero massimo di trasferimenti simultanei
+ a| 
+
+
+
+ a| 
+Acceleratore (Mbps)
+ a| 
+300
+
+
+
+ a| 
+Frequenza di aggiornamento
+ a| 
+1:00
+
+
+
+ a| 
+week_end
+ a| 
+Intervallo di giorni
+ a| 
+Sabato
+
+
+
+ a| 
+Ora di inizio
+ a| 
+02:30
+
+
+
+ a| 
+Durata
+ a| 
+53:30
+
+
+
+ a| 
+Percentuale del numero massimo di trasferimenti simultanei
+ a| 
+90
+
+
+
+ a| 
+Numero massimo di trasferimenti simultanei
+ a| 
+
+
+
+ a| 
+Acceleratore (Mbps)
+ a| 
+500
+
+
+
+ a| 
+Frequenza di aggiornamento
+ a| 
+2:00
+
+|===

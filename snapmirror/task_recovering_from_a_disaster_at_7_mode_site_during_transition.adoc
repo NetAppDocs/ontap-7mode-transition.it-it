@@ -1,0 +1,18 @@
+---
+permalink: snapmirror/task_recovering_from_a_disaster_at_7_mode_site_during_transition.html 
+sidebar: sidebar 
+keywords: ontap, 7, mode, transition, snapmirror, recover, disaster, site 
+summary: 'Se è stata stabilita una relazione di disaster recovery SnapMirror tra il volume primario 7-Mode e il volume secondario Clustered Data ONTAP e se si verifica un disastro nel sito primario 7-Mode, è possibile indirizzare l"accesso del client al volume secondario Clustered Data ONTAP. Una volta riportato online il volume primario 7-Mode, è necessario eseguire ulteriori operazioni per reindirizzare i client al volume primario di Clustered Data ONTAP.' 
+---
+= Ripristino da un disastro nel sito 7-Mode durante la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se è stata stabilita una relazione di disaster recovery SnapMirror tra il volume primario 7-Mode e il volume secondario Clustered Data ONTAP e se si verifica un disastro nel sito primario 7-Mode, è possibile indirizzare l'accesso del client al volume secondario Clustered Data ONTAP. Una volta riportato online il volume primario 7-Mode, è necessario eseguire ulteriori operazioni per reindirizzare i client al volume primario di Clustered Data ONTAP.
+
+Per conservare i dati scritti sul volume secondario Clustered Data ONTAP dopo il disastro, è necessario eseguire la transizione del volume primario 7-Mode dopo che il volume primario 7-Mode è tornato in linea e stabilire una relazione SnapMirror tra il volume primario e il volume secondario di Clustered Data ONTAP. È quindi possibile reindirizzare i client ai volumi primari di Clustered Data ONTAP.
+
+La risincronizzazione di SnapMirror dai volumi Data ONTAP in cluster ai volumi 7-Mode non è supportata. Pertanto, se si ristabilisce la relazione di DR tra il volume primario 7-Mode e il volume secondario Clustered Data ONTAP dopo il disastro, tutti i dati scritti sul Data ONTAP secondario del cluster andranno persi.

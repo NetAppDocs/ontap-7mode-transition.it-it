@@ -1,0 +1,18 @@
+---
+permalink: copy-based/task_consolidating_snapshot_policies_and_cron_schedules_on_transitioned_volumes.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, consolidate, cron, schedules, transitioned, volumes 
+summary: 7-Mode Transition Tool genera pianificazioni univoche per ogni volume sottoposto a transizione. Per questo motivo, è possibile creare un gran numero di pianificazioni cron dopo la transizione, quindi è necessario sapere come consolidarle dopo la transizione. 
+---
+= Consolidamento delle pianificazioni cron da volumi in transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+7-Mode Transition Tool genera pianificazioni univoche per ogni volume sottoposto a transizione. Per questo motivo, è possibile creare un gran numero di pianificazioni cron dopo la transizione, quindi è necessario sapere come consolidarle dopo la transizione.
+
+.Fasi
+. Consolidare le pianificazioni cron dopo la transizione utilizzando `job schedule cron` comando.
+

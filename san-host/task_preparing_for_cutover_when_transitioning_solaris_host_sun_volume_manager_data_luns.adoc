@@ -1,0 +1,53 @@
+---
+permalink: san-host/task_preparing_for_cutover_when_transitioning_solaris_host_sun_volume_manager_data_luns.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, cutover, phase, solaris, host, sun, volume, manager 
+summary: Se si esegue la transizione di un LUN di dati host Solaris con Sun Volume Manager da Data ONTAP in 7-Mode a Clustered Data ONTAP, è necessario eseguire alcuni passaggi prima di accedere alla fase di cutover. 
+---
+= Preparazione per la fase di cutover durante la transizione dei LUN dei dati Sun Volume Manager dell'host Solaris
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si esegue la transizione di un LUN di dati host Solaris con Sun Volume Manager da Data ONTAP in 7-Mode a Clustered Data ONTAP, è necessario eseguire alcuni passaggi prima di accedere alla fase di cutover.
+
+Se si utilizza una configurazione FC, è necessario stabilire la connettività fabric e lo zoning ai nodi Data ONTAP in cluster.
+
+Se si utilizza una configurazione iSCSI, è necessario rilevare e accedere alle sessioni iSCSI dei nodi Clustered Data ONTAP.
+
+Per le transizioni basate sulla copia, eseguire questi passaggi prima di avviare l'operazione Storage Cutover nel 7-Mode Transition Tool (7MTT).
+
+Per le transizioni senza copia, eseguire questi passaggi prima di avviare l'operazione Export & Halt 7-Mode in 7MTT.
+
+. Arrestare l'i/o su tutti i punti di montaggio.
+. Chiudere ogni applicazione che accede alle LUN in base alle raccomandazioni del vendor dell'applicazione.
+. Smontare tutti i punti di montaggio:
++
+`*umount _mount_point_*`
+
++
+[listing]
+----
+#umount /d1
+#umount /d2
+----
+. Eseguire le seguenti operazioni sul metaset:
++
+`*metaset –s _set-name_ –A disable*`
+
++
+`metaset –s _set-name_ –r`
+
++
+`*metaset –s _set-name_ –P*`
+
++
+[listing]
+----
+metaset -s n_vg -A disable
+metaset -s n_vg -r
+metaset -s n_vg -P
+----
+

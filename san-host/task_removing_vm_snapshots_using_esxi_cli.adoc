@@ -1,0 +1,26 @@
+---
+permalink: san-host/task_removing_vm_snapshots_using_esxi_cli.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, remove, vm, snapshots, esxi, cli 
+summary: 'È possibile scegliere di utilizzare la CLI ESXi per rimuovere gli snapshot se si utilizza lo strumento di correzione host (HRT) o se si preferisce la flessibilità dell"utilizzo della CLI.' 
+---
+= Rimozione degli snapshot delle macchine virtuali utilizzando la CLI ESXi
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile scegliere di utilizzare la CLI ESXi per rimuovere gli snapshot se si utilizza lo strumento di correzione host (HRT) o se si preferisce la flessibilità dell'utilizzo della CLI.
+
+È necessario disporre del VMID dalla scheda host VM nel _Inventory Assessment Workbook_ generato dal 7-Mode Transition Tool (7MTT).
+
+.Fasi
+. Utilizzare SSH per accedere alla console ESXi.
+. Rimuovere tutte le snapshot delle macchine virtuali della macchina virtuale con il VMID applicabile:
++
+`*# vim-cmd vmsvc/snapshot.removeall _VMID_*`
+
+
+
+Dopo aver eliminato gli snapshot, è necessario rigenerare l' _Eserciziario per la valutazione dell'inventario_ per raccogliere informazioni relative a Data ONTAP che opera in 7-Mode e agli host ESXi.

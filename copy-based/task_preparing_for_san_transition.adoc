@@ -1,0 +1,14 @@
+---
+permalink: copy-based/task_preparing_for_san_transition.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, san, prepare 
+summary: Prima di eseguire la transizione di un ambiente SAN, è necessario comprendere quali configurazioni sono supportate per la transizione SAN, creare LIF SAN su SVM e preparare gli host SAN per la transizione. 
+---
+= Preparazione per la transizione SAN
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Prima di eseguire la transizione di un ambiente SAN, è necessario comprendere quali configurazioni sono supportate per la transizione SAN, creare LIF SAN su SVM e preparare gli host SAN per la transizione.

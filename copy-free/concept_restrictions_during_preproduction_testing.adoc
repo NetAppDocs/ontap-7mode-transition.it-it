@@ -1,0 +1,151 @@
+---
+permalink: copy-free/concept_restrictions_during_preproduction_testing.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, preproduction, testing, restrictions 
+summary: Alcune operazioni sono bloccate e alcune operazioni non sono consigliate durante i test di preproduzione. Queste restrizioni sono imposte per consentire un rollback a 7-Mode se non si desidera eseguire il commit della transizione. 
+---
+= Restrizioni durante i test di pre-produzione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Alcune operazioni sono bloccate e alcune operazioni non sono consigliate durante i test di preproduzione. Queste restrizioni sono imposte per consentire un rollback a 7-Mode se non si desidera eseguire il commit della transizione.
+
+
+
+== Operazioni bloccate
+
+|===
+| Operazione | Descrizione 
+
+
+ a| 
+Eliminazione automatica (eliminazione automatica) delle copie Snapshot aggregate
+ a| 
+Poiché le copie Snapshot a livello aggregato 7-Mode create durante l'operazione di esportazione sono necessarie in caso di rollback, le copie Snapshot non vengono eliminate automaticamente quando lo spazio utilizzato nell'aggregato cresce.
+
+
+IMPORTANT: È necessario monitorare lo spazio fisico libero nell'aggregato e assicurarsi che gli aggregati non esauriscano lo spazio durante il test.
+
+
+
+ a| 
+Spostamento dei volumi in un altro aggregato
+ a| 
+* Non è possibile spostare i volumi negli aggregati in transizione.
+* È possibile spostare i volumi dagli aggregati in transizione agli aggregati del cluster.
+
+
+
+
+ a| 
+Copia o spostamento di LUN tra volumi
+ a| 
+* Non è possibile copiare o spostare LUN nei volumi in transizione.
+* È possibile copiare o spostare LUN dai volumi in transizione ad altri volumi nel cluster.
+
+
+
+
+ a| 
+Creazione di un aggregato
+ a| 
+Questa operazione è limitata alla coppia ha del cluster di destinazione. È possibile creare aggregati su altri nodi del cluster.
+
+
+
+ a| 
+Distruggere un aggregato
+ a| 
+Poiché le copie Snapshot a livello aggregato 7-Mode create durante l'operazione di esportazione sono necessarie in caso di rollback, gli aggregati in transizione non possono essere distrutti.
+
+
+
+ a| 
+Impostazione di un aggregato in transizione come aggregato root
+ a| 
+Gli aggregati transitori non possono essere selezionati come aggregati root. Inoltre, non è possibile modificare la policy di ha degli aggregati in transizione a CFO.
+
+
+
+ a| 
+Esecuzione di operazioni di copia del file
+ a| 
+* Non è possibile spostare o copiare i file (copia su richiesta di un singolo file) nei volumi in transizione.
+* È possibile spostare o copiare i file dai volumi in transizione ad altri volumi nel cluster.
+
+
+
+
+ a| 
+Mirroring di un aggregato esistente
+ a| 
+L'operazione viene bloccata su tutti gli aggregati del cluster.
+
+
+
+ a| 
+Aggiornamento o ripristino della versione di Data ONTAP sui nodi del cluster di destinazione
+ a| 
+È necessario eseguire il commit del progetto prima di aggiornare o ripristinare i nodi del cluster di destinazione.
+
+
+
+ a| 
+Aggiunta di dischi
+ a| 
+Non è possibile eseguire `storage aggregate add-disks` nel livello di privilegio admin. Tuttavia, è possibile eseguire questo comando nel livello di privilegio avanzato.
+
+
+IMPORTANT: È necessario assicurarsi che vengano aggiunti solo i dischi spare degli shelf di dischi 7-Mode per aumentare lo spazio negli aggregati in transizione. È necessario aggiungere dischi di riserva utilizzando `-disklist` parametro (il `-diskcount` il parametro non deve essere utilizzato).
+
+
+
+ a| 
+Designazione di un volume in transizione come volume root SVM
+ a| 
+Non è possibile eseguire `volume make-vsroot` sui volumi in transizione.
+
+|===
+
+
+== Operazioni sconsigliate
+
+|===
+| Operazione | Azione correttiva prima del rollback 
+
+
+ a| 
+Spostamento degli aggregati
+
+La proprietà dell'aggregato in transizione viene modificata nel partner ha.
+ a| 
+Sostituire la proprietà aggregata prima del rollback perché 7-Mode Transition Tool mappa gli aggregati ai controller 7-Mode in base alle informazioni di mappatura del nodo di destinazione salvate nel progetto.
+
+
+
+ a| 
+Creazione di volumi sugli aggregati in transizione
+ a| 
+È necessario eliminare questi volumi o spostarli in aggregati diversi.
+
+
+
+ a| 
+Ridenominazione di aggregati o volumi
+ a| 
+Rinominare gli aggregati o i volumi con il nome originale.
+
+
+
+ a| 
+Modifica del tipo di RAID
+ a| 
+Il tipo RAID deve corrispondere al tipo 7-Mode RAID se si decide di tornare alla modalità 7.
+
+|===
+*Informazioni correlate*
+
+http://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-cm-cmpr/GUID-5CB10C70-AC11-41C0-8C16-B4D0DF916E9B.html["Comandi di ONTAP 9"]

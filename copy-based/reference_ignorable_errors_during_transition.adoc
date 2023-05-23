@@ -1,0 +1,83 @@
+---
+permalink: copy-based/reference_ignorable_errors_during_transition.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, ignorable, errors 
+summary: Durante la transizione potrebbero verificarsi errori ignorabili. Prima di continuare con la transizione, è necessario riconoscere questi errori. 
+---
+= Errori ignorabili durante la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Durante la transizione potrebbero verificarsi errori ignorabili. Prima di continuare con la transizione, è necessario riconoscere questi errori.
+
+Quando si aggiunge una categoria di errori ignorabili al progetto di transizione basato sulla copia utilizzando la CLI dello strumento di transizione 7-Mode, significa che si è compreso l'impatto dell'errore. È necessario eseguire nuovamente l'operazione di transizione dopo aver ignorato l'errore. A questo punto, l'errore di blocco diventa un messaggio di avviso e l'errore viene visualizzato come "`riconosciuto`". È possibile continuare la transizione con l'avviso.
+
+|===
+| Categoria | Descrizione 
+
+
+ a| 
+`acknowledge-no-nonascii-filenames-in-source-volumes`
+ a| 
+La conferma di questo errore indica che i volumi SnapLock selezionati per l'operazione di verifica della catena di custodia non contengono file con nomi di file con caratteri non ASCII.
+
+
+
+ a| 
+`acknowledge-snaplock-coc-volume-autocommit-period`
+ a| 
+Una volta aggiunto questo errore ignorabile al progetto, lo strumento di transizione 7- Mode prosegue con la transizione anche se la proprietà autocommit Period è impostata sul volume ONTAP SnapLock configurato per memorizzare i risultati della verifica della catena di custodia SnapLock.
+
+
+
+ a| 
+`nfs-qtrees-exported`
+ a| 
+La conferma di questo errore significa che sono state comprese le differenze nell'applicazione delle regole di esportazione di qtree tra Data ONTAP che opera in 7-Mode e ONTAP. Significa inoltre che hai compreso i possibili passaggi manuali necessari dopo l'applicazione delle regole di esportazione NFS da parte di 7-Mode Transition Tool. https://kb.netapp.com/Advice_and_Troubleshooting/Data_Storage_Software/ONTAP_OS/7MTT_Precheck_10111_-_How_to_transition_7-Mode_volumes_that_have_qtree_level_exports["Anteprima 7MTT 10111 - come eseguire la transizione di volumi 7-Mode con esportazioni a livello di qtree"]
+
+
+
+ a| 
+`ignore-cifs-ad-domain-mismatch`
+ a| 
+Se si riconosce questo errore, 7-Mode Transition Tool continua con la transizione delle configurazioni CIFS anche se il dominio CIFS Active Directory (ad) del sistema 7-Mode è diverso dal dominio CIFS ad della SVM di destinazione. È necessario assicurarsi che i domini CIFS ad del sistema 7-Mode e la SVM di destinazione siano domini attendibili. In caso contrario, la transizione delle configurazioni CIFS alla SVM di destinazione non riesce. https://kb.netapp.com/Advice_and_Troubleshooting/Data_Storage_Software/ONTAP_OS/How_to_transition_CIFS_configurations_when_Active_Directory_Domain_of_CIFS_server_on_7-Mode_and_target_SVM_are_different["Come eseguire la transizione delle configurazioni CIFS quando il dominio Active Directory del server CIFS su 7-Mode e la SVM di destinazione sono diversi"]
+
+
+
+ a| 
+`ignore-ping-check-from-ic-lifs-to-7mode`
+ a| 
+Una volta aggiunto questo errore ignorabile al progetto, 7-Mode Transition Tool non esegue il controllo per eseguire il ping del sistema di storage 7-Mode dalle LIF dell'intercluster di destinazione.https://kb.netapp.com/Advice_and_Troubleshooting/Data_Storage_Software/ONTAP_OS/7MTT_cbt_-_How_to_handle_the_scenario_where_7-Mode_data-copy_IP_address["7MTT Copy-based Transition - come gestire lo scenario in cui l'indirizzo IP della copia dei dati 7-Mode non è raggiungibile dalle LIF dell'intercluster di destinazione"]
+
+
+
+ a| 
+`ignore-secondary-snapmirror-source-check`
+ a| 
+Dopo aver aggiunto questo errore ignorabile al progetto, 7-Mode Transition Tool non verifica se tutti i dettagli primari richiesti per 7-Mode sono stati aggiunti al progetto secondario. A causa di questo errore, 7-Mode Transition Tool potrebbe non creare relazioni SnapMirror tra i volumi primari 7-Mode e i volumi secondari del cluster durante l'operazione di cutover (project complete) secondaria.
+
+
+
+ a| 
+`ignore-configuration-limits-check`
+ a| 
+È possibile utilizzare questa opzione per riconoscere i limiti di configurazione (errore di pre-controllo) e continuare con la transizione. Riconoscendo questo errore, si comprende che il tempo di cutover dello storage dovrebbe durare più di 3-8 ore, che include il tempo necessario per le operazioni di esportazione, interruzione e importazione (le operazioni automatizzate) e anche per il cablaggio degli shelf di dischi ai nuovi controller. https://kb.netapp.com/Advice_and_Troubleshooting/Data_Storage_Software/ONTAP_OS/Storage_cutover_time_considerations_for_Copy-Free_Transition["Considerazioni sul tempo di cutover dello storage per la transizione senza copia"]
+
+
+
+ a| 
+`mount-snaplock-volumes-using-7mode-volume-name`
+ a| 
+Una volta aggiunto questo errore ignorabile al progetto, lo strumento di transizione 7-Mode monta i volumi SnapLock con il percorso di montaggio `/<7-mode-volume-name>`
+
+
+
+ a| 
+`acknowledge-no-snaplock-audit-transition-to-mcc`
+ a| 
+Una volta aggiunto questo errore ignorabile al progetto, lo strumento di transizione 7-Mode continua con la transizione anche se il cluster di destinazione si trova in una configurazione MetroCluster.
+
+|===

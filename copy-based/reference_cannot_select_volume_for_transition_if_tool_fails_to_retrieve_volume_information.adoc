@@ -1,0 +1,20 @@
+---
+permalink: copy-based/reference_cannot_select_volume_for_transition_if_tool_fails_to_retrieve_volume_information.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, tool, fails, volume, information 
+summary: Il riquadro di selezione del volume visualizza il messaggio di errore Impossibile recuperare le informazioni sul volume quando si tenta di selezionare un volume. Questo errore si verifica in genere se il controller è occupato. 
+---
+= Impossibile selezionare un volume per la transizione se lo strumento non riesce a recuperare le informazioni sul volume
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il riquadro di selezione del volume visualizza `Failed to retrieve volume information` quando si tenta di selezionare un volume, viene visualizzato un messaggio di errore. Questo errore si verifica in genere se il controller è occupato.
+
+
+
+== Soluzione alternativa
+
+Attendere che il controller non sia occupato, quindi selezionare nuovamente il volume.

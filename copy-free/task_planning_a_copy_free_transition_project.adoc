@@ -1,0 +1,16 @@
+---
+permalink: copy-free/task_planning_a_copy_free_transition_project.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, plan, project 
+summary: 'La pianificazione di un progetto di transizione senza copia implica la selezione dei controller 7-Mode di origine e dei nodi del cluster di destinazione, il mapping dei volumi 7-Mode su una macchina virtuale di storage (SVM), la selezione dei LIF da migrare e l"esecuzione di controlli preliminari.' 
+---
+= Pianificazione di un progetto di transizione senza copia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+La pianificazione di un progetto di transizione senza copia implica la selezione dei controller 7-Mode di origine e dei nodi del cluster di destinazione, il mapping dei volumi 7-Mode su una macchina virtuale di storage (SVM), la selezione dei LIF da migrare e l'esecuzione di controlli preliminari.
+
+È possibile creare più progetti con gli stessi nodi di coppia ha del cluster di destinazione. È quindi possibile eseguire i controlli preliminari e applicare le configurazioni SVM su tutti questi progetti. Tuttavia, è possibile che nella finestra della sezione critica sia presente un solo progetto alla volta. Un progetto si trova nella finestra della sezione critica se il progetto si trova in una delle fasi dall'esportazione al commit o se è stata avviata un'operazione di rollback per il progetto. È possibile procedere con l'operazione di esportazione e interruzione per un altro progetto solo dopo il completamento dell'operazione di commit o rollback per il progetto nella finestra della sezione critica.

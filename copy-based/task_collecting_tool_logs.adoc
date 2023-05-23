@@ -1,0 +1,26 @@
+---
+permalink: copy-based/task_collecting_tool_logs.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, download, log, files 
+summary: 7-Mode Transition Tool crea file di log che forniscono dettagli di elaborazione delle operazioni di migrazione e valutazione della transizione eseguite sul sistema. 
+---
+= Download dei file di log di transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+7-Mode Transition Tool crea file di log che forniscono dettagli di elaborazione delle operazioni di migrazione e valutazione della transizione eseguite sul sistema.
+
+. Fare clic su *Logs* nel menu superiore.
+. Fare clic su *Collect Project Logs* (Raccogli log di progetto) per raccogliere i log relativi a tutti i progetti.
+. Per raccogliere i log di un determinato progetto, individuare i progetti dall'elenco e fare clic su *Download*.
++
+I registri vengono scaricati come `.zip` e il nome della cartella è l'indicatore data e ora.
+
+
+
+*Informazioni correlate*
+
+https://kb.netapp.com/Advice_and_Troubleshooting/Miscellaneous/How_to_upload_a_file_to_NetApp["Come caricare un file su NetApp"]

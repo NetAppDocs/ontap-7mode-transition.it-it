@@ -1,0 +1,54 @@
+---
+permalink: snapmirror/task_preparing_7_mode_system_for_transition.html 
+sidebar: sidebar 
+keywords: ontap, 7, mode, transition, prepare, system, snapmirror 
+summary: 'Prima di avviare una transizione, è necessario completare alcune attività sul sistema 7-Mode, ad esempio l"aggiunta della licenza SnapMirror e del sistema 7-Mode per comunicare con il cluster di destinazione.' 
+---
+= Preparazione del sistema 7-Mode per la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Prima di avviare una transizione, è necessario completare alcune attività sul sistema 7-Mode, ad esempio l'aggiunta della licenza SnapMirror e del sistema 7-Mode per comunicare con il cluster di destinazione.
+
+Tutti i volumi 7-Mode che si desidera trasferire devono essere online.
+
+.Fasi
+. Aggiungere e attivare la licenza SnapMirror sul sistema 7-Mode:
++
+.. Aggiungere la licenza SnapMirror al sistema 7-Mode:
++
+`*license add _license_code_*`
+
++
+`_license_code_` è il codice di licenza acquistato.
+
+.. Attivare la funzionalità SnapMirror:
++
+`*options snapmirror.enable on*`
+
+
+
+. Configurare il sistema 7-Mode e il cluster di destinazione per comunicare tra loro scegliendo una delle seguenti opzioni:
++
+** Impostare `snapmirror.access` opzione a tutti.
+** Impostare il valore di `snapmirror.access` Agli indirizzi IP di tutte le LIF del cluster.
+** Se il `snapmirror.access` l'opzione è `legacy` e a. `snapmirror.checkip.enable` l'opzione è `off`, Aggiungere il nome SVM a `/etc/snapmirror.allow` file.
+** Se il `snapmirror.access` l'opzione è `legacy` e a. `snapmirror.checkip.enable` l'opzione è `on`, Aggiungere gli indirizzi IP dei file LIF a `/etc/snapmirror.allow` file.
+
+
+. A seconda della versione Data ONTAP del sistema 7-Mode, attenersi alla seguente procedura:
++
+.. Consentire il traffico SnapMirror su tutte le interfacce:
++
+`*options interface.blocked.snapmirror ""*`
+
+.. Se si utilizza Data ONTAP versione 7.3.7, 8.0.3 o 8.1 e si utilizza l'indirizzo IP dell'interfaccia e0M come indirizzo IP di gestione per interagire con 7-Mode Transition Tool, consentire il traffico dati sull'interfaccia e0M:
++
+`*options interface.blocked.mgmt_data_traffic off*`
+
+
+
+

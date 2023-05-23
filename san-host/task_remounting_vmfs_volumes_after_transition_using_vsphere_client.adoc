@@ -1,0 +1,37 @@
+---
+permalink: san-host/task_remounting_vmfs_volumes_after_transition_using_vsphere_client.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, remount, vmfs, volumes, vshpere, client 
+summary: Dopo la transizione, è necessario rimontare i volumi VMFS per portare i datastore e le macchine virtuali nei rispettivi stati di pre-transizione. Se non conosci la CLI ESXi o se è più conveniente nel tuo ambiente, puoi utilizzare vSphere Client per il remount dei volumi. 
+---
+= Rimontare i volumi VMFS dopo la transizione utilizzando vSphere Client
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dopo la transizione, è necessario rimontare i volumi VMFS per portare i datastore e le macchine virtuali (VM) nei rispettivi stati di pre-transizione. Se non conosci la CLI ESXi o se è più conveniente nel tuo ambiente, puoi utilizzare vSphere Client per il remount dei volumi.
+
+Questi passaggi si applicano ai volumi e ai volumi di spanning.
+
+.Fasi
+. Accedere all'host ESXi o al vCenter Server che gestisce l'host ESXi.
+. In *host e cluster*, selezionare l'host ESXi.
+. Accedere a *Configuration* > *hardware* > *Storage*.
+. Nell'angolo in alto a destra, fare clic su *Aggiungi storage*.
+. Selezionare *disco/LUN*.
+. Fare clic su *Avanti*.
+. Nell'elenco delle LUN, individuare la colonna *VMFS_label* con il nome dell'archivio dati.
+. Selezionare il LUN per completare l'operazione di remount.
++
+Se si sta rimontando un volume VMFS con estensione, il primo LUN nell'intervallo viene contrassegnato con "`head`". Selezionare il LUN "`head`" per completare l'operazione di remount.
+
+. Fare clic su *Avanti*.
+. Nella finestra Select VMFS Mount Options (Seleziona opzioni di montaggio VMFS), selezionare *Keep the existing Signature* (Mantieni la firma esistente).
+. Completare la procedura guidata.
+. Ripetere questa procedura per tutte le LUN che visualizzano il nome del datastore nella colonna VMFS_label.
++
+I datastore vengono rimontati e le macchine virtuali sono attive.
+
+

@@ -1,0 +1,63 @@
+---
+permalink: copy-free/task_testing_workloads_and_applications.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, test, workload, application 
+summary: 'È necessario testare manualmente tutti i carichi di lavoro e le applicazioni nell"ambiente di pre-produzione. È quindi possibile avviare la produzione per un breve periodo per valutare se è necessario eseguire il rollback prima di eseguire il commit del progetto.' 
+---
+= Test dei carichi di lavoro e delle applicazioni
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario testare manualmente tutti i carichi di lavoro e le applicazioni nell'ambiente di pre-produzione. È quindi possibile avviare la produzione per un breve periodo per valutare se è necessario eseguire il rollback prima di eseguire il commit del progetto.
+
+Gli aggregati in transizione devono avere almeno il 5% di spazio fisico libero.
+
+
+NOTE: La Best practice consiste nell'avere almeno il 20% di spazio libero negli aggregati in transizione.
+
+Alcune operazioni sono limitate durante i test di pre-produzione.
+
+xref:concept_restrictions_during_preproduction_testing.adoc[Restrizioni durante i test di pre-produzione]
+
+.Fasi
+. Connettere i client ai volumi in transizione.
+. Se si dispone di carichi DI lavoro SAN, eseguire le attività di correzione degli host post-transizione sugli host SAN.
++
+http://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-7mtt-sanspl/home.html["Transizione e correzione degli host SAN"]
+
+. Testare tutti i carichi di lavoro e le applicazioni che utilizzano i dati e le configurazioni in transizione.
+. Verificare che gli aggregati in transizione non stiano esaurendo lo spazio monitorando lo spazio fisico libero negli aggregati in transizione dalla scheda aggregati nella dashboard 7-Mode Transition Tool.
++
+*Risoluzione dei problemi:* se si esaurisce lo spazio sugli aggregati in transizione, è possibile aggiungere dischi.
+
++
+.. Accedere al livello di privilegio avanzato: +
+`*set -privilege advanced*`
+.. Seleziona i dischi spare dagli shelf di dischi 7-Mode e Aggiungi i dischi per aumentare lo spazio negli aggregati in transizione: +
+`*storage aggregate add-disks -aggregate _aggr_name_ -disklist _disk1_*`
++
+Se i dischi spare 7-Mode non sono disponibili, è possibile utilizzare dischi spare dagli shelf di dischi nei nodi del cluster; tuttavia, ciò complica il processo di rollback.
+
+
+
+
+
+È possibile iniziare a fornire i dati di produzione.
+
+[IMPORTANT]
+====
+È possibile fornire i dati nell'ambiente di produzione per un breve periodo di tempo per garantire che i carichi di lavoro funzionino correttamente in un ambiente di produzione e che non sia necessario eseguire il rollback a 7-Mode. Non è necessario prolungare questa fase e non è necessario posticipare il commit del progetto di transizione senza copia per i seguenti motivi:
+
+* La probabilità di esaurimento dello spazio negli aggregati in transizione aumenta man mano che i nuovi dati vengono scritti nei volumi.
+* Eventuali nuovi dati scritti nei volumi durante questa fase non saranno disponibili durante il rollback.
+
+
+====
+*Informazioni correlate*
+
+xref:concept_reverting_a_copy_free_transition_project.adoc[Esecuzione di un rollback della transizione a 7-Mode]
+
+http://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-cm-cmpr/GUID-5CB10C70-AC11-41C0-8C16-B4D0DF916E9B.html["Comandi di ONTAP 9"]

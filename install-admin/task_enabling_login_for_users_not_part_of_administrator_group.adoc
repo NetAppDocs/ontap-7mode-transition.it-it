@@ -1,0 +1,36 @@
+---
+permalink: install-admin/task_enabling_login_for_users_not_part_of_administrator_group.html 
+sidebar: sidebar 
+keywords: ontap, 7, mode, install, enable, login, user, administrator, group 
+summary: 'Per impostazione predefinita, gli utenti devono essere membri del gruppo Administrator nel sistema Windows su cui è installato 7-Mode Transition Tool. In qualsiasi momento, è possibile attivare l"accesso per gli utenti che non sono membri del gruppo Administrators e che non possono installare lo strumento ma che sono autenticati per utilizzare il sistema Windows su cui lo strumento è installato.' 
+---
+= Abilitazione dell'accesso per gli utenti che non fanno parte del gruppo Administrator
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Per impostazione predefinita, gli utenti devono essere membri del gruppo Administrator nel sistema Windows su cui è installato 7-Mode Transition Tool. In qualsiasi momento, è possibile attivare l'accesso per gli utenti che non sono membri del gruppo Administrators e che non possono installare lo strumento ma che sono autenticati per utilizzare il sistema Windows su cui lo strumento è installato.
+
+.Fasi
+. Accedere all'host Windows utilizzando i privilegi di amministratore.
+. Modificare il file di configurazione dello strumento per consentire agli utenti che non fanno parte del gruppo Administrator di accedere allo strumento:
++
+.. Aprire `\etc\conf\transition-tool.conf` dalla directory di installazione.
+.. Impostare il valore di `tool.login.non.admin.enabled` nel `transition-tool.conf` file su true.
+.. Salvare il file.
+
+
+. Riavviare il servizio di transizione.
++
+.. Fare clic su *Start* > *pannello di controllo* > *sistema e servizi* > *Strumenti di amministrazione* > *servizi*.
+.. Fare clic con il pulsante destro del mouse sul servizio *NetApp 7-Mode Transition Tool* e fare clic su *Stop*.
+.. Fare nuovamente clic con il pulsante destro del mouse sul servizio *NetApp 7-Mode Transition Tool* e fare clic su *Start*.
+
+
+
+
+*Informazioni correlate*
+
+xref:task_modifying_default_configuration_settings_of_7mtt.adoc[Modifica delle opzioni di configurazione di 7-Mode Transition Tool]

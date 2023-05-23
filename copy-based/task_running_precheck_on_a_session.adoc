@@ -1,0 +1,58 @@
+---
+permalink: copy-based/task_running_precheck_on_a_session.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, run, prechecks 
+summary: 'Dopo aver creato una sessione di transizione, è possibile validare la sessione per verificare se è possibile eseguire la transizione dell"ambiente 7-Mode utilizzando il comando di verifica preliminare della transizione. È possibile verificare la compatibilità tra il sistema di storage 7-Mode e SVM per fattori quali funzionalità e impostazioni di sicurezza.' 
+---
+= Esecuzione dei controlli preliminari
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dopo aver creato una sessione di transizione, è possibile validare la sessione per verificare se è possibile eseguire la transizione dell'ambiente 7-Mode utilizzando `transition precheck` comando. È possibile verificare la compatibilità tra il sistema di storage 7-Mode e SVM per fattori quali funzionalità e impostazioni di sicurezza.
+
+La sessione di transizione deve essere in fase di preparazione.
+
+Il `transition cbt precheck` il comando genera un report dettagliato dei messaggi di errore. Ai problemi identificati nel report vengono assegnati diversi livelli di severità, a seconda dell'impatto del problema sul processo di transizione. Poiché alcuni errori possono ostacolare la transizione, è necessario eseguire azioni correttive per errori e avvisi. Prima di procedere con la transizione, è inoltre necessario esaminare l'impatto dei messaggi di altri livelli di gravità.
+
+.Fasi
+. Verificare la compatibilità per la transizione:
++
+`*transition cbt precheck -p _project_name_*`
+
++
+[listing]
+----
+7-Mode Transition Tool>transition cbt precheck -p project_finance
+
+[1/14 ] Project status checks                                                  [    Errors     ]
+
+Operation summary:
+------------------
+The 'precheck' operation on the project 'project_finance' has failed.
+
+ 1  Errors - Failed!
+
+Do you want to see a detailed report {yes, no} [yes]:
+
+1 Errors:
+---------
+90202: Checking whether any of the 7-Mode volumes are in 'offline' state.                              [     Error     ]
+  > Following volumes are in 'offline' state.
+  > CORRECTIVE-ACTION: Bring offline volumes online by using the following command: 'vol online
+  > <volume_name>'.
+  > AFFECTED-OBJECTS: { vol2 }
+
+Next suggested steps:
+---------------------
+1. Review the 'precheck' operation results, fix all blocking errors and run the 'precheck' operation again.
+2. Use the 'transition job-results -j 6e33e0a7-bb36-49df-91f3-2e52cbfa3074' command to see the results of this
+operation.
+
+Ran precheck for project 'project_finance'.
+----
+
+
+È necessario risolvere tutti gli errori che potrebbero causare problemi con la transizione prima di avviare la copia dei dati dai volumi 7-Mode.

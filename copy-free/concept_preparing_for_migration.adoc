@@ -1,0 +1,20 @@
+---
+permalink: copy-free/concept_preparing_for_migration.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, prepare 
+summary: Prima di iniziare la transizione senza copia, è necessario identificare la coppia ha 7-Mode per la transizione, comprendere i requisiti e le restrizioni per la migrazione e preparare i sistemi 7-Mode e il cluster per la transizione. È inoltre necessario conoscere le funzionalità di Data ONTAP supportate e non supportate per la transizione. 
+---
+= Preparazione per la transizione senza copia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Prima di iniziare la transizione senza copia, è necessario identificare la coppia ha 7-Mode per la transizione, comprendere i requisiti e le restrizioni per la migrazione e preparare i sistemi 7-Mode e il cluster per la transizione. È inoltre necessario conoscere le funzionalità di Data ONTAP supportate e non supportate per la transizione.
+
+image::../media/delete_me_cft_preparation_workflow.gif[delete me cft preparation workflow]
+
+*Informazioni correlate*
+
+https://mysupport.netapp.com/matrix["Tool di matrice di interoperabilità NetApp"]

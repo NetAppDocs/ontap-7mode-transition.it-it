@@ -1,0 +1,15 @@
+---
+permalink: command-map/reference_trademark.html 
+sidebar: sidebar 
+keywords: ontap, command, map, transition, trademark 
+summary: Informazioni sui marchi per la guida Command Map for 7-Mode Administrators. 
+---
+= Marchio
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+NETAPP, il logo NETAPP e i marchi elencati nella pagina dei marchi NetApp sono marchi di NetApp, Inc. Altri nomi di società e prodotti potrebbero essere marchi dei rispettivi proprietari.
+
+http://www.netapp.com/us/legal/netapptmlist.aspx[]

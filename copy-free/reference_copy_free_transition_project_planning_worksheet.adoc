@@ -1,0 +1,598 @@
+---
+permalink: copy-free/reference_copy_free_transition_project_planning_worksheet.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, project, planning, worksheet 
+summary: È possibile utilizzare i fogli di lavoro per la pianificazione della transizione senza copia per registrare informazioni su mappatura dei nodi, mappatura SVM, mappatura dei volumi e LIFF per la transizione. I fogli di lavoro sono utili quando si crea un progetto di transizione utilizzando 7-Mode Transition Tool. È necessario conoscere le linee guida per il completamento dei fogli di lavoro. 
+---
+= Fogli di lavoro per la pianificazione del progetto di transizione senza copia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile utilizzare i fogli di lavoro per la pianificazione della transizione senza copia per registrare informazioni su mappatura dei nodi, mappatura SVM, mappatura dei volumi e LIFF per la transizione. I fogli di lavoro sono utili quando si crea un progetto di transizione utilizzando 7-Mode Transition Tool. È necessario conoscere le linee guida per il completamento dei fogli di lavoro.
+
+Per completare i fogli di lavoro, attenersi alle seguenti linee guida:
+
+* Mappare ciascuna unità vFiler su una SVM.
++
+Se non sono presenti unità vFiler nel controller 7-Mode, mappare il controller su una singola SVM.
+
+* Registrare il nome del volume 7-Mode e il nome del volume Data ONTAP corrispondente.
++
+Il nome del volume ONTAP potrebbe essere diverso dal nome del volume 7-Mode.
+
+* Identificare le LIF da configurare su ogni SVM.
++
+Gli indirizzi IP dei file LIF possono essere presenti nel sistema 7-Mode o essere nuovi file LIF.
+
+
+
+
+
+== Mappatura dei nodi
+
+|===
+| Controller 7-Mode | Nodo del cluster mappato 
+
+
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+
+|===
+
+
+== SVM e mappatura dei volumi
+
+|===
+| Controller 7-Mode | Unità vFiler o controller | SVM mappato | Volume 7-Mode | Volume SVM 
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+
+|===
+
+
+== Mappatura LIF (indirizzi IP 7-Mode)
+
+|===
+| Controller 7-Mode | Unità vFiler o controller | SVM mappato | 7-Mode IP address (Indirizzo IP 7-Mode) | Netmask | Gateway predefinito | Nodo principale | Porta home 
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+|===
+
+
+== Mappatura LIF (nuovi LIF)
+
+|===
+| SVM | Nuovo indirizzo IP | Netmask | Gateway predefinito | Nodo principale | Porta home 
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+ a| 
+ a| 
+ a| 
+ a| 
+
+|===
+
+
+== Esempio
+
+La seguente tabella mostra un esempio di fogli di lavoro completi per una coppia ha 7-Mode con i controller Hosta_7mode e hostB_7mode.
+
+*Mappatura del nodo*
+
+|===
+| Controller 7-Mode | Nodo del cluster mappato 
+
+
+ a| 
+Hosta_7mode
+ a| 
+cluster1_01
+
+
+
+ a| 
+HostB_7mode
+ a| 
+cluster1_02
+
+|===
+*SVM e mappatura dei volumi*
+
+|===
+| Controller 7-Mode | Nodo del cluster mappato | Unità vFiler o controller | SVM mappato | Volume 7-Mode | Volume SVM 
+
+
+ a| 
+Hosta_7mode
+ a| 
+cluster1_01
+ a| 
+VfilerA
+ a| 
+svm1
+ a| 
+Vola
+ a| 
+Vola
+
+
+
+ a| 
+Volb
+ a| 
+Volb
+
+
+
+ a| 
+VfilerB
+ a| 
+svm2
+ a| 
+vol1
+ a| 
+vol_nfs
+
+
+
+ a| 
+vola2
+ a| 
+vol_cifs
+
+
+
+ a| 
+HostB_7mode
+ a| 
+cluster1_02
+ a| 
+Non applicabile
+ a| 
+svm3
+ a| 
+volo3
+ a| 
+volo3
+
+
+
+ a| 
+vol4
+ a| 
+vol4
+
+
+
+ a| 
+vol5
+ a| 
+vol5
+
+
+
+ a| 
+vol6
+ a| 
+vol6
+
+|===
+*Mappatura LIF (indirizzi IP 7-Mode)*
+
+|===
+| Controller 7-Mode | Unità vFiler o controller | SVM mappato | IP 7-Mode esistente | Netmask | Gateway predefinito | Nodo principale | Porta home 
+
+
+ a| 
+Hosta_7mode
+ a| 
+VfilerA
+ a| 
+svm1
+ a| 
+192.0.2.129
+ a| 
+255.255.255.128
+ a| 
+192.40.0.1
+ a| 
+cluster1_01
+ a| 
+e0a
+
+
+
+ a| 
+192.0.2.135
+ a| 
+255.255.255.128
+ a| 
+192.40.0.1
+ a| 
+cluster1_02
+ a| 
+e0b
+
+
+
+ a| 
+VfilerB
+ a| 
+svm2
+ a| 
+-
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+-
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+HostB_7mode
+ a| 
+Non applicabile
+ a| 
+svm3
+ a| 
+192.0.2.110
+ a| 
+255.255.255.128
+ a| 
+192.40.0.1
+ a| 
+cluster1_01
+ a| 
+e0c
+
+
+
+ a| 
+192.0.2.111
+ a| 
+255.255.255.128
+ a| 
+192.40.0.1
+ a| 
+cluster1_02
+ a| 
+e0d
+
+|===
+* Mappatura LIF (nuovi LIF)*
+
+|===
+| SVM | Nuovo indirizzo IP | Netmask | Gateway predefinito | Nodo principale | Porta home 
+
+
+ a| 
+svm1
+ a| 
+-
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+-
+ a| 
+ a| 
+ a| 
+ a| 
+
+
+
+ a| 
+svm2
+ a| 
+192.0.2.130
+ a| 
+255.255.255.128
+ a| 
+192.40.0.1
+ a| 
+cluster1_01
+ a| 
+e1c
+
+
+
+ a| 
+192.0.2.131
+ a| 
+255.255.255.128
+ a| 
+192.40.0.1
+ a| 
+cluster1_02
+ a| 
+e1d
+
+
+
+ a| 
+svm3
+ a| 
+192.0.2.136
+ a| 
+255.255.255.128
+ a| 
+192.40.0.1
+ a| 
+cluster1_01
+ a| 
+e0c
+
+
+
+ a| 
+192.0.2.137
+ a| 
+255.255.255.128
+ a| 
+192.40.0.1
+ a| 
+cluster1_02
+ a| 
+e0d
+
+|===

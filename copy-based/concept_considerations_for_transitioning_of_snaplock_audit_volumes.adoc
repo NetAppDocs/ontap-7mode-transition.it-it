@@ -1,0 +1,22 @@
+---
+permalink: copy-based/concept_considerations_for_transitioning_of_snaplock_audit_volumes.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, snaplock, audit, volumes 
+summary: Lo strumento di transizione 7-Mode supporta la transizione dei volumi di audit SnapLock. Il flusso di lavoro per la transizione dei volumi di audit SnapLock è lo stesso della transizione dei volumi di conformità SnapLock. 
+---
+= Considerazioni per la transizione dei volumi di audit SnapLock
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Lo strumento di transizione 7-Mode supporta la transizione dei volumi di audit SnapLock. Il flusso di lavoro per la transizione dei volumi di audit SnapLock è lo stesso della transizione dei volumi di conformità SnapLock.
+
+Dopo la transizione dei volumi di audit in ONTAP, è necessario designare manualmente il volume di audit in transizione come volume di audit SnapLock per la SVM di destinazione.
+
+In ONTAP, i volumi di audit sono configurati a livello di SVM. In Data ONTAP, operativo in 7-Mode, un volume di audit funge da repository consolidato per tutti i volumi nel controller nelle unità vFiler.
+
+I volumi di audit SnapLock sono un tipo di volume di conformità SnapLock. La transizione dei volumi di controllo SnapLock non è supportata se il cluster di destinazione si trova in una configurazione MetroCluster.
+
+Vedere https://kb.netapp.com/Advice_and_Troubleshooting/Data_Storage_Software/ONTAP_OS/How_to_configure_audit_volume_in_clustered_Data_ONTAP_for_the_transitioned_SnapLock_volumes["Come configurare il volume di audit in Clustered Data ONTAP per i volumi SnapLock in transizione"]

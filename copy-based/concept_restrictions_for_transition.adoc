@@ -1,0 +1,45 @@
+---
+permalink: copy-based/concept_restrictions_for_transition.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, restrictions 
+summary: È necessario conoscere alcune limitazioni per la transizione di alcuni volumi e configurazioni 7-Mode. 
+---
+= Restrizioni per la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario conoscere alcune limitazioni per la transizione di alcuni volumi e configurazioni 7-Mode.
+
+* Nessun volume all'interno dello stesso progetto può essere tagliato fino a quando tutti i volumi dello stesso progetto non hanno completato i trasferimenti di riferimento.
+* Se si desidera trasferire volumi primari e secondari 7-Mode quando sia l'origine che la destinazione 7-Mode eseguono Data ONTAP 7.3.x o 8.0.x, è necessario avviare la transizione del volume secondario 7-Mode solo quando non sono presenti aggiornamenti dei dati dal volume primario 7-Mode al volume secondario 7-Mode.
++
+È necessario verificare che le pianificazioni degli aggiornamenti dei dati per il volume primario 7-Mode al volume secondario 7-Mode non siano in conflitto con le pianificazioni per il volume secondario 7-Mode al volume secondario ONTAP.
+
+* Non è necessario avviare una transizione mentre gli aggregati del sistema 7-Mode o del cluster stanno eseguendo l'aggiornamento dal formato a 32 bit a quello a 64 bit; in caso contrario, la transizione non riesce.
+* Lo strumento di transizione 7-Mode non esegue la transizione di un volume con un qtree che è la destinazione di una relazione SnapMirror qtree.
++
+Prima di poter eseguire la transizione del volume, è necessario interrompere la relazione di qtree SnapMirror.
+
+* Non è possibile eseguire la transizione di una relazione SnapMirror fanout (un volume primario che si trova nelle relazioni di SnapMirror con più di un volume secondario in controller diversi) utilizzando l'interfaccia Web di 7-Mode Transition Tool.
++
+Per eseguire la transizione delle relazioni SnapMirror in una configurazione fanout, è necessario utilizzare la CLI 7-Mode Transition Tool. È necessario creare progetti separati per ciascun volume secondario, completare la transizione dei progetti secondari, quindi creare e completare la transizione del volume primario.
+
+* Non è possibile trasferire contemporaneamente volumi da unità vFiler diverse o da controller 7-Mode diversi alla stessa SVM.
++
+È necessario completare la transizione dei volumi da una determinata unità vFiler o da un controller 7-Mode prima di poter avviare la transizione dei volumi da un'altra unità vFiler o da un controller 7-Mode.
+
+* Lo strumento di transizione 7-Mode non esegue la transizione di un'unità vFiler come singola entità.
++
+Tuttavia, è possibile trasferire tutti i volumi in un'unità vFiler selezionandoli come parte di uno o più progetti.
+
+* Lo strumento di transizione 7-Mode non esegue la transizione del volume root di un'unità vFiler se il volume root si basa su un qtree che appartiene all'unità vFiler predefinita.
+* Lo strumento di transizione 7-Mode non esegue la transizione di un volume con un qtree se il volume e il qtree sono di proprietà di diverse unità vFiler.
++
+La transizione di un volume di questo tipo rende il qtree inaccessibile.
+
+
+
+L'operazione di pre-controllo visualizza informazioni su alcune di queste restrizioni.

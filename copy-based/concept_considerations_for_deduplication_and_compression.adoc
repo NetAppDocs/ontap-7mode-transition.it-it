@@ -1,0 +1,29 @@
+---
+permalink: copy-based/concept_considerations_for_deduplication_and_compression.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, deduplication, compression 
+summary: Quando si utilizza la compressione, i volumi di origine e di destinazione devono appartenere a un aggregato a 64 bit. Tutti i risparmi di compressione e deduplica sul volume di origine vengono conservati in rete durante la transizione. Dopo la transizione, il volume di destinazione eredita tutti gli attributi di compressione e deduplica e i risparmi di storage dal volume di origine. 
+---
+= Considerazioni per la deduplica e la compressione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando si utilizza la compressione, i volumi di origine e di destinazione devono appartenere a un aggregato a 64 bit. Tutti i risparmi di compressione e deduplica sul volume di origine vengono conservati in rete durante la transizione. Dopo la transizione, il volume di destinazione eredita tutti gli attributi di compressione e deduplica e i risparmi di storage dal volume di origine.
+
+La transizione dei dati deduplicati e compressi consente di ridurre la larghezza di banda della rete durante la transizione per i seguenti motivi:
+
+* I blocchi condivisi vengono trasferiti una sola volta.
+* La compressione viene mantenuta durante l'intero trasferimento.
+* I dati compressi e deduplicati comportano dimensioni di trasferimento inferiori come risultato del risparmio di spazio di compressione e deduplica; pertanto, i trasferimenti vengono completati più rapidamente.
+
+
+Durante la transizione, non è consigliabile avviare la compressione o la deduplica dei dati esistenti sul volume di origine. Se la deduplica o la compressione sono in corso, è necessario avviare la transizione solo dopo il completamento dell'operazione di deduplica o compressione. Pertanto, i dati non deduplicati o non compressi e i file di metadati temporanei aggiuntivi non vengono inviati in rete al volume di destinazione.
+
+Affinché la deduplica e la compressione abbiano effetto su qualsiasi nuovo dato scritto sul volume ONTAP, è necessario attivare le pianificazioni di deduplica e compressione dopo la transizione.
+
+A partire da Data ONTAP 8.1, la deduplica mantiene un database di impronte digitali parzialmente ordinato nel volume insieme alla copia aggregata. Di conseguenza, il sistema di destinazione avrà il risparmio di spazio dal volume di origine e una copia del database delle impronte digitali ordinato. Dopo la migrazione, quando l'efficienza del volume viene eseguita per la prima volta sul nuovo volume, il database delle impronte digitali aggregato viene costruito automaticamente dalla copia nel volume di destinazione. Ciò può comportare un aumento del tempo necessario per il completamento delle operazioni di efficienza dei volumi.
+
+Se il volume di origine esegue un Data ONTAP in 7-Mode prima della versione 8.1, è necessario eseguire `volume efficiency start` con il `-scan-old-data option` parametro per ottimizzare il risparmio di spazio. Una volta completata la migrazione, è necessario verificare se la pianificazione della deduplica soddisfa i requisiti del cluster e prendere in considerazione la possibilità di passare a una policy di efficienza dei volumi.

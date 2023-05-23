@@ -1,0 +1,24 @@
+---
+permalink: copy-based/concept_supported_configurations_for_generating_an_fc_zone_plan.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, supported, configurations, fc, zone, plan 
+summary: Per generare il piano di zona FC, è necessario conoscere le configurazioni supportate di sistemi 7-Mode, host, switch FC e cluster. È necessario utilizzare il piano per configurare le zone per il cluster dopo la migrazione. 
+---
+= Configurazioni supportate per la generazione di un piano di zona FC
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Per generare il piano di zona FC, è necessario conoscere le configurazioni supportate di sistemi 7-Mode, host, switch FC e cluster. È necessario utilizzare il piano per configurare le zone per il cluster dopo la migrazione.
+
+I sistemi 7-Mode (controller singolo o coppia ha), gli host e il cluster possono essere collegati agli switch dello stesso fabric o a fabric diversi, a seconda dei requisiti del data center.
+
+La figura seguente illustra una configurazione in cui i sistemi 7-Mode, gli host e il cluster sono connessi agli switch nello stesso fabric:
+
+image::../media/fc_zone_config1.gif[La figura seguente illustra una configurazione in cui i sistemi 7-Mode,hosts,and cluster are connected to the switches in the same fabric]
+
+La figura seguente illustra una configurazione in cui i sistemi 7-Mode e il cluster sono collegati a switch in diversi fabric:
+
+image::../media/fc_zone_config2.gif[La figura seguente illustra una configurazione in cui i sistemi 7-Mode e il cluster sono collegati a switch in fabric diversi]

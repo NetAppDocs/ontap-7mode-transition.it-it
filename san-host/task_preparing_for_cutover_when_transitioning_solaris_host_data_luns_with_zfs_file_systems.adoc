@@ -1,0 +1,63 @@
+---
+permalink: san-host/task_preparing_for_cutover_when_transitioning_solaris_host_data_luns_with_zfs_file_systems.html 
+sidebar: sidebar 
+keywords: cutover, ontap, san, host, transition, host, data, lun, nfs, file, system 
+summary: Se si sta passando un LUN di dati host Solaris con file system ZFS da Data ONTAP in 7-Mode a Clustered Data ONTAP, è necessario eseguire alcuni passaggi prima di entrare nella fase di cutover. 
+---
+= Preparazione per la fase di cutover durante la transizione dei LUN di dati host Solaris con file system ZFS
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si sta passando un LUN di dati host Solaris con file system ZFS da Data ONTAP in 7-Mode a Clustered Data ONTAP, è necessario eseguire alcuni passaggi prima di entrare nella fase di cutover.
+
+Se si utilizza una configurazione FC, è necessario stabilire la connettività fabric e lo zoning ai nodi Data ONTAP in cluster.
+
+Se si utilizza una configurazione iSCSI, è necessario rilevare e accedere alle sessioni iSCSI dei nodi Clustered Data ONTAP.
+
+Per le transizioni basate sulla copia, eseguire questi passaggi prima di avviare l'operazione Storage Cutover nel 7-Mode Transition Tool (7MTT).
+
+Per le transizioni senza copia, eseguire questi passaggi prima di avviare l'operazione Export & Halt 7-Mode in 7MTT.
+
+.Fasi
+. Arrestare l'i/o su tutti i punti di montaggio.
+. Chiudere ogni applicazione che accede alle LUN in base alle raccomandazioni del vendor dell'applicazione.
+. Esportare lo zpool:
++
+`*zpool export _pool-name_*`
+
++
+[listing]
+----
+# zpool export n_pool
+----
+. Verificare che gli zpool siano esportati:
++
+** Dovrebbe elencare lo zpool esportato: +
+`*zpool import*`
+** Non deve elencare lo zpool esportato: +
+`*zpool list*`
+
+
++
+[listing]
+----
+# zpool export n_pool
+
+# zpool list
+no pools available
+
+# zpool import
+  pool: n_pool
+    id: 5049703405981005579
+ state: ONLINE
+action: The pool can be imported using its name or numeric identifier.
+config:
+
+        n_pool                                   ONLINE
+          c0t60A98000383035356C2447384D396550d0  ONLINE
+          c0t60A98000383035356C2447384D39654Ed0  ONLINE
+----
+

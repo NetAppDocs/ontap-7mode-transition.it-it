@@ -1,0 +1,46 @@
+---
+permalink: copy-based/concept_prerequisites_to_transition_nfs_configurations.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, prerequisites, nfs, configurations 
+summary: Le configurazioni NFS vengono eseguite dallo strumento di transizione 7-Mode solo quando vengono soddisfatti determinati prerequisiti sul sistema 7-Mode e sul cluster. Se una delle condizioni non viene soddisfatta, lo strumento non esegue la transizione della configurazione. 
+---
+= Prerequisiti per la transizione delle configurazioni NFS
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Le configurazioni NFS vengono eseguite dallo strumento di transizione 7-Mode solo quando vengono soddisfatti determinati prerequisiti sul sistema 7-Mode e sul cluster. Se una delle condizioni non viene soddisfatta, lo strumento non esegue la transizione della configurazione.
+
+
+
+== Prerequisiti 7-Mode
+
+* NFS deve essere concesso in licenza.
+* Se MultiStore è concesso in licenza, NFS deve essere attivato sull'unità vFiler proprietaria dei volumi in transizione.
+* Per la transizione di un server Kerberos basato su Microsoft Active Directory (ad) a una nuova SVM, deve esistere una voce DNS per il dominio ad.
++
+
+NOTE: Per eseguire la transizione della configurazione Kerberos, è necessario eseguire la transizione di almeno una LIF come parte del progetto e la LIF deve essere risolvibile in un nome host.
+
+* Se si desidera trasferire le regole di esportazione in-memory, è necessario aggiungerle a. `/etc/exports` file prima della transizione.
++
+7-Mode Transition Tool consente di eseguire la transizione solo alle regole di esportazione persistenti definite in `/etc/exports` file.
+
+
+
+
+
+== Prerequisiti del cluster
+
+* NFS deve essere concesso in licenza.
+* Per la transizione di un server Kerberos basato su Microsoft ad a una SVM esistente con DNS configurato, deve esistere una voce DNS per il dominio ad.
+* L'inclinazione del clock tra il centro di distribuzione delle chiavi Kerberos (KDC) e il sistema ONTAP deve essere inferiore o uguale a 5 minuti.
+
+
+*Informazioni correlate*
+
+xref:concept_how_nfs_exports_are_transitioned.adoc[Modalità di transizione delle esportazioni NFS]
+
+http://docs.netapp.com/ontap-9/index.jsp["Documentazione NetApp: ONTAP 9"]

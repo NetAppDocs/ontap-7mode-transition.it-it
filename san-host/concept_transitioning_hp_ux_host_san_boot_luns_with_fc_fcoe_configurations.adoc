@@ -1,0 +1,14 @@
+---
+permalink: san-host/concept_transitioning_hp_ux_host_san_boot_luns_with_fc_fcoe_configurations.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, hp, ux, host, lun, fc, fcoe, configurations 
+summary: 'Se si effettua la transizione di un LUN di avvio SAN host HP con una configurazione FC o FCoE da Data ONTAP in 7-Mode a Clustered Data ONTAP utilizzando lo strumento di transizione 7-Mode (7MTT), è necessario eseguire procedure specifiche prima e dopo la transizione per risolvere i problemi di transizione sull"host.' 
+---
+= Transizione dei LUN di boot SAN host HP-UX con configurazioni FC/FCoE
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si effettua la transizione di un LUN di avvio SAN host HP con una configurazione FC o FCoE da Data ONTAP con 7-Mode a Clustered Data ONTAP utilizzando 7-Mode Transition Tool (7MTT), è necessario eseguire procedure specifiche prima e dopo la transizione per risolvere i problemi di transizione sull'host.

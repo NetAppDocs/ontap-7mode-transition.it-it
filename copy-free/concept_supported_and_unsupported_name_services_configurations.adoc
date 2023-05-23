@@ -1,0 +1,69 @@
+---
+permalink: copy-free/concept_supported_and_unsupported_name_services_configurations.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, name, services, required, manual, steps 
+summary: È necessario conoscere le configurazioni dei name service che sono state eseguite dallo strumento di transizione 7-Mode. Alcune configurazioni di name service non vengono passate a ONTAP perché non sono supportate in ONTAP o devono essere eseguite manualmente. 
+---
+= Transizione dei name service: Configurazioni supportate e non supportate e procedure manuali richieste
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario conoscere le configurazioni dei name service che sono state eseguite dallo strumento di transizione 7-Mode. Alcune configurazioni di name service non vengono passate a ONTAP perché non sono supportate in ONTAP o devono essere eseguite manualmente.
+
+Verificare tutti i messaggi di errore e di avviso relativi al controllo preliminare per valutare l'impatto di tali configurazioni sulla transizione.
+
+
+
+== Configurazioni in transizione
+
+Ad un livello elevato, le seguenti configurazioni di name service vengono eseguite dal 7-Mode Transition Tool:
+
+* Configurazione DNS (`/etc/resolv.conf`)
+* Configurazione LDAP
+* Configurazione NIS
+* Configurazione dello switch name service (`/etc/nsswitch.conf` e. `/etc/resolv.conf`)
+* Configurazione degli host (`/etc/hosts`)
+* Utenti e gruppi UNIX (`/etc/passwd` e. `/etc/group`)
+* Configurazione dei netgroup (`/etc/netgroup`)
+
+
+Per informazioni dettagliate su queste configurazioni dei name service, consultare i risultati della verifica preliminare.
+
+
+
+== Configurazioni non supportate in ONTAP
+
+* Slave NIS
+* Trasmissione NIS
+* Caching dei gruppi NIS
+* DNS dinamico
+* Cache DNS
+* Database shadow
+* Origini del database host diverse da file o DNS
++
+ONTAP supporta solo file e DNS per la ricerca degli host; altre origini di database non sono supportate. Ordine di ricerca dell'host in `/etc/nsswitch.conf` viene ignorato durante la transizione.
+
+
+
+
+
+== Configurazioni che devono essere configurate manualmente
+
+È necessario configurare manualmente le seguenti opzioni LDAP sulle SVM:
+
+* `ldap.usermap.attribute.unixaccount`
+* `ldap.password`
+* `ldap.usermap.base`
+* `ldap.ssl.enable`
+
+
+*Informazioni correlate*
+
+xref:task_customizing_configurations_for_transition.adoc[Personalizzazione della transizione delle configurazioni 7-Mode]
+
+https://docs.netapp.com/ontap-9/topic/com.netapp.doc.cdot-famg-nfs/home.html["Gestione NFS"]
+
+https://docs.netapp.com/us-en/ontap/networking/index.html["Gestione di rete e LIF"]

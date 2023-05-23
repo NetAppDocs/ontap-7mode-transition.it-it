@@ -1,0 +1,245 @@
+---
+permalink: copy-free/reference_ignorable_errors_during_transition.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, ignorable, errors 
+summary: 'Durante la transizione potrebbero verificarsi errori ignorabili. Questi errori possono verificarsi durante l"operazione di pre-check, cablaggio, importazione o commit di un progetto di transizione senza copia. Prima di continuare con la transizione, è necessario riconoscere questi errori.' 
+---
+= Errori ignorabili durante la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Durante la transizione potrebbero verificarsi errori ignorabili. Questi errori possono verificarsi durante l'operazione di pre-check, cablaggio, importazione o commit di un progetto di transizione senza copia. Prima di continuare con la transizione, è necessario riconoscere questi errori.
+
+Quando si aggiunge una categoria di errori ignorabili al progetto di transizione senza copia utilizzando la CLI del 7-Mode Transition Tool, significa che si è compreso l'impatto dell'errore. È necessario eseguire nuovamente l'operazione di transizione dopo aver ignorato l'errore. A questo punto, l'errore di blocco diventa un messaggio di avviso e l'errore viene visualizzato come "`riconosciuto`". È possibile continuare la transizione con l'avviso.
+
+
+
+== Operazione di pre-check: Categorie di errori ignorabili
+
+|===
+| Categoria | Quando viene visualizzato l'errore 
+
+
+ a| 
+`ignore-source-not-multipath`
+ a| 
+Gli shelf di dischi 7-Mode non sono in una configurazione multipath.
+
+
+
+ a| 
+`ignore-target-not-multipath`
+ a| 
+Gli shelf di dischi nei nodi del cluster di destinazione non sono in una configurazione multipath.
+
+
+
+ a| 
+`ignore-source-storage-fault`
+ a| 
+Gli shelf di dischi 7-Mode presentano alcuni errori (come visualizzato nell'output di `storage show fault` comando).
+
+
+
+ a| 
+`ignore-target-storage-fault`
+ a| 
+Gli shelf di dischi nei nodi del cluster di destinazione presentano alcuni errori (come visualizzato nell'output di `system node run -node _node_name_ -command storage show fault` comando).
+
+
+
+ a| 
+ignore-target-port-requirement
+ a| 
+I nodi del cluster di destinazione non dispongono di un numero sufficiente di porte per collegare gli shelf di dischi 7-Mode.
+
+
+
+ a| 
+`ignore-aggr-space-less-than-5-percent`
+ a| 
+Gli aggregati 7-Mode sono fuori spazio perché lo spazio libero negli aggregati 7-Mode è inferiore al 5% dello spazio fisico.
+
+
+
+ a| 
+`ignore-aggr-logical-space-more-than-97-percent`
+ a| 
+Gli aggregati 7-Mode sono fuori spazio perché lo spazio logico nell'aggregato è pieno oltre il 97%.
+
+
+
+ a| 
+`ignore-aggr-snapshot-spill-more-than-4-percent`
+ a| 
+Gli aggregati 7-Mode sono fuori spazio perché le copie Snapshot occupano più spazio di quello allocato per la riserva di copie Snapshot.
+
+
+
+ a| 
+`ignore-aggr-physical-space-more-than-89-percent-and-snapshot-spill`
+ a| 
+Gli aggregati 7-Mode sono fuori spazio perché lo spazio fisico totale utilizzato è superiore al 89% e le copie Snapshot occupano più spazio di quello allocato per la riserva di copia Snapshot.
+
+
+
+ a| 
+`ignore-volumes-with-file-gurantee`
+ a| 
+I volumi 7-Mode hanno la garanzia di spazio impostata su `file`, Che non è supportato in ONTAP.
+
+
+
+ a| 
+`ignore-volumes-with-disabled-gurantees`
+ a| 
+La garanzia di spazio dei volumi è attualmente disattivata a causa della mancanza di spazio nei volumi.
+
+
+
+ a| 
+`nfs-qtrees-exported`
+ a| 
+Le regole di esportazione di qtree sono presenti nel sistema 7-Mode.
+
+La conferma di questo errore significa che sono state comprese le differenze nelle regole di esportazione di qtree tra Data ONTAP che opera in 7-Mode e ONTAP. Potrebbe essere necessario eseguire alcuni passaggi manuali dopo l'applicazione delle regole di esportazione NFS da parte di 7-Mode Transition Tool.
+
+https://kb.netapp.com/onprem/ontap/da/NAS/7MTT_Precheck_10111_-_How_to_transition_7-Mode_volumes_that_have_qtree_level_exports["7MTT pre-check 10111 - transizione di volumi 7-Mode con esportazioni a livello di qtree"]
+
+
+
+ a| 
+`ignore-configuration-limits-check`
+ a| 
+Gli oggetti e le configurazioni da migrare superano un determinato limite. Il cutover dello storage può richiedere molto tempo ed è necessario prepararsi al downtime.
+
+https://kb.netapp.com/onprem/ontap/os/Storage_cutover_time_considerations_for_Copy-Free_Transition["Considerazioni per ridurre il tempo di cutover dello storage durante la transizione Copy-Free"]
+
+
+
+ a| 
+`ignore-cifs-ad-domain-mismatch`
+ a| 
+7-Mode Transition Tool continua con la transizione della configurazione CIFS anche se il dominio CIFS Active Directory del sistema 7-Mode è diverso dal dominio CIFS Active Directory della SVM di destinazione.
+
+È necessario assicurarsi che i domini CIFS Active Directory del sistema 7-Mode e la SVM di destinazione siano domini attendibili. In caso contrario, la transizione delle configurazioni CIFS alla SVM di destinazione non riesce.
+
+https://kb.netapp.com/Advice_and_Troubleshooting/Data_Storage_Software/ONTAP_OS/How_to_transition_CIFS_configurations_when_Active_Directory_Domain_of_CIFS_server_on_7-Mode_and_target_SVM_are_different["Come eseguire la transizione delle configurazioni CIFS quando il dominio Active Directory del server CIFS su 7-Mode e la SVM di destinazione sono diversi"]
+
+|===
+
+
+== Operazione di verifica del cablaggio: Categorie di errori ignorabili
+
+|===
+| Categoria | Quando viene visualizzato l'errore 
+
+
+ a| 
+`ignore-missing-spare-disks`
+ a| 
+Uno o più dischi spare 7-Mode non vengono rilevati dai nodi del cluster di destinazione.
+
+
+
+ a| 
+`ignore-missing-degraded-aggr-disks`
+ a| 
+Impossibile rilevare fino a due dischi da uno qualsiasi dei gruppi RAID-DP 7-Mode o un disco da uno qualsiasi dei gruppi RAID RAID-4 7-Mode sui nodi del cluster di destinazione.
+
+Continuando con la transizione, tali aggregati vengono degradati dopo la transizione.
+
+|===
+
+
+== Operazione di importazione: Categorie di errori ignorabili
+
+Se si aggiunge una categoria di errore ignorabile al progetto di transizione senza copia durante l'operazione di importazione, Data ONTAP esegue alcune azioni correttive sugli aggregati e sui volumi, oltre a modificare l'errore di blocco in un avviso.
+
+|===
+| Categoria | Quando viene visualizzato l'errore | Azione correttiva se l'errore viene riconosciuto e l'operazione di importazione viene eseguita di nuovo 
+
+
+ a| 
+`ignore-aggregates-with-32bit-snapshot-for-import`
+ a| 
+Le copie Snapshot a 32 bit vengono rilevate nell'aggregato 7-Mode.
+ a| 
+Le copie Snapshot a 32 bit vengono eliminate da tutti gli aggregati 7-Mode che fanno parte di questo progetto.
+
+
+
+ a| 
+`transition-dirty-aggregates-during-import`
+ a| 
+Uno degli aggregati in fase di transizione non è stato chiuso correttamente nel sistema di storage 7-Mode.
+ a| 
+Tutti gli aggregati 7-Mode che non sono stati chiusi correttamente vengono trasferiti. Ciò potrebbe causare la perdita di dati dopo la transizione.
+
+
+
+ a| 
+`ignore-aggregates-not-being-online-for-import`
+ a| 
+L'aggregato non era online quando il sistema di storage 7-Mode è stato arrestato.
+ a| 
+Tutti gli aggregati offline vengono portati online.
+
+
+
+ a| 
+`ignore-volumes-with-32bit-snapshot-for-import`
+ a| 
+Le copie Snapshot a 32 bit vengono rilevate nel volume 7-Mode.
+ a| 
+Le copie Snapshot a 32 bit vengono eliminate da tutti i volumi 7-Mode che fanno parte di questo progetto.
+
+
+
+ a| 
+`ignore-volumes-with-dirty-file-system-for-import`
+ a| 
+Uno dei volumi in transizione non è stato chiuso correttamente nel sistema di storage 7-Mode.
+ a| 
+Tutti i volumi 7-Mode che non sono stati chiusi correttamente vengono trasferiti. Ciò potrebbe causare la perdita di dati dopo la transizione.
+
+
+
+ a| 
+`transition-offline-volumes-during-import`
+ a| 
+Il volume non era in linea quando il sistema di storage 7-Mode è stato arrestato.
+ a| 
+Tutti i volumi offline vengono portati online.
+
+
+
+ a| 
+`transition-restricted-volumes-during-import`
+ a| 
+Il volume era nello stato limitato quando il sistema di storage 7-Mode è stato arrestato.
+ a| 
+Tutti i volumi limitati vengono portati online.
+
+|===
+
+
+== Operazione di commit: Categorie di errori ignorabili
+
+Se si aggiunge una categoria di errore ignorabile al progetto di transizione senza copia durante l'operazione di commit, ONTAP esegue alcune azioni correttive sugli aggregati e sui volumi, oltre a modificare l'errore di blocco in un avviso.
+
+|===
+| Categoria | Quando viene visualizzato l'errore | Azione correttiva se l'errore viene riconosciuto e l'operazione di commit viene eseguita di nuovo 
+
+
+ a| 
+`ignore-commit-offline-aggregates`
+ a| 
+Alcuni degli aggregati in transizione sono offline.
+ a| 
+Tutti gli aggregati offline vengono portati online.
+
+|===

@@ -1,0 +1,72 @@
+---
+section: snapmirror
+title: Transizione dei dati 7-Mode con SnapMirror
+url: "/snapmirror/index.html"
+entries:
+- title: Transizione di volumi 7-Mode con SnapMirror
+  url: "/snapmirror/task_transitioning_7_mode_volumes_using_snapmirror.html"
+  entries:
+  - title: Pianificazione della transizione
+    url: "/snapmirror/concept_planning_for_transition.html"
+    entries:
+    - title: Funzionalità e volumi non supportati per la transizione
+      url: "/snapmirror/concept_features_and_volumes_not_supported_for_transition.html"
+      entries:
+      - title: Funzionalità non supportate per la transizione SAN
+        url: "/snapmirror/concept_unsupported_7_mode_san_functions.html"
+    - title: Requisiti della versione 7-Mode per la transizione
+      url: "/snapmirror/reference_7_mode_ontap_version_requirements_for_transitioning_volumes_using_snapmirror.html"
+    - title: Considerazioni sull'utilizzo di SnapMirror per la transizione
+      url: "/snapmirror/concept_considerations_for_using_snapmirror_for_transition.html"
+    - title: Considerazioni sullo spazio durante la transizione dei volumi SAN
+      url: "/snapmirror/concept_considerations_for_space_when_transitioning_san_volumes.html"
+    - title: Linee guida per la transizione dei volumi SnapLock
+      url: "/snapmirror/concept_guidelines_for_transitioning_snaplock_volumes.html"
+  - title: Preparazione per la transizione
+    url: "/snapmirror/task_preparing_for_transition.html"
+    entries:
+    - title: Requisiti di licenza per la transizione
+      url: "/snapmirror/concept_licensing_requirements_for_transition.html"
+    - title: Preparazione del sistema 7-Mode per la transizione
+      url: "/snapmirror/task_preparing_7_mode_system_for_transition.html"
+    - title: Preparazione del cluster per la transizione
+      url: "/snapmirror/task_preparing_cluster_for_transition.html"
+    - title: Creazione di una relazione peer di transizione
+      url: "/snapmirror/task_creating_a_transition_peering_relationship.html"
+    - title: Configurazione delle dimensioni di una finestra TCP per le relazioni
+        SnapMirror
+      url: "/snapmirror/task_configuring_a_tcp_window_size_for_snapmirror_relationships.html"
+  - title: Transizione dei volumi
+    url: "/snapmirror/task_transitioning_volumes.html"
+    entries:
+    - title: Transizione di un volume standalone
+      url: "/snapmirror/task_transitioning_a_stand_alone_volume.html"
+    - title: Transizione di una relazione SnapMirror di un volume in una configurazione
+        sfalsata
+      url: "/snapmirror/task_transitioning_a_data_protection_relationship.html"
+      entries:
+      - title: Transizione di un volume secondario
+        url: "/snapmirror/task_transitioning_secondary_volume.html"
+      - title: Transizione di un volume primario
+        url: "/snapmirror/task_transitioning_a_primary_volume.html"
+    - title: Transizione di una relazione SnapMirror di un volume in parallelo
+      url: "/snapmirror/task_transitioning_a_volume_snapmirror_relationship_in_parallel.html"
+- title: Transizione di una relazione di disaster recovery tra le unità vFiler
+  url: "/snapmirror/task_transitioning_disaster_recovery_relationship.html"
+- title: Ripristino da un disastro nel sito 7-Mode durante la transizione
+  url: "/snapmirror/task_recovering_from_a_disaster_at_7_mode_site_during_transition.html"
+  entries:
+  - title: Reindirizzamento dei client al volume secondario Clustered Data ONTAP dopo
+      un disastro
+    url: "/snapmirror/task_redirecting_clients_to_clustered_ontap_secondary_volume.html"
+  - title: Transizione del volume primario 7-Mode come volume standalone
+    url: "/snapmirror/task_transitioning_7_mode_primary_as_a_standalone_volume.html"
+  - title: Reindirizzamento dei client al volume primario di Clustered Data ONTAP
+    url: "/snapmirror/task_redirecting_clients_to_clustered_ontap_primary_volume_after_disaster.html"
+- title: Risoluzione dei problemi di transizione durante l'utilizzo di SnapMirror
+  url: "/snapmirror/reference_troubleshooting.html"
+  entries:
+  - title: Ripresa di un trasferimento di riferimento SnapMirror non riuscito
+    url: "/snapmirror/task_resuming_a_failed_snapmirror_transfer_transition.html"
+  - title: Ripristino da una transizione LUN non riuscita
+    url: "/snapmirror/task_recovering_from_a_failed_lun_transition.html"

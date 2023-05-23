@@ -1,0 +1,24 @@
+---
+permalink: copy-based/concept_guidelines_for_deciding_when_to_cutover.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, decide, perform, cutover 
+summary: 'Poiché il cutover della transizione è un"interruzione per i clienti, è necessario pianificare l"attività per ridurre al minimo il downtime. È necessario pianificare il cutover durante una finestra a bassa attività. È necessario aggiornare i volumi ONTAP e attendere il completamento dei trasferimenti prima di scollegare i client e avviare il cutover dello storage per ridurre il downtime.' 
+---
+= Linee guida per decidere quando eseguire il cutover
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Poiché il cutover della transizione è un'interruzione per i clienti, è necessario pianificare l'attività per ridurre al minimo il downtime. È necessario pianificare il cutover durante una finestra a bassa attività. È necessario aggiornare i volumi ONTAP e attendere il completamento dei trasferimenti prima di scollegare i client e avviare il cutover dello storage per ridurre il downtime.
+
+È necessario continuare a monitorare lo stato di SnapMirror per ciascun volume. Se la durata dell'ultimo trasferimento dei pochi aggiornamenti precedenti per il volume rientra in un limite accettabile, la maggior parte delle modifiche dei dati nel volume deve essere stata copiata e il tempo per l'aggiornamento finale dei dati durante il cutover deve rientrare nel limite accettabile.
+
+È possibile ricavare il downtime approssimativo in base al numero di volumi che vengono trasferiti.
+
+Per ridurre al minimo il tempo di cutover, la latenza di rete tra 7-Mode Transition Tool e i sistemi storage deve essere minima. Per la transizione di una relazione SnapMirror di un volume, la latenza di rete tra lo strumento e i sistemi primari deve essere minima.
+
+*Informazioni correlate*
+
+xref:task_performing_on_demand_snapmirror_update_operation.adoc[Esecuzione di aggiornamenti SnapMirror on-demand]

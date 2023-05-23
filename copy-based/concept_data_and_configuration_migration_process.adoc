@@ -1,0 +1,86 @@
+---
+permalink: copy-based/concept_data_and_configuration_migration_process.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, data, configuration, migration, process 
+summary: 'Il processo di migrazione dei dati e della configurazione che utilizza 7-Mode Transition Tool è costituito dalle seguenti fasi: Preparazione, copia dei dati di riferimento, applicazione della configurazione e cutover dello storage. Se si dispone di volumi SnapLock per la verifica della catena di custodia, la verifica della catena di custodia è una fase aggiuntiva dopo il cutover.' 
+---
+= Processo di migrazione dei dati e della configurazione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il processo di migrazione dei dati e della configurazione che utilizza 7-Mode Transition Tool comprende le seguenti fasi: Preparazione, copia dei dati di riferimento, applicazione della configurazione (pre-over) e cutover dello storage. Se si dispone di volumi SnapLock per la verifica della catena di custodia, la verifica della catena di custodia è una fase aggiuntiva dopo il cutover.
+
+L'immagine seguente mostra le diverse fasi del processo di migrazione:
+
+image::../media/transition_operational_flow.gif[flusso operativo di transizione]
+
+
+
+== Preparazione
+
+In questa fase, vengono eseguiti dei controlli preliminari per verificare la funzionalità delle funzioni. Il processo verifica i sistemi di storage 7-Mode per verificare che i volumi e la configurazione siano pronti per la migrazione a ONTAP. Verifica che il cluster sia configurato correttamente e sia in grado di supportare la transizione. Gli errori devono essere risolti prima di continuare con la transizione. Sebbene lo strumento consenta di continuare senza risolvere gli avvisi, è necessario comprendere l'impatto degli avvisi prima di procedere con la transizione. È possibile eseguire le verifiche preliminari più volte per verificare che tutti gli errori siano stati risolti.
+
+Anche se la fase di pre-controllo e le fasi di valutazione eseguite durante la valutazione sembrano essere simili, ci sono delle differenze. La fase di pre-controllo è un test più dettagliato che si concentra sui sistemi storage specifici identificati come sistemi di origine della migrazione (7-Mode) e di destinazione (ONTAP). La fase di valutazione valuta solo i sistemi di origine della migrazione, controllando le differenze di funzionalità e funzionalità con ONTAP.
+
+
+
+== Copia dei dati di riferimento
+
+Sulla SVM vengono creati nuovi volumi, viene stabilita una relazione SnapMirror tra i volumi 7-Mode e ONTAP e viene eseguito un trasferimento di riferimento. Una volta completata la linea di base, i trasferimenti incrementali vengono eseguiti automaticamente in base a una pianificazione di copia dei dati definita dall'utente. I client e i server che accedono allo storage di origine rimangono online fino al completamento di questa fase.
+
+La copia dei dati richiede l'accesso a CPU, memoria e storage, con conseguente utilizzo di risorse aggiuntive nel sistema storage di origine. Si consiglia di pianificare l'attività di copia dei dati in modo che si verifichi durante i periodi di non picco (preferibilmente, l'utilizzo della CPU dovrebbe essere intorno al 50%).
+
+
+
+== Applica configurazione (pre-over)
+
+Questa fase include i trasferimenti incrementali di SnapMirror; le informazioni di configurazione vengono applicate al sistema ONTAP, alla SVM e ai volumi. In alternativa, è anche possibile testare i volumi ONTAP sottoposti a transizione prima del cutover dello storage.
+
+Sebbene venga applicata la maggior parte della configurazione, alcune azioni vengono posticipate al cutover dello storage: Ad esempio, l'applicazione delle quote.
+
+Gli indirizzi IP 7-Mode selezionati per la transizione vengono creati nello stato di inattività amministrativa. I nuovi indirizzi IP selezionati per la transizione vengono creati nello stato di configurazione amministrativa. Questi nuovi indirizzi IP possono essere utilizzati per verificare l'accesso ai dati durante il test di pre-overing.
+
+Si consiglia di eseguire la fase di applicazione della configurazione (pre-time) pochi giorni o settimane prima della finestra di cutover pianificata. Questa attività aiuta a verificare che tutte le configurazioni siano applicate correttamente e che siano necessarie modifiche.
+
+
+TIP: Sebbene non siano necessari aggiornamenti incrementali, è consigliabile eseguire un trasferimento incrementale il più vicino possibile al cutover dello storage per ridurre al minimo il tempo di disconnessione dei client.
+
+
+
+== Cutover dello storage
+
+A un livello elevato durante il cutover dello storage, i client vengono disconnessi, viene eseguito un trasferimento dei dati finale, la relazione SnapMirror viene interrotta e i client vengono riconnessi manualmente.
+
+La disconnessione di client o server dal volume di storage di origine impedisce l'esecuzione di scritture aggiuntive durante l'esecuzione della copia finale. Prima di disconnettere i client, è consigliabile eseguire un aggiornamento incrementale per ridurre al minimo il downtime.
+
+L'accesso allo storage deve essere disconnesso solo per i volumi che vengono migrati. L'accesso allo storage può essere interrotto dal lato storage o dal lato client. La Best practice consiste nell'interrompere la connettività dal punto di vista dello storage. Ad esempio, se un client CIFS sta accedendo a un volume denominato "`user01`" su un sistema di storage 7-Mode, è possibile utilizzare `cifs terminate -v user01` Comando per disattivare l'accesso a tutte le condivisioni CIFS sul volume (interruzione dell'accesso client dal lato storage). Gli indirizzi IP, i punti di montaggio o persino i nomi delle condivisioni potrebbero cambiare in seguito alla migrazione e pertanto l'accesso client potrebbe essere interrotto anche dal lato client. Se i client non sono in grado di scrivere nuovi dati nel container di storage in fase di migrazione, è possibile utilizzare uno o entrambi questi metodi per interrompere l'accesso.
+
+Una volta scollegati i client, 7-Mode Transition Tool esegue una copia finale in modo che i set di dati di origine e di destinazione siano a parità. Il 7-Mode Transition Tool configura i LIF dei dati su SVM. Alcune modifiche alla configurazione che non sono state effettuate durante il pre-time, come l'applicazione di configurazioni E quote SAN, vengono applicate anche alla SVM in questo momento.
+
+Una volta completato il cutover dello storage, è possibile riconnettere manualmente i client e convalidare l'accesso ai dati. La convalida dell'accesso ai dati implica la verifica che i client stiano accedendo correttamente al sistema ONTAP e che tutte le autorizzazioni funzionino come previsto.
+
+
+
+== Verifica della catena di custodia per i volumi SnapLock
+
+È possibile attivare l'operazione Chain of Custody per i volumi SnapLock nel progetto una volta completata la transizione. Questa operazione non è obbligatoria ed è necessaria solo se la verifica della catena di custodia è essenziale per la transizione dei volumi SnapLock. È possibile eseguire questa operazione per tutti i volumi SnapLock nel progetto o per un sottoinsieme di volumi SnapLock nel progetto. La verifica della catena di custodia è supportata sia per la compliance che per i volumi SnapLock aziendali. La verifica della catena di custodia è supportata solo per i volumi SnapLock di lettura/scrittura e non per i volumi SnapLock di sola lettura.
+
+
+IMPORTANT: La verifica della catena di custodia non è supportata per i volumi SnapLock che hanno nomi di file con caratteri non ASCII.
+
+Il flusso di lavoro di verifica è supportato solo nella GUI 7-Mode Transition Tool e non nel flusso di lavoro CLI.
+
+L'operazione di verifica della catena di custodia esegue quanto segue:
+
+* Enumera tutti i file WORM dei volumi 7-Mode
+* Calcola l'impronta digitale per ogni file WORM enumerato in precedenza su volumi 7-Mode e volumi ONTAP in transizione
+* Genera un report con dettagli sul numero di file con impronte digitali corrispondenti e non corrispondenti e sul motivo della mancata corrispondenza
+
+
+I dati delle impronte digitali per tutti i file WORM vengono memorizzati in un volume ONTAP fornito durante la fase di pianificazione.
+
+
+NOTE: In base al numero di file presenti nei volumi 7-Mode, il processo di verifica della catena di custodia può richiedere molto tempo (giorni o settimane).

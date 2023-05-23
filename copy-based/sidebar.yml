@@ -1,0 +1,286 @@
+---
+section: copy-based
+title: Transizione basata sulla copia
+url: "/copy-based/index.html"
+entries:
+- title: Panoramica della transizione
+  url: "/copy-based/concept_transition_overview.html"
+  entries:
+  - title: Transizione basata sulla copia utilizzando 7-Mode Transition Tool
+    url: "/copy-based/concept_copy_based_transition_using_7mtt.html"
+  - title: Terminologia di transizione
+    url: "/copy-based/concept_transition_terminology.html"
+  - title: Limiti per la transizione
+    url: "/copy-based/reference_limits_for_transition.html"
+- title: Raccolta e valutazione delle informazioni di inventario
+  url: "/copy-based/concept_collecting_and_assessing_inventory_information.html"
+  entries:
+  - title: Requisiti di versione di storage, host e switch FC per la valutazione della
+      transizione
+    url: "/copy-based/concept_storage_host_fc_switches_version_requirements.html"
+  - title: Preparazione dei sistemi 7-Mode e degli host per la valutazione della transizione
+    url: "/copy-based/task_preparing_7_mode_systems_for_inventory_collection.html"
+  - title: Valutazione di controller e host
+    url: "/copy-based/task_assessing_controllers_and_hosts.html"
+    entries:
+    - title: Generazione di un report di valutazione mediante l'aggiunta di sistemi
+        al 7-Mode Transition Tool
+      url: "/copy-based/task_generating_an_assessment_report_by_adding_systems_to_7mtt.html"
+    - title: Generazione di un report di valutazione mediante l'importazione del report
+        di inventario XML
+      url: "/copy-based/task_generating_an_assessment_report_by_importing_inventory_report_xml.html"
+  - title: Generazione di un piano di zona FC
+    url: "/copy-based/task_generating_fc_zone_plan.html"
+    entries:
+    - title: Configurazioni supportate per la generazione di un piano di zona FC
+      url: "/copy-based/concept_supported_configurations_for_generating_an_fc_zone_plan.html"
+  - title: Come utilizzare il riepilogo esecutivo della valutazione per la valutazione
+      della transizione
+    url: "/copy-based/concept_how_you_can_use_assessment_executive_summary_for_transition_assessment.html"
+- title: Workflow di transizione basato sulla copia
+  url: "/copy-based/concept_copy_based_transition_workflow.html"
+- title: Processo di migrazione dei dati e della configurazione
+  url: "/copy-based/concept_data_and_configuration_migration_process.html"
+  entries:
+  - title: Modalità di transizione di un volume standalone
+    url: "/copy-based/concept_how_you_transition_a_stand_alone_volume.html"
+  - title: Modalità di transizione dei volumi in una relazione SnapMirror
+    url: "/copy-based/concept_how_you_transition_volumes_in_a_snapmirror_relationship.html"
+- title: Preparazione per la transizione basata sulla copia
+  url: "/copy-based/concept_preparing_for_copy_based_transition.html"
+  entries:
+  - title: Requisiti per la transizione basata su copia
+    url: "/copy-based/concept_requirements_for_copy_based_transition.html"
+  - title: Requisiti delle porte per la comunicazione con 7-Mode Transition Tool
+    url: "/copy-based/concept_port_requirements_for_communicating_with_7mtt.html"
+  - title: Restrizioni per la transizione
+    url: "/copy-based/concept_restrictions_for_transition.html"
+  - title: Preparazione del sistema 7-Mode per la transizione
+    url: "/copy-based/task_preparing_7_mode_system_for_transition.html"
+  - title: Preparazione della rete per la transizione
+    url: "/copy-based/task_preparing_network_for_transition.html"
+    entries:
+    - title: Considerazioni per la transizione degli indirizzi IP 7-Mode
+      url: "/copy-based/concept_considerations_for_transitioning_7_mode_ip_addresses.html"
+  - title: Preparazione del cluster per la transizione
+    url: "/copy-based/task_preparing_cluster_for_transition.html"
+  - title: Preparazione di aggregati e volumi 7-Mode per la transizione
+    url: "/copy-based/task_preparing_7_mode_volumes_and_aggregates_for_transition.html"
+    entries:
+    - title: Restrizioni per la transizione di volumi 7-Mode
+      url: "/copy-based/concept_restrictions_for_copy_free_transition.html"
+    - title: Preparazione per la transizione a ONTAP 8.3 e versioni successive supportate
+      url: "/copy-based/task_transitioning_to_clustered_ontap_8_3_from_a_7_mode_version_with_32_bit_data.html"
+      entries:
+      - title: Espansione di un aggregato nel formato a 64 bit
+        url: "/copy-based/task_expanding_an_aggregate_to_64_bit_format_without_adding_storage.html"
+      - title: Ricerca e rimozione di volumi a 32 bit e copie Snapshot
+        url: "/copy-based/task_finding_and_removing_32_bit_data_from_source_volumes_and_snapshot_copies.html"
+    - title: Considerazioni per la deduplica e la compressione
+      url: "/copy-based/concept_considerations_for_deduplication_and_compression.html"
+    - title: Considerazioni per i volumi FlexClone
+      url: "/copy-based/concept_considerations_for_flexclone_volumes.html"
+    - title: Considerazioni sulle quote
+      url: "/copy-based/concept_considerations_for_quotas.html"
+  - title: Supporto per la transizione dei volumi SnapLock
+    url: "/copy-based/concept_support_for_transitioning_snaplock_volumes.html"
+    entries:
+    - title: Considerazioni per la transizione dei volumi aziendali SnapLock
+      url: "/copy-based/concept_considerations_for_transitioning_of_snaplock_enterprise_volumes.html"
+    - title: Considerazioni per la transizione dei volumi di conformità SnapLock
+      url: "/copy-based/concept_considerations_for_transitioning_of_snaplock_compliance_volumes.html"
+    - title: Considerazioni per la transizione dei volumi di audit SnapLock
+      url: "/copy-based/concept_considerations_for_transitioning_of_snaplock_audit_volumes.html"
+    - title: Considerazioni per la transizione delle opzioni SnapLock 7-Mode
+      url: "/copy-based/concept_considerations_for_transitioning_of_7_mode_snaplock_options.html"
+    - title: Considerazioni sull'utilizzo della verifica della catena di custodia
+        per volumi SnapLock 7-Mode
+      url: "/copy-based/concept_considerations_for_chain_of_custody_verification_for_7_mode_snaplock_volumes.html"
+  - title: Preparazione ai servizi di gestione dei nomi per la transizione
+    url: "/copy-based/concept_preparing_for_name_services_transition.html"
+    entries:
+    - title: 'Transizione dei name service: Configurazioni supportate e non supportate
+        e procedure manuali richieste'
+      url: "/copy-based/concept_supported_and_unsupported_name_services_configurations.html"
+    - title: Considerazioni per la transizione delle configurazioni DNS, NIS e LDAP
+      url: "/copy-based/concept_considerations_for_transitioning_dns_and_ldap_configurations.html"
+    - title: Considerazioni per la transizione di netgroup e utenti e gruppi UNIX
+      url: "/copy-based/concept_considerations_for_transitioning_unix_users_and_groups.html"
+  - title: Preparazione per la transizione NFS
+    url: "/copy-based/concept_preparing_for_nfs_transition.html"
+    entries:
+    - title: Prerequisiti per la transizione delle configurazioni NFS
+      url: "/copy-based/concept_prerequisites_to_transition_nfs_configurations.html"
+    - title: 'Transizione NFS: Configurazioni supportate e non supportate e procedure
+        manuali richieste'
+      url: "/copy-based/concept_nfs_configurations_supported_unsupported_or_requiring_manual_steps_for_transition.html"
+    - title: Modalità di transizione delle esportazioni NFS
+      url: "/copy-based/concept_how_nfs_exports_are_transitioned.html"
+  - title: Preparazione per la transizione SMB/CIFS
+    url: "/copy-based/concept_preparing_for_smb_cifs_transition.html"
+    entries:
+    - title: Prerequisiti per la transizione delle configurazioni CIFS
+      url: "/copy-based/concept_prerequisites_for_transitioning_cifs_configurations.html"
+    - title: Configurazioni CIFS supportate e non supportate per la transizione a
+        ONTAP
+      url: "/copy-based/concept_cifs_configurations_supported_unsupported_or_requiring_manual_steps_for_transition.html"
+    - title: Considerazioni per la transizione di utenti e gruppi locali CIFS
+      url: "/copy-based/concept_considerations_for_local_users_and_groups_transition.html"
+  - title: Preparazione per la transizione della configurazione MetroCluster
+    url: "/copy-based/concept_preparing_for_metrocluster_configuration_transition.html"
+  - title: Preparazione per la transizione SAN
+    url: "/copy-based/task_preparing_for_san_transition.html"
+    entries:
+    - title: Preparazione degli host SAN per la transizione
+      url: "/copy-based/task_preparing_san_hosts_for_transition.html"
+    - title: Configurazione delle zone mediante il piano di zona FC
+      url: "/copy-based/task_configuring_zones_by_using_fc_zone_plan.html"
+    - title: Creazione DI LIF SAN prima della transizione
+      url: "/copy-based/task_creating_san_lifs_before_transition.html"
+    - title: 'Transizione SAN: Configurazioni supportate e non supportate e procedure
+        manuali richieste'
+      url: "/copy-based/concept_san_transition_supported_and_unsupported_configurations_and_required_manual_steps.html"
+    - title: Considerazioni sullo spazio durante la transizione dei volumi SAN
+      url: "/copy-based/concept_considerations_for_space_when_transitioning_san_volumes.html"
+  - title: Preparazione delle funzionalità di protezione dei dati per la transizione
+    url: "/copy-based/concept_preparing_data_protection_features_for_transition.html"
+    entries:
+    - title: 'Transizione per la protezione dei dati: Configurazioni supportate e
+        non supportate'
+      url: "/copy-based/concept_supported_and_unsupported_data_protection_relationships.html"
+    - title: Considerazioni sull'utilizzo di SnapMirror per la transizione
+      url: "/copy-based/concept_considerations_for_using_snapmirror_for_transition.html"
+  - title: Linee guida per decidere quando eseguire il cutover
+    url: "/copy-based/concept_guidelines_for_deciding_when_to_cutover.html"
+  - title: Impatto del takeover e del giveback sulla transizione
+    url: "/copy-based/concept_impact_of_takeover_and_giveback_on_transition.html"
+- title: Migrazione di dati e configurazione da volumi 7-Mode
+  url: "/copy-based/task_transitioning_volumes_using_7mtt.html"
+  entries:
+  - title: Checklist per la preparazione della transizione
+    url: "/copy-based/reference_transition_preparation_checklist.html"
+  - title: Aggiunta di controller e cluster
+    url: "/copy-based/task_adding_controllers_and_clusters.html"
+  - title: Creazione di un progetto di transizione
+    url: "/copy-based/task_creating_a_transition_project.html"
+  - title: Personalizzazione della transizione delle configurazioni 7-Mode
+    url: "/copy-based/task_customizing_configurations_for_transition.html"
+  - title: Esecuzione dei controlli preliminari
+    url: "/copy-based/task_running_prechecks.html"
+    entries:
+    - title: Livelli di severità per i messaggi di pre-controllo
+      url: "/copy-based/concept_severity_levels_for_precheck_messages.html"
+  - title: Avvio della copia dei dati di riferimento
+    url: "/copy-based/task_starting_baseline_data_copy.html"
+  - title: Applicazione di configurazioni 7-Mode
+    url: "/copy-based/task_applying_7_mode_configurations.html"
+  - title: Configurazione delle zone mediante il piano di zona FC
+    url: "/copy-based/task_configuring_zones_by_using_fc_zone_plan.html"
+  - title: Esecuzione di aggiornamenti SnapMirror on-demand
+    url: "/copy-based/task_performing_on_demand_snapmirror_update_operation.html"
+  - title: Completamento di un progetto di transizione
+    url: "/copy-based/task_completing_a_transition_project.html"
+  - title: Completamento della verifica della catena di custodia
+    url: "/copy-based/task_completing_chain_of_custody_verification.html"
+- title: Eseguire la transizione dei volumi utilizzando la CLI del 7-Mode Transition
+    Tool
+  url: "/copy-based/concept_transitioning_volumes_using_7mtt_cli.html"
+  entries:
+  - title: Scenari per la selezione dei volumi in un progetto
+    url: "/copy-based/concept_scenarios_for_selecting_volumes_in_a_session.html"
+  - title: Eseguire la transizione dei volumi utilizzando la CLI del 7-Mode Transition
+      Tool
+    url: "/copy-based/concept_transitioning_volumes_using_7mtt_cli.html"
+    entries:
+    - title: Creazione di un progetto di transizione
+      url: "/copy-based/task_creating_a_transition_session.html"
+    - title: Personalizzare la transizione delle configurazioni 7-Mode utilizzando
+        la CLI
+      url: "/copy-based/task_transitioning_volumes_by_excluding_a_subset_of_configurations.html"
+      entries:
+      - title: Configurazioni che possono essere escluse dalla transizione
+        url: "/copy-based/reference_configurations_that_can_be_excluded.html"
+      - title: Esempi di consolidamento delle regole di esportazione NFS e delle pianificazioni
+          Snapshot per la transizione
+        url: "/copy-based/reference_example_consolidating_nfs_export_rules_for_transition.html"
+    - title: Esecuzione dei controlli preliminari
+      url: "/copy-based/task_running_precheck_on_a_session.html"
+    - title: Avvio della copia dei dati per un progetto di transizione
+      url: "/copy-based/task_starting_data_copy_for_a_transition_session.html"
+    - title: Applicazione delle configurazioni ai volumi ONTAP
+      url: "/copy-based/task_applying_configurations_to_ontap_volumes.html"
+    - title: Completamento della transizione
+      url: "/copy-based/task_completing_transition_process.html"
+  - title: Comandi per la gestione della transizione
+    url: "/copy-based/reference_commands_for_managing_transition_sessions.html"
+- title: Esecuzione manuale delle attività post-transizione
+  url: "/copy-based/task_performing_post_transition_tasks.html"
+  entries:
+  - title: Configurazione delle zone mediante il piano di zona FC
+    url: "/copy-based/task_configuring_zones_by_using_fc_zone_planner.html"
+  - title: Ripristino da una transizione LUN non riuscita
+    url: "/copy-based/task_recovering_from_a_failed_lun_transition.html"
+  - title: Visualizzazione delle configurazioni SAN in transizione
+    url: "/copy-based/task_viewing_transitioned_san_configurations.html"
+  - title: Limitazioni con le copie Snapshot 7-Mode delle LUN gestite da SnapDrive
+      e SnapManager dopo la transizione
+    url: "/copy-based/concept_limitations_with_snapshot_copies_and_luns_managed_by_snap_products.html"
+  - title: Configurazione delle pianificazioni dei processi cron sul sito remoto dopo
+      la transizione di una configurazione MetroCluster
+    url: "/copy-based/task_post_transition_task_for_a_metrocluster_configuration.html"
+  - title: Eliminazione delle copie Snapshot del volume 7-Mode dai volumi in transizione
+    url: "/copy-based/task_deleting_7_mode_volume_snapshot_copies_from_transitioned_volumes.html"
+  - title: Consolidamento delle pianificazioni cron da volumi in transizione
+    url: "/copy-based/task_consolidating_snapshot_policies_and_cron_schedules_on_transitioned_volumes.html"
+- title: Gestione di un progetto di transizione
+  url: "/copy-based/concept_managing_a_transition_project.html"
+  entries:
+  - title: Modifica di un progetto
+    url: "/copy-based/task_editing_a_subproject.html"
+  - title: Gestione dei trasferimenti e della pianificazione di SnapMirror
+    url: "/copy-based/concept_managing_snapmirror_transfers_and_schedule.html"
+    entries:
+    - title: Creazione di una pianificazione di copia dei dati per i trasferimenti
+        SnapMirror
+      url: "/copy-based/task_creating_schedule_for_snapmirror_transfers.html"
+    - title: Considerazioni per la creazione di una pianificazione di copia dei dati
+      url: "/copy-based/concept_guidelines_for_creating_a_data_copy_schedule.html"
+    - title: Modifica o eliminazione di una pianificazione di copia dei dati per i
+        trasferimenti SnapMirror
+      url: "/copy-based/task_editing_or_deleting_snapmirror_transfer_schedule.html"
+  - title: Gestione delle interfacce logiche
+    url: "/copy-based/task_managing_logical_interfaces.html"
+  - title: Rimozione di volumi da un progetto
+    url: "/copy-based/task_removing_volumes_from_a_project.html"
+  - title: Mettere in pausa e riprendere un progetto
+    url: "/copy-based/task_pausing_and_resuming_a_subproject.html"
+  - title: Interruzione di un progetto
+    url: "/copy-based/task_aborting_a_subproject.html"
+  - title: Eliminazione di un progetto
+    url: "/copy-based/task_deleting_a_project.html"
+- title: Risoluzione dei problemi
+  url: "/copy-based/concept_troubleshooting_web_interface_issues.html"
+  entries:
+  - title: Download dei file di log di transizione
+    url: "/copy-based/task_collecting_tool_logs.html"
+  - title: File di log per 7-Mode Transition Tool
+    url: "/copy-based/concept_log_files_for_7mtt.html"
+  - title: Continuare con la transizione se si verificano errori ignorabili
+    url: "/copy-based/task_acknowledging_errors_to_continue_with_transition.html"
+    entries:
+    - title: Errori ignorabili durante la transizione
+      url: "/copy-based/reference_ignorable_errors_during_transition.html"
+  - title: Transizione di una configurazione MetroCluster non riuscita a causa di
+      switchover o switchback
+    url: "/copy-based/task_transitioning_a_metrocluster_configuration_if_a_switchover_or_switchback_event_occurs.html"
+  - title: Impossibile selezionare un volume secondario dal riquadro di selezione
+      del volume
+    url: "/copy-based/reference_cannot_select_a_secondary_volume_from_volume_selection_pane.html"
+  - title: Impossibile selezionare un volume per la transizione se lo strumento non
+      riesce a recuperare le informazioni sul volume
+    url: "/copy-based/reference_cannot_select_volume_for_transition_if_tool_fails_to_retrieve_volume_information.html"
+  - title: Impossibile procedere dal riquadro di mappatura del volume se la SVM selezionata
+      non ha aggregato
+    url: "/copy-based/reference_cannot_proceed_from_volume_mapping_pane_if_selected_svm_has_no_aggregate.html"
+  - title: La compressione non viene attivata dopo la transizione da Data ONTAP 7.3.x.
+    url: "/copy-based/reference_compression_fails_to_start_after_transition.html"

@@ -1,0 +1,16 @@
+---
+permalink: copy-free/task_copy_free_transition_workflow.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, workflow 
+summary: 'Il workflow di transizione senza copia include la preparazione per la transizione, l"esecuzione della transizione e il completamento della transizione. Alcune di queste attività devono essere eseguite manualmente sui sistemi 7-Mode e sul cluster.' 
+---
+= Workflow di transizione senza copia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il workflow di transizione senza copia include la preparazione per la transizione, l'esecuzione della transizione e il completamento della transizione. Alcune di queste attività devono essere eseguite manualmente sui sistemi 7-Mode e sul cluster.
+
+image::../media/cft_highlevel_workflow.gif[workflow cft di alto livello]

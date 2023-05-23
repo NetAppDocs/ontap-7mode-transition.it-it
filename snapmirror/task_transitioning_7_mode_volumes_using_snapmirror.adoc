@@ -1,0 +1,66 @@
+---
+permalink: snapmirror/task_transitioning_7_mode_volumes_using_snapmirror.html 
+sidebar: sidebar 
+keywords: ontap, 7, mode, transition, volumes, snapmirror, ontap, clustered, data 
+summary: È possibile trasferire volumi 7-Mode in un ambiente NAS e SAN in volumi Data ONTAP in cluster utilizzando i comandi SnapMirror di Clustered Data ONTAP. Una volta completata la transizione, è necessario impostare i protocolli, i servizi e altre configurazioni sul cluster 
+---
+= Transizione di volumi 7-Mode con SnapMirror
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+A partire da ONTAP 9.12.1, non è più possibile eseguire la transizione di volumi 7-Mode utilizzando la tecnologia SnapMirror.
+
+Tuttavia, per ONTAP 9.11.1 e versioni precedenti, è possibile trasferire volumi 7-Mode in un ambiente NAS e SAN in volumi Data ONTAP in cluster utilizzando i comandi SnapMirror di Clustered Data ONTAP. È quindi necessario impostare i protocolli, i servizi e le altre configurazioni sul cluster al termine della transizione.
+
+*Consiglio:* è consigliabile utilizzare lo strumento di transizione 7-Mode per la transizione basata su copia a volumi 7-Mode per ONTAP 9.11.1 e versioni precedenti, in quanto lo strumento fornisce controlli preliminari per verificare sia 7-Mode che il cluster in ogni fase del processo di migrazione, in modo da evitare molti potenziali problemi. Lo strumento semplifica in modo significativo la migrazione di tutti i protocolli, la rete e le configurazioni dei servizi, oltre alla migrazione dei dati.
+
+http://docs.netapp.com/us-en/ontap-7mode-transition/releasenotes.html["7-Mode Transition Tool Release Notes"]
+
+Questa procedura fornisce le attività di alto livello da eseguire per la transizione utilizzando SnapMirror.
+
+[NOTE]
+====
+Prima di eseguire l'aggiornamento a ONTAP 9.12.1, attenersi alla seguente procedura:
+
+.Fasi
+. Eseguire il seguente comando per rendere scrivibile il volume di destinazione di SnapMirror:
+`snapmirror break`
+. Eseguire il seguente comando per eliminare tutte le relazioni SnapMirror TDP:
+`snapmirror delete`
+
+
+====
+. xref:concept_planning_for_transition.adoc[Verificare che i volumi che si intende trasferire siano supportati per la transizione].
+. xref:task_preparing_7_mode_system_for_transition.adoc[Preparare il sistema 7-Mode per la transizione].
+. xref:task_preparing_cluster_for_transition.adoc[Preparare il cluster per la transizione].
+. xref:task_creating_a_transition_peering_relationship.adoc[Creare una relazione di transizione tra il sistema 7-Mode come origine e la SVM come destinazione].
+. xref:task_transitioning_volumes.adoc[Copiare i dati dal volume 7-Mode al volume Clustered Data ONTAP creando una relazione SnapMirror tra i due volumi].
+
+
+Al termine della migrazione dei dati, è necessario eseguire le seguenti attività:
+
+* Facoltativo: Creare una LIF dati sulla SVM per abilitare l'accesso al client.
++
+https://docs.netapp.com/us-en/ontap/networking/index.html["Gestione di rete e LIF"].
+
+* Configurare protocolli, reti e servizi su SVM.
++
+** https://docs.netapp.com/us-en/ontap/networking/index.html["Gestione di rete e LIF"].
+** http://docs.netapp.com/ontap-9/topic/com.netapp.doc.cdot-famg-cifs/home.html["Gestione SMB/CIFS"]
+** https://docs.netapp.com/ontap-9/topic/com.netapp.doc.cdot-famg-nfs/home.html["Gestione NFS"]
+
+
+* Creare igroups e mappare LUN
++
+https://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-cm-sanag/home.html["Amministrazione SAN"]
+
+* Se si eseguono transizioni di volumi con LUN, è necessario eseguire le attività post-transizione richieste sugli host prima di ripristinare l'accesso ai volumi Data ONTAP in cluster in transizione.
++
+http://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-7mtt-sanspl/home.html["Transizione e correzione degli host SAN"]
+
+
+
+https://mysupport.netapp.com/site/global/dashboard["Supporto NetApp"]

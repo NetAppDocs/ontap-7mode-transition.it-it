@@ -1,0 +1,18 @@
+---
+permalink: san-host/concept_downtime_at_precutover_phase_of_esxi_host_transition.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, downtime, apply, configurations, precutover, phase, esxi, host 
+summary: 'È necessario pianificare il downtime nella fase di applicazione della configurazione (pre-utover) durante la transizione degli host ESXi.' 
+---
+= Downtime alla fase di applicazione della configurazione (pre-utover) della transizione degli host ESXi
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario pianificare il downtime nella fase di applicazione della configurazione (pre-utover) durante la transizione degli host ESXi.
+
+Dopo aver completato i prerequisiti per le transizioni degli host ESXi, è possibile utilizzare 7-Mode Transition Tool (7MTT) per trasferire i LUN da Data ONTAP in 7-Mode a ONTAP. Gli host, le macchine virtuali e le applicazioni ESXi possono essere online fino alla fase di applicazione della configurazione (pre-over) della transizione 7MTT. Tuttavia, nella fase di applicazione della configurazione (pre-over), tutte le applicazioni e i sistemi operativi guest devono essere spenti. Se gli host ESXi vengono avviati DA SAN o se i LUN avviati DA SAN fanno parte della transizione, anche gli host ESXi devono essere spenti nella fase di applicazione della configurazione (pre-utover).
+
+Se l'host non viene avviato DA SAN e si deve mantenere il servizio in esecuzione su LUN o LUN di array non in transizione non creati da NetApp, è possibile scegliere di non spegnerlo. Tuttavia, se non viene chiuso, potrebbe verificarsi la condizione di all-paths-down (APD). Per evitare la condizione di APD, è possibile mascherare Data ONTAP che opera in LUN 7-Mode. Vedere link:https://kb.vmware.com/s/article/1009449["ID della Knowledge base VMware 1009449"] per ulteriori informazioni.

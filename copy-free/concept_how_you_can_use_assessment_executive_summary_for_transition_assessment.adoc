@@ -1,0 +1,65 @@
+---
+permalink: copy-free/concept_how_you_can_use_assessment_executive_summary_for_transition_assessment.html 
+sidebar: sidebar 
+keywords: assessment, ontap, transition, copy, free, executive, summary 
+summary: 'Il riepilogo esecutivo della transizione fornisce un riepilogo dei controller 7-Mode, degli host e degli switch FC nel tuo ambiente. Fornisce un report di valutazione delle funzionalità e delle funzionalità correnti utilizzate e consiglia la metodologia di transizione per ciascun volume all"interno dell"ambiente di storage. Puoi utilizzare il riepilogo per pianificare la transizione.' 
+---
+= Come utilizzare il riepilogo esecutivo della valutazione per la valutazione della transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il riepilogo esecutivo della transizione fornisce un riepilogo dei controller 7-Mode, degli host e degli switch FC nel tuo ambiente. Fornisce un report di valutazione delle funzionalità e delle funzionalità correnti utilizzate e consiglia la metodologia di transizione per ciascun volume all'interno dell'ambiente di storage. Puoi utilizzare il riepilogo per pianificare la transizione.
+
+Il riepilogo esecutivo comprende le seguenti sezioni principali:
+
+
+
+== Cluster di destinazione
+
+Questa sezione elenca la versione ONTAP del cluster di destinazione selezionato durante la valutazione.
+
+
+
+== Riepilogo della raccolta di dati
+
+È possibile visualizzare l'elenco dei controller 7-Mode, degli host e degli switch per i quali sono state raccolte informazioni. È possibile visualizzare la versione di ONTAP e i dettagli del modello del controller 7-Mode. È inoltre possibile visualizzare il tipo di sistema operativo, la versione e il modello degli host.
+
+
+
+== Fattibilità della transizione e metodologia di transizione consigliata
+
+Questa sezione fornisce un riepilogo dei controlli preliminari eseguiti su ciascun controller e della fattibilità della transizione a livello di controller e volume. I volumi che appartengono alle unità vFiler presenti in `stopped` oppure `inconsistent` lo stato o i volumi offline o con restrizioni non sono inclusi per la valutazione. Il report visualizza il numero di errori e avvisi riportati nel controllo preliminare per ciascun controller. Prima di eseguire la transizione, è necessario esaminare questi errori e avvisi e risolvere eventuali problemi. I dettagli di questi controlli preliminari sono disponibili nella scheda Riepilogo del controllo preliminare di configurazione del manuale di valutazione.
+
+*Fattibilità della transizione senza copia*: Questa sezione elenca il numero di controlli preliminari a livello di controller che hanno portato a errori e avvisi per la transizione senza copia. Se un controllo preliminare non riesce per uno dei controller della coppia ha, non è possibile eseguire la transizione della coppia ha utilizzando una transizione senza copia. È necessario risolvere tutti gli errori e gli avvisi prima di eseguire la transizione della coppia ha. I dettagli di questi controlli preliminari sono disponibili nella scheda CFT Precheck Summary (Riepilogo controlli preliminari CFT) del manuale di valutazione.
+
+In base alle configurazioni di volume e controller e al riepilogo del controllo preliminare, il riepilogo esecutivo fornisce un consiglio sulla migliore metodologia di transizione per ciascun volume valutato. Ad esempio, non è possibile eseguire la transizione di volumi tradizionali in 7-Mode o di volumi FlexCache perché queste funzionalità non sono supportate in ONTAP.
+
+Per la maggior parte delle configurazioni, 7-Mode Transition Tool è lo strumento consigliato per la transizione. Tuttavia, alcuni carichi di lavoro non possono essere trasferiti utilizzando 7-Mode Transition Tool e, per questi, è necessario utilizzare un metodo di migrazione basato su host o applicazione.
+
+http://www.netapp.com/us/media/tr-4052.pdf["Report tecnico di NetApp 4052: Passaggio riuscito a Clustered Data ONTAP (Data ONTAP 8.2.x e 8.3)"]
+
+
+
+== Inventario dello storage
+
+Questa sezione fornisce le seguenti informazioni:
+
+* Storage Objects (oggetti di storage): Fornisce informazioni sul numero di oggetti di storage, ad esempio volumi, qtree, LUN, unità vFiler, Relazioni, condivisioni ed esportazioni di SnapMirror in ogni controller.
+* Utilizzo dello storage: Fornisce informazioni sullo spazio utilizzato, sullo spazio disponibile e sullo spazio utilizzato dai controller 7-Mode.
+* Licenses (licenze): Fornisce l'elenco delle licenze delle funzioni attivate su ciascun controller.
+* Protocol Configuration (Configurazione del protocollo): Fornisce informazioni dettagliate sui protocolli configurati sui controller, ad esempio i protocolli CIFS, NFS e SAN e sulle versioni.
+* Interconnessione di SnapMirror: Fornisce informazioni sui controller o sui volumi che costituiscono l'origine o la destinazione di una relazione SnapMirror.
++
+È possibile utilizzare queste informazioni per identificare i controller che si trovano nelle relazioni di SnapMirror con i controller elencati nel report, ma non sono inclusi per la valutazione.
+
+* Interconnettività SnapVault: Fornisce informazioni su controller, volumi o qtree che sono l'origine o la destinazione di una relazione SnapVault con il controller, i volumi o i qtree specificati nel controller.
+
+
+
+
+== Errori di raccolta dei dati
+
+Questa sezione fornisce informazioni dettagliate su controller e host che non possono essere raccolti da 7-Mode Transition Tool e sul motivo del guasto. I dettagli degli errori di raccolta dati sono disponibili nella scheda errori raccolta dati del manuale di valutazione. È possibile risolvere questi errori e valutare nuovamente i sistemi.

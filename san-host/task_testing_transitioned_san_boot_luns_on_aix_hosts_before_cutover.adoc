@@ -1,0 +1,39 @@
+---
+permalink: san-host/task_testing_transitioned_san_boot_luns_on_aix_hosts_before_cutover.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, boot, lun, aix, hosts, cutover, phase, copy, based 
+summary: 'Se si utilizza 7-Mode Transition Tool (7MTT) 2.2 o versione successiva e Data ONTAP 8.3.2 o versione successiva per la transizione dei LUN host Windows 7-Mode, è possibile testare i LUN Data ONTAP in cluster sottoposti a transizione prima della fase di cutover per verificare che funzionino come desiderato.' 
+---
+= Test delle LUN di boot SAN in transizione sugli host AIX prima della fase di cutover delle transizioni basate sulla copia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si utilizza 7-Mode Transition Tool (7MTT) 2.2 o versione successiva e Data ONTAP 8.3.2 o versione successiva per la transizione dei LUN host Windows 7-Mode, è possibile testare i LUN Data ONTAP in cluster sottoposti a transizione prima della fase di cutover per verificare che funzionino come desiderato.
+
+I LUN 7-Mode devono essere pronti per la transizione.
+
+È necessario mantenere la parità hardware tra l'host di test e l'host di origine ed eseguire le seguenti operazioni sull'host di test.
+
+Le LUN Data ONTAP in cluster sono in modalità di lettura/scrittura durante il test. Si convertono in modalità di sola lettura quando il test è completo e si sta preparando per la fase di cutover.
+
+.Fasi
+. Una volta completata la copia dei dati di riferimento, selezionare *Test Mode* nell'interfaccia utente 7MTT.
+. Nell'interfaccia utente 7MTT, fare clic su *Apply Configuration* (Applica configurazione).
+. Sull'host di test, accedere alla console di gestione hardware, quindi avviare l'host dal menu *SMS*.
+. Dopo l'avvio dell'host, modificare l'indirizzo IP e il nome host.
+. Verificare che i LUN Clustered Data ONTAP siano presenti:
++
+`*sanlun lun show*`
+
+. Eseguire i test in base alle necessità.
+. Spegnere l'host di test:
++
+`*shutdown -h*`
+
+. Nell'interfaccia utente 7MTT, fare clic su *Finish Testing* (fine test).
+
+
+Se le LUN Data ONTAP in cluster devono essere rimappate all'host di origine, è necessario preparare l'host di origine per la fase di cutover. Se i LUN Data ONTAP in cluster devono rimanere mappati all'host di test, non sono necessarie ulteriori operazioni sull'host di test.

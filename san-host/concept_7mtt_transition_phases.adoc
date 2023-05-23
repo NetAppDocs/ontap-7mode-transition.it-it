@@ -1,0 +1,22 @@
+---
+permalink: san-host/concept_7mtt_transition_phases.html 
+sidebar: sidebar 
+keywords: ontap, san, host, 7, mode, transition, phase 
+summary: 'Puoi utilizzare il tool di transizione 7-Mode per eseguire una transizione senza copia (CFT) o una transizione basata su copia (CBT) da Data ONTAP che opera in 7-Mode a Clustered Data ONTAP. È necessario conoscere le fasi di ciascun metodo di transizione in modo da comprendere anche quando eseguire le procedure di correzione specifiche richieste per gli host.' 
+---
+= 7-Mode Transition Tool Transition Phases
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile utilizzare 7-Mode Transition Tool (7MTT) per eseguire una transizione senza copia (CFT) o una transizione basata su copia (CBT) da Data ONTAP in 7-Mode a Clustered Data ONTAP. È necessario conoscere le fasi di ciascun metodo di transizione in modo da comprendere anche quando eseguire le procedure di correzione specifiche richieste per gli host.
+
+Le fasi CFT sono le seguenti:
+
+image::../media/delete_me_cft_phases.gif[Fasi di transizione senza copia]
+
+Le fasi CBT sono le seguenti:
+
+image::../media/delete_me_transition_operational_flow.gif[Fasi di transizione basate sulla copia]

@@ -1,0 +1,38 @@
+---
+permalink: copy-based/task_transitioning_volumes_using_7mtt.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, migrate, data, configuration, volumes 
+summary: Per migrare i volumi o una relazione SnapMirror di un volume utilizzando 7-Mode Transition Tool, è necessario prima configurare i progetti, avviare una copia di riferimento e completare i progetti. 
+---
+= Migrazione di dati e configurazione da volumi 7-Mode
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Per migrare i volumi o una relazione SnapMirror di un volume utilizzando 7-Mode Transition Tool, è necessario prima configurare i progetti, avviare una copia di riferimento e completare i progetti.
+
+* I controller e i cluster 7-Mode che si desidera includere nella transizione devono essere raggiungibili dall'host Windows in cui è installato lo strumento.
+* È necessario disporre di tutti i privilegi di amministratore per i controller e i cluster che si desidera includere nel progetto di transizione.
+* Il servizio 7-Mode Transition Tool deve essere in esecuzione sul computer su cui è installato.
++
+Il servizio è impostato su automatico per impostazione predefinita e dovrebbe avviarsi al riavvio del computer.
+
+* Non eseguire contemporaneamente operazioni di valutazione e migrazione su un controller.
+* Non modificare gli oggetti (volumi, indirizzi IP, informazioni di sistema e così via) sui controller e sui cluster 7-Mode dopo aver risolto gli errori e gli avvisi riportati dal controllo preliminare.
+* Evitare di utilizzare più sessioni di interfaccia Web che scrivono contemporaneamente sulla stessa SVM per evitare risultati indesiderati.
+* Evitare di modificare le password del controller e del cluster durante il processo di transizione.
+* Evitare di utilizzare i pulsanti del browser **Indietro**e *Avanti*, poiché il tool non supporta la navigazione nel browser Web e potrebbe causare risultati indesiderati.
+* Evitare l'aggiornamento del browser durante la transizione, poiché potrebbe causare risultati indesiderati.
+
+
+La seguente immagine illustra il processo di migrazione:
+
+image::../media/transition_gui_flow.gif[flusso gui di transizione]
+
+*Informazioni correlate*
+
+xref:concept_how_you_transition_a_stand_alone_volume.adoc[Modalità di transizione di un volume standalone]
+
+xref:concept_how_you_transition_volumes_in_a_snapmirror_relationship.adoc[Modalità di transizione dei volumi in una relazione SnapMirror]

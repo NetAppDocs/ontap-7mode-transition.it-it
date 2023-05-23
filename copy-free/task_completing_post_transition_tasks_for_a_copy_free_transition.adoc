@@ -1,0 +1,14 @@
+---
+permalink: copy-free/task_completing_post_transition_tasks_for_a_copy_free_transition.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, complete 
+summary: 'Il completamento della transizione implica la verifica manuale dei volumi e delle configurazioni in transizione, il test del carico di lavoro, l"avvio della produzione e il commit del progetto di transizione senza copia. Poiché il rollback non è consentito dopo l"operazione di commit, è necessario verificare tutti i carichi di lavoro e avviare la produzione per una breve durata per valutare se è necessario eseguire il rollback.' 
+---
+= Completamento della transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il completamento della transizione implica la verifica manuale dei volumi e delle configurazioni in transizione, il test del carico di lavoro, l'avvio della produzione e il commit del progetto di transizione senza copia. Poiché il rollback non è consentito dopo l'operazione di commit, è necessario verificare tutti i carichi di lavoro e avviare la produzione per una breve durata per valutare se è necessario eseguire il rollback.

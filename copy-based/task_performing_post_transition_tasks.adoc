@@ -1,0 +1,40 @@
+---
+permalink: copy-based/task_performing_post_transition_tasks.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, perform, manual, post, tasks 
+summary: 'Una volta completato correttamente il cutover dello storage e la transizione, è necessario eseguire alcune attività post-transizione per configurare le funzionalità non in transizione, prima di abilitare l"accesso client ai volumi ONTAP.' 
+---
+= Esecuzione manuale delle attività post-transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Una volta completato correttamente il cutover dello storage e la transizione, è necessario eseguire alcune attività post-transizione per configurare le funzionalità non in transizione, prima di abilitare l'accesso client ai volumi ONTAP.
+
+.Fasi
+. Manual (Manuale): Eseguire i passaggi necessari per configurare le funzionalità non in transizione, come indicato nel report di pre-check.
++
+Ad esempio, è necessario configurare manualmente IPv6 e FPolicy dopo la transizione.
+
+. Eliminare o consolidare le configurazioni in transizione.
++
+7-Mode Transition Tool crea una nuova istanza per tutte le configurazioni che sono passate da 7-Mode. Pertanto, potrebbero essere presenti diverse istanze di alcune configurazioni, come le pianificazioni cron, che potrebbero dover essere consolidate o eliminate manualmente.
+
+. Transizione SAN: Riconfigurare manualmente gli host.
++
+http://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-7mtt-sanspl/home.html["Transizione e correzione degli host SAN"]
+
+. Assicurarsi che la SVM sia pronta a fornire i dati ai client verificando quanto segue:
++
+** I volumi sulla SVM sono online e di lettura/scrittura.
+** Gli indirizzi IP della SVM sono disponibili e raggiungibili dai server dei nomi.
+
+
+. Reindirizzare l'accesso del client ai volumi ONTAP.
+
+
+*Informazioni correlate*
+
+http://docs.netapp.com/ontap-9/index.jsp["Documentazione NetApp: ONTAP 9"]

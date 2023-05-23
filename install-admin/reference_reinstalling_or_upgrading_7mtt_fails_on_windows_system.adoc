@@ -1,0 +1,36 @@
+---
+permalink: install-admin/reference_reinstalling_or_upgrading_7mtt_fails_on_windows_system.html 
+sidebar: sidebar 
+keywords: ontap, 7, mode, install, reinstall, upgrade, transition, tool, fail, window 
+summary: 'Questa sezione fornisce informazioni sull"errore durante la reinstallazione o l"aggiornamento dello strumento di transizione 7-Mode su un sistema Windows. Fornisce inoltre la causa dell"errore e le procedure per risolverlo.' 
+---
+= La reinstallazione o l'aggiornamento dello strumento di transizione 7-Mode non riesce sul sistema Windows
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Questa sezione fornisce informazioni sull'errore durante la reinstallazione o l'aggiornamento dello strumento di transizione 7-Mode su un sistema Windows. Fornisce inoltre la causa dell'errore e le procedure per risolverlo.
+
+* *Messaggio*
++
+`Another instance of NetApp 7-Mode Transition Tool setup or uninstall is running. Only one instance can run at a time`.
+
+* *Causa*
++
+Alcuni file nella cartella di installazione di 7-Mode Transition Tool sono aperti.
+
+* *Azione correttiva*
++
+.. Chiudere tutti i file di installazione di 7-Mode Transition Tool.
+.. Aprire la voce di registro per 7-Mode Transition Tool:
++
+... Controllare il campo *INSTALLATION_STATUS*.
+... Se il valore è `*INSTALLER_IS_RUNNING*`, impostarlo su `*INSTALLED*`.
+
+
+.. Riprovare a reinstallare o aggiornare lo strumento.
+
+
+

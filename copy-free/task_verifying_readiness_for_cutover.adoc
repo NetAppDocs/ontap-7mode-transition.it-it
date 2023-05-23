@@ -1,0 +1,36 @@
+---
+permalink: copy-free/task_verifying_readiness_for_cutover.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, verify, cutover, ready, systems 
+summary: 'Prima di disconnettere l"accesso client, è possibile verificare la preparazione del sistema 7-Mode per il cutover dello storage, ad esempio verificare se SP o RLM è configurato sul sistema 7-Mode e se gli shelf di dischi, gli aggregati e i volumi sono pronti per la transizione. È possibile risolvere manualmente qualsiasi problema prima dell"operazione di esportazione, riducendo così i tempi di inattività.' 
+---
+= Verificare che i sistemi 7-Mode siano pronti per il cutover
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Prima di disconnettere l'accesso client, è possibile verificare la preparazione del sistema 7-Mode per il cutover dello storage, ad esempio verificare se SP o RLM è configurato sul sistema 7-Mode e se gli shelf di dischi, gli aggregati e i volumi sono pronti per la transizione. È possibile risolvere manualmente qualsiasi problema prima dell'operazione di esportazione, riducendo così i tempi di inattività.
+
+È possibile eseguire questa operazione più volte prima di avviare l'operazione di esportazione e interruzione.
+
+.Fasi
+. Fare clic su *Check Readiness* (verifica disponibilità) per verificare che i sistemi 7-Mode siano pronti per il cutover.
++
+Sebbene questa operazione sia facoltativa, è consigliabile verificare la preparazione dei sistemi e risolvere i problemi prima dell'operazione di esportazione, in modo da ridurre al minimo la finestra di cutover dello storage.
+
+. Attendere il completamento dell'operazione ed effettuare le seguenti operazioni:
++
+.. Fare clic su *Save as CSV* (Salva come CSV) per salvare i risultati dell'operazione in un file.
+.. Fare clic su *Collect Tool Logs* (Raccogli log strumento) per eseguire un backup di tutti i file di log della transizione.
++
+Si consiglia di salvare i file di log dopo ogni operazione di transizione.
+
+.. Fare clic su *Close* (Chiudi) per chiudere la finestra dei risultati dell'operazione.
+
+
++
+Se il completamento dell'operazione richiede molto tempo, fare clic su *Esegui in background* per uscire dalla finestra dei risultati dell'operazione. Non modificare il progetto o eseguire altre attività quando l'operazione è in esecuzione in background. È quindi possibile visualizzare i risultati delle operazioni dalla scheda Operation History (Cronologia operazioni).
+
+

@@ -1,0 +1,19 @@
+---
+permalink: copy-free/task_verifying_transition_configurations.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, verify, configurations 
+summary: Dopo aver importato correttamente i volumi e le configurazioni 7-Mode, è necessario verificare manualmente gli aggregati, i volumi, le LUN e le configurazioni in transizione. 
+---
+= Verifica delle configurazioni in transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dopo aver importato correttamente i volumi e le configurazioni 7-Mode, è necessario verificare manualmente gli aggregati, i volumi, le LUN e le configurazioni in transizione.
+
+.Fasi
+. Verificare che gli aggregati 7-Mode, i volumi e le LUN, nonché le condivisioni CIFS, le esportazioni NFS e le mappature LUN siano in fase di transizione.
+. Verificare che tutte le configurazioni 7-Mode siano conservate.
+

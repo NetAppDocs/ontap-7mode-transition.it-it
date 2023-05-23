@@ -1,0 +1,121 @@
+---
+permalink: san-host/task_remounting_luns_with_mount_point_using_dmmp_alias_name_on_linux_hosts_after_transition.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, remount, lun, points, dmmp, alias, names 
+summary: Dopo la transizione da ONTAP in 7-Mode a Clustered Data ONTAP, è necessario rimontare i LUN con i punti di montaggio. I volumi 7-Mode sono offline e i LUN 7-Mode non sono accessibili agli host. 
+---
+= Rimontare LUN con punti di montaggio utilizzando nomi alias DMMP su host Linux dopo la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dopo la transizione da ONTAP in 7-Mode a Clustered Data ONTAP, è necessario rimontare i LUN con i punti di montaggio. I volumi 7-Mode sono offline e i LUN 7-Mode non sono accessibili agli host.
+
+Se si sta eseguendo una transizione senza copia (CFT), le procedure per `vol rehost` deve essere completo.
+
+Vedere link:https://docs.netapp.com/us-en/ontap-7mode-transition/copy-free/index.html["7-Mode Transition Tool Copy-Free Transition Guide"] per ulteriori informazioni.
+
+* Per le transizioni basate sulla copia (CBT), eseguire questi passaggi dopo aver completato l'operazione Storage Cutover nel 7MTT.
+* Per i CFT, eseguire questi passaggi dopo l'operazione Import Data & Configuration (Importa dati e configurazione) nel 7MTT.
++
+.. Generare il file di mappatura LUN 7-Mode su ONTAP:
++
+*** Per le transizioni basate sulla copia, eseguire il seguente comando dall'host Linux in cui è installato 7MTT: +
+`*transition cbt export lunmap -p _project-name_ -o _file_path_*`
++
+Ad esempio:
+
++
+`*transition cbt export lunmap -p SanWorkLoad -o c:/Libraires/Documents/7-to-C-LUN-MAPPING.csv*`
+
+*** Per le transizioni senza copia, eseguire il seguente comando dal sistema in cui è installato 7MTT: +
+`*transition cft export lunmap -p _project-name_ -s _svm-name_ -o _output-file_`
++
+Ad esempio:
+
++
+`*transition cft export lunmap -p SanWorkLoad -s svml -0 c:/Libraries/Documents/7-to-C-LUN-MAPPING-svml.csv*`
+
++
+
+NOTE: È necessario eseguire questo comando per ciascuna delle macchine virtuali di storage (SVM).
+
+
+
+.. Annotare l'ID dell'handle del dispositivo ONTAP nel file di mappatura LUN.
+.. Rimuovere i dispositivi SCSI creati per i LUN 7-Mode:
++
+*** Per rimuovere tutti i dispositivi SCSI: +
+`*rescan-scsi-bus.sh -r*`
+*** Per rimuovere ciascun dispositivo SCSI singolarmente: +
+`*echo 1> /sys/block/__SCSI_ID__/delete_`
++
+Questo comando deve essere eseguito su tutti i dispositivi LUN SCSI 7-Mode. Consultare la colonna SCSI Device ID (ID dispositivo SCSI) nella scheda SAN host LUN (LUN host SAN) del _Inventory Assessment Workbook_ per identificare gli ID dei dispositivi SCSI per i LUN.
+
+
+
+.. Scopri le nuove LUN ONTAP:
++
+`*rescan-scsi-bus.sh*`
+
+.. Verificare che i LUN ONTAP siano stati rilevati:
++
+`*sanlun lun show*`
+
++
+I dispositivi SCSI del LUN ONTAP devono essere elencati in `device filename` colonna.
+
++
+Un esempio di nome di dispositivo SCSI è `/dev/sdp`.
+
+.. In `/etc/multipath.conf` Sostituire l'ID handle del dispositivo 7-Mode con l'ID handle del dispositivo del LUN Data ONTAP in cluster in modo che il `alias name` Indica l'ID LUN di Clustered Data ONTAP.
++
+Aggiornare la sezione multipath come mostrato di seguito. Nell'esempio riportato di seguito viene illustrato il `/etc/multipath.conf file`, Prima di sostituire l'ID LUN 7-Mode. In questo esempio, l'ID LUN `360a9800037534562572b453855496b43` indica a. `dmmp_fs_lun` nome alias.
+
++
+[listing]
+----
+multipaths {
+        multipath {
+             wwid	360a9800037534562572b453855496b43
+             alias		dmmp_fs_lun
+    }
+}
+----
++
+Dopo aver sostituito l'ID LUN 7-Mode con l'ID LUN ONTAP `360a9800037534562572b453855496b43`, i file di esempio sono i seguenti:
+
++
+[listing]
+----
+multipaths {
+        multipath {
+             wwid	3600a098051764937303f4479515a7452
+             alias		dmmp_fs_lun
+    }
+}
+----
+.. Configurare i dispositivi DMMP per i LUN ONTAP:
++
+`*multipath*`
+
+.. Verificare che l'alias DMMP punti all'ID handle del dispositivo LUN ONTAP:
++
+`*multipath -ll _device_handle_ID_*`
+
+.. Montare il LUN ONTAP nella directory del punto di montaggio:
++
+`*mount /dev/mapper/__alias_namemount_dir_name__*`
+
++
+Se i punti di montaggio sono definiti nel file /etc/fstab, utilizzare il comando mount -a per montare il LUN.
+
+.. Verificare che il dispositivo DMMP sia montato:
++
+`_mount_`
+
+
+
+

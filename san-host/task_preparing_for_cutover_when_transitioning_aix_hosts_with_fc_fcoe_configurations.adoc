@@ -1,0 +1,25 @@
+---
+permalink: san-host/task_preparing_for_cutover_when_transitioning_aix_hosts_with_fc_fcoe_configurations.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, cutover, phase, aix, host, fc, fcoe, configurations 
+summary: Prima di entrare nella fase di cutover per gli host AIX con configurazioni FC o FCoE, è necessario eseguire operazioni specifiche. 
+---
+= Preparazione per la fase di cutover durante la transizione degli host AIX con configurazioni FC/FCoE.
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Prima di entrare nella fase di cutover per gli host AIX con configurazioni FC o FCoE, è necessario eseguire operazioni specifiche.
+
+È necessario stabilire la connettività fabric e lo zoning ai nodi Data ONTAP in cluster.
+
+Per le transizioni basate sulla copia, eseguire questi passaggi dopo aver completato l'operazione Storage Cutover nello strumento di transizione 7-Mode. Le transizioni senza copia non sono supportate sugli host AIX.
+
+.Fasi
+. Spegnere l'host:
++
+`*shutdown -h*`
+
+

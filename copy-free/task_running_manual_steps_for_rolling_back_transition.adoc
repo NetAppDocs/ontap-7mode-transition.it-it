@@ -1,0 +1,104 @@
+---
+permalink: copy-free/task_running_manual_steps_for_rolling_back_transition.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, manual, roll, back 
+summary: 'Se si decide di eseguire il rollback della transizione, è necessario eseguire alcune operazioni manuali sul cluster e sui sistemi 7-Mode. L"elenco delle fasi di rollback manuale viene generato dallo strumento di transizione 7-Mode.' 
+---
+= Eseguire manualmente il rollback della transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si decide di eseguire il rollback della transizione, è necessario eseguire alcune operazioni manuali sul cluster e sui sistemi 7-Mode. L'elenco delle fasi di rollback manuale viene generato dallo strumento di transizione 7-Mode.
+
+Le fasi di rollback variano a seconda della fase in cui si decide di eseguire il rollback. È necessario eseguire tutti i passaggi di questa attività se si decide di eseguire il rollback dopo un'operazione di importazione riuscita. Se si decide di eseguire il rollback in una fase precedente, è necessario eseguire un sottoinsieme di questi passaggi.
+
+.Fasi
+. Accedere al cluster.
+. Se un volume in transizione si trova in una relazione SnapMirror, scegliere una delle seguenti azioni:
++
+** Se un volume in transizione è la destinazione di una relazione SnapMirror, eliminare la relazione SnapMirror: +
+`*snapmirror delete -destination-path _destination-path_ -source-path _source-path_*`
+** Se un volume in transizione è l'origine di una relazione SnapMirror, rilasciare la relazione SnapMirror:
+`*snapmirror release -destination-path destination-path -source-path source-path*`
+
+
+. Dal cluster, verificare che le seguenti operazioni non siano in esecuzione sui volumi in transizione:
++
+.. Operazione di spostamento del volume: +
+`*volume move show*`
+.. Operazione di spostamento del LUN: +
+`*lun move show*`
+.. Operazione di copia del LUN: +
+`*lun copy show*`
+
+
+. Eseguire il rollback per tutti gli aggregati 7-Mode:
++
+.. Accedere al livello di privilegio diagnostico: +
+`*set -privilege diagnostic*`
+.. Ripristinare gli aggregati allo stato 7-Mode utilizzando `storage transition revert start` comando.
++
+Questo comando richiede parametri aggiuntivi, come l'ID del progetto di transizione e gli attributi di aggregazione. Utilizzare il comando complete con i parametri e i relativi valori, come generato dallo strumento di transizione 7-Mode.
+
+.. Verificare che il rollback abbia esito positivo per tutti gli aggregati in transizione: +
+`*storage transition revert show-status*`
++
+Il `status-code` il campo di un aggregato viene visualizzato come `revert_complete` quando il rollback ha esito positivo.
+
+
+
+. Riassegnare le proprietà dei dischi dai nodi del cluster di destinazione ai controller 7-Mode:
++
+.. Assegnare la proprietà del disco ai controller 7-Mode: +
+`*disk assign –disk _disk_id_ –s _system_id_ -force true*`
+.. Verificare che la proprietà del disco sia assegnata ai controller 7-Mode:
++
+`*storage disk show -fields owner-id*`
+
+
+
+. Rimuovere i file LIF 7-Mode dalle SVM:
++
+`*network interface delete -vserver _svm_name_ -lif _lif_name_*`
+
+. Rimuovere le restrizioni di transizione senza copia sui nodi del cluster di destinazione dal livello di privilegio diagnostico:
++
+`*storage transition pre-commit end -session-id _transition_project_id_*`
+
++
+È inoltre possibile eseguire questa operazione al termine dell'operazione di rollback e dopo che i controller 7-Mode sono operativi.
+
+. Eliminare le informazioni sul progetto di transizione relative ai nodi del cluster di destinazione utilizzando il seguente comando di livello di privilegio diagnostico:
++
+`*storage transition purge-info -session-id _transition_project_id_*`
+
++
+È inoltre possibile eseguire questa operazione al termine dell'operazione di rollback e dopo che i controller 7-Mode sono operativi.
+
+. Se l'assegnazione automatica della proprietà del disco è stata disattivata sui nodi del cluster durante l'operazione di esportazione e interruzione, abilitarla:
++
+`*storage disk assign -auto true*`
+
+. Rimuovere manualmente tutte le configurazioni che lo strumento ha eseguito la transizione alle SVM di destinazione.
++
+È possibile visualizzare i risultati delle operazioni di provisioning e importazione di SVM per ottenere informazioni sulle configurazioni transitate dallo strumento.
+
+. Rimuovere gli shelf di dischi dai nodi del cluster di destinazione, quindi ricollegarli ai controller 7-Mode.
++
+
+TIP: Utilizzare lo strumento Config Advisor per verificare il cablaggio.
+
+. Se gli ID shelf di dischi 7-Mode sono stati modificati per risolvere i conflitti con gli ID shelf di dischi dei nodi del cluster di destinazione, modificarli manualmente con gli ID precedenti e spegnere e riaccendere gli shelf di dischi affinché i nuovi ID abbiano effetto.
+. Avviare i controller 7-Mode di origine in modalità normale.
+. Da uno dei controller 7-Mode di origine, abilitare la funzionalità di Takeover:
++
+`*cf enable*`
+
+. Se l'eliminazione automatica delle copie Snapshot aggregate è stata disattivata durante l'operazione di esportazione e interruzione, abilitarla:
++
+`*options snap autodelete _aggr_name_ on*`
+
+

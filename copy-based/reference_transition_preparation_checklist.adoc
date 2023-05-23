@@ -1,0 +1,405 @@
+---
+permalink: copy-based/reference_transition_preparation_checklist.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, preparation, checklist 
+summary: Prima di iniziare la transizione, verificare di aver soddisfatto tutti i prerequisiti per la transizione. 
+---
+= Checklist per la preparazione della transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Prima di iniziare la transizione, verificare di aver soddisfatto tutti i prerequisiti per la transizione.
+
+
+
+== Requisiti di versione di ONTAP
+
+|===
+| Elemento | Sì 
+
+
+ a| 
+Versione 7-Mode supportata https://mysupport.netapp.com/matrix["Tool di matrice di interoperabilità NetApp"]
+ a| 
+
+
+
+ a| 
+Il cluster deve eseguire una delle seguenti versioni di Data ONTAP:
+
+* Data ONTAP 8.2.x
+* Data ONTAP 8.3.x
+
+ a| 
+
+
+
+ a| 
+È necessario passare a una delle seguenti versioni di ONTAP:
+
+* Utilizzo di 7-Mode Transition Tool 3.3.3:
++
+** ONTAP 9.8 o versioni precedenti supportate
+
+
+* Utilizzo di 7-Mode Transition Tool 3.3.2:
++
+** ONTAP 9.7P2 o versione successiva 9.7 P (le versioni precedenti del 9.7 non sono supportate)
+** ONTAP 9.6P7 o versioni successive 9.6 P (le versioni precedenti 9.6 non sono supportate)
+** ONTAP 9.5 o versione precedente di ONTAP 9
+** Clustered Data ONTAP 8.1.4P4 o versione successiva 8.x.
+
+
+* Utilizzo di 7-Mode Transition Tool 3.3.1:
++
+** ONTAP 9.5 o versione precedente di ONTAP 9
+** Clustered Data ONTAP 8.1.4P4 o versione successiva 8.x.
+
+
+
+ a| 
+
+|===
+
+
+== Requisiti di licenza
+
+|===
+| Elemento | Sì 
+
+
+ a| 
+La licenza SnapMirror è abilitata sul sistema 7-Mode
+ a| 
+
+
+
+ a| 
+Le licenze SnapMirror sono abilitate sui cluster primario e secondario per la transizione di una relazione SnapMirror di un volume
+ a| 
+
+
+
+ a| 
+La licenza CIFS è abilitata sul cluster, se abilitata sul sistema 7-Mode
+ a| 
+
+
+
+ a| 
+La licenza NFS è abilitata sul cluster, se abilitata sul sistema 7-Mode
+ a| 
+
+
+
+ a| 
+La licenza iSCSI è abilitata sul cluster, se abilitata sul sistema 7-Mode
+ a| 
+
+
+
+ a| 
+La licenza FC viene attivata sul cluster, se attivata sul sistema 7-Mode
+ a| 
+
+
+
+ a| 
+Le altre licenze delle funzioni, se disponibili nel sistema 7-Mode, vengono aggiunte al cluster
+ a| 
+
+|===
+
+
+== Requisiti di SnapMirror sul sistema 7-Mode
+
+|===
+| Elemento | Sì 
+
+
+ a| 
+Licenza SnapMirror
+ a| 
+
+
+
+ a| 
+`options snapmirror.enable on`
+ a| 
+
+
+
+ a| 
+`options interface.snapmirror.blocked ""`
+ a| 
+
+
+
+ a| 
+Verificare se una delle seguenti affermazioni è vera:
+
+* Il `snapmirror.access` l'opzione è impostata su tutti
+* Il `snapmirror.access` L'opzione è impostata sugli indirizzi IP di tutte le LIF dell'intercluster sul cluster
+* Se il `snapmirror.access` l'opzione è impostata su `legacy` e a. `snapmirror.checkip.enable` l'opzione è `off`, Il nome SVM viene aggiunto a `/etc/snapmirror.allow` file
+* Se il `snapmirror.access` l'opzione è impostata su legacy e su `snapmirror.checkip.enable` l'opzione è `on`, Gli indirizzi IP delle LIF di intercluster vengono aggiunti a. `/etc/snapmirror.allow` file
+
+ a| 
+
+|===
+
+
+== Impostazioni del volume nel sistema 7-Mode
+
+|===
+| Elemento | Sì 
+
+
+ a| 
+Il volume è online
+ a| 
+
+
+
+ a| 
+Il volume non è limitato
+ a| 
+
+
+
+ a| 
+Le seguenti opzioni di volume sono disattivate:
+
+* `no_i2p`
+* `read_realloc`
+* `nvfail`
+
+ a| 
+
+|===
+
+
+== Gestione dell'accesso al cluster
+
+|===
+| Elemento | Sì 
+
+
+ a| 
+SSL attivato
+
+`system services web show`
+ a| 
+
+
+
+ a| 
+HTTPS è consentito sulla LIF di gestione del cluster
+
+`system services firewall policy show`
+ a| 
+
+|===
+
+
+== Gestione dell'accesso al sistema 7-Mode
+
+|===
+| Elemento | Sì 
+
+
+ a| 
+HTTPS attivato
+
+`options httpd.admin.ssl.enable on`
+ a| 
+
+
+
+ a| 
+SSL attivato
+
+`secureadmin setup ssl`
+
+`options ssl.enable on`
+ a| 
+
+
+
+ a| 
+SSLv2 e SSLv3 sono disattivati
+
+`options ssl.v2.enable off`
+
+`options ssl.v3.enable off`
+ a| 
+
+|===
+
+
+== Requisiti di rete
+
+|===
+| Elemento | Sì 
+
+
+ a| 
+Il cluster è raggiungibile utilizzando la LIF di gestione del cluster
+ a| 
+
+
+
+ a| 
+Su ciascun nodo del cluster sono impostate una o più LIF intercluster per il multipathing, mentre su ciascun nodo sono richieste due LIF intercluster
+ a| 
+
+
+
+ a| 
+Vengono creati percorsi statici per le LIF dell'intercluster
+ a| 
+
+
+
+ a| 
+Il sistema 7-Mode e il cluster sono raggiungibili dal sistema Windows su cui è installato 7-Mode Transition Tool
+ a| 
+
+
+
+ a| 
+Il server NTP viene configurato e l'ora del sistema 7-Mode viene sincronizzata con l'ora del cluster
+ a| 
+
+|===
+
+
+== Requisiti delle porte
+
+|===
+| Elemento | Sì 
+
+
+ a| 
+Sistema 7-Mode
+
+* 10565/TCP
+* 10566/TCP
+* 10567/TCP
+* 10568/TCP
+* 10569/TCP
+* 10670/TCP
+* 80/TCP
+* 443/TCP
+
+ a| 
+
+
+
+ a| 
+Cluster
+
+* 10565/TCP
+* 10566/TCP
+* 10567/TCP
+* 10568/TCP
+* 10569/TCP
+* 10670/TCP
+* 11105/TCP
+* 80/TCP
+* 443/TCP
+
+ a| 
+
+|===
+
+
+== Requisiti NFS
+
+|===
+| Elemento | Sì 
+
+
+ a| 
+La licenza NFS viene aggiunta al cluster
+ a| 
+
+
+
+ a| 
+La voce DNS deve essere configurata per il dominio ad sulla SVM
+ a| 
+
+
+
+ a| 
+NFS viene aggiunto all'elenco dei protocolli consentiti per SVM
+ a| 
+
+
+
+ a| 
+L'inclinazione del clock tra KDC e il cluster è inferiore o uguale a 5 minuti
+ a| 
+
+|===
+
+
+== Requisiti CIFS
+
+|===
+| Elemento | Sì 
+
+
+ a| 
+La licenza CIFS viene aggiunta al cluster
+ a| 
+
+
+
+ a| 
+Se la licenza MultiStore è attivata, CIFS deve essere aggiunto all'elenco dei protocolli consentiti per l'unità vFiler proprietaria dei volumi in transizione
+ a| 
+
+
+
+ a| 
+CIFS è configurato e in esecuzione sul sistema 7-Mode
+ a| 
+
+
+
+ a| 
+Il tipo di autenticazione in 7-Mode per CIFS è Active Directory (ad) o Workgroup
+ a| 
+
+
+
+ a| 
+CIFS viene aggiunto all'elenco dei protocolli consentiti per SVM
+ a| 
+
+
+
+ a| 
+DNS è configurato per SVM
+ a| 
+
+
+
+ a| 
+Il server CIFS è configurato per SVM
+ a| 
+
+
+
+ a| 
+CIFS è in esecuzione su SVM
+ a| 
+
+|===
+*Informazioni correlate*
+
+xref:concept_preparing_for_copy_based_transition.adoc[Preparazione per la transizione basata sulla copia]

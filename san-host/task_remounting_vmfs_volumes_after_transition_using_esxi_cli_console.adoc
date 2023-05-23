@@ -1,0 +1,51 @@
+---
+permalink: san-host/task_remounting_vmfs_volumes_after_transition_using_esxi_cli_console.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, esxi, cli, vmfs, volumes 
+summary: Dopo la transizione, è possibile utilizzare ESXi CLI per rimontare i volumi e portare i datastore e le macchine virtuali nei rispettivi stati di pre-transizione. 
+---
+= Rimontare i volumi VMFS dopo la transizione utilizzando la CLI ESXi
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dopo la transizione, è possibile utilizzare ESXi CLI per rimontare i volumi e portare i datastore e le macchine virtuali nei rispettivi stati di pre-transizione.
+
+Il LUN 7-Mode originale deve essere non mappato o offline.
+
+Questi passaggi si applicano ai volumi e ai volumi di spanning.
+
+.Fasi
+. Accedere alla console ESXi utilizzando SSH.
+. Elencare i LUN appena aggiunti con firme VMFS e etichette VMFS esistenti:
++
+`*# esxcfg-volume -l*`
+
++
+Di seguito viene riportato un esempio dei LUN elencati con firme VMFS ed etichette VMFS.
+
++
+[listing]
+----
+# esxcfg-volume -l
+VMFS UUID/label: 53578567-5b5c363e-21bb-001ec9d631cb/datastore1
+Can mount: Yes
+Can resignature: Yes
+Extent name: naa.600a098054314c6c445d446f79716475:1 range: 0 - 409599
+(MB)
+----
+. Rimontare i volumi VMFS in modo persistente con la stessa firma:
++
+** Per volumi regolari: +
+`*esxcfg-volume -M|--persistent-mount _VMFS UUID|label_*`
+** Per i volumi distribuiti: +
+`*# esxcfg-volume -M vmfs-span-ds*`
+
+
+
+
+*Informazioni correlate*
+
+http://kb.vmware.com/selfservice/microsites/search.do?language=en_US&cmd=displayKC&externalId=1011387["VMware KB: Gestione vSphere delle LUN rilevate come LUN snapshot"]

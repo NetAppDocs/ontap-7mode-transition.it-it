@@ -1,0 +1,33 @@
+---
+permalink: copy-free/task_performing_manual_configuration_tasks.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, performing, manual, configuration 
+summary: 'È necessario eseguire manualmente alcune attività di configurazione richieste per i carichi di lavoro e le applicazioni che accedono ai volumi in transizione. È possibile ottenere l"elenco delle attività manuali dai risultati del controllo preliminare.' 
+---
+= Esecuzione di attività di configurazione manuali dopo la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario eseguire manualmente alcune attività di configurazione richieste per i carichi di lavoro e le applicazioni che accedono ai volumi in transizione. È possibile ottenere l'elenco delle attività manuali dai risultati del controllo preliminare.
+
+.Fasi
+. Eseguire le attività elencate nei risultati del controllo preliminare per la configurazione di funzionalità che non sono state eseguite dallo strumento o che richiedono la personalizzazione per l'ambiente in uso.
++
+xref:concept_supported_and_unsupported_name_services_configurations.adoc[Transizione dei name service: Configurazioni supportate e non supportate e procedure manuali richieste]
+
++
+xref:concept_nfs_configurations_supported_unsupported_or_requiring_manual_steps_for_transition.adoc[Transizione NFS: Configurazioni supportate e non supportate e procedure manuali richieste]
+
++
+xref:concept_cifs_configurations_supported_unsupported_or_requiring_manual_steps_for_transition.adoc[Configurazioni CIFS supportate e non supportate per la transizione a ONTAP]
+
++
+xref:concept_san_transition_supported_and_unsupported_configurations_and_required_manual_steps.adoc[Transizione SAN: Configurazioni supportate e non supportate e procedure manuali richieste]
+
++
+xref:task_transitioning_a_snapmirror_relationship.adoc[Transizione di una relazione SnapMirror]
+
+

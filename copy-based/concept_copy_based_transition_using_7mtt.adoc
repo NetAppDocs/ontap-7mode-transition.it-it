@@ -1,0 +1,51 @@
+---
+permalink: copy-based/concept_copy_based_transition_using_7mtt.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, 7, mode, tool 
+summary: 7-Mode Transition Tool consente di eseguire una transizione basata su copia raccogliendo informazioni e valutando controller 7-Mode, host, switch e applicazioni per la transizione. È quindi possibile migrare i dati e le configurazioni da 7-Mode a ONTAP. 
+---
+= Transizione basata sulla copia utilizzando 7-Mode Transition Tool
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+7-Mode Transition Tool consente di eseguire una transizione basata su copia raccogliendo informazioni e valutando controller 7-Mode, host, switch e applicazioni per la transizione. È quindi possibile migrare i dati e le configurazioni da 7-Mode a ONTAP.
+
+7-Mode Transition Tool viene eseguito su un sistema Windows o Linux. 7-Mode Transition Tool offre un'interfaccia web e un'interfaccia a riga di comando per la gestione delle operazioni di transizione.
+
+
+
+== Raccolta e valutazione di sistemi, host, switch e applicazioni ONTAP
+
+È possibile eseguire le seguenti attività di raccolta e valutazione utilizzando 7-Mode Transition Tool:
+
+* Raccogliere informazioni sull'inventario da sistemi ONTAP (controller 7-Mode e nodi nel cluster), host, switch e applicazioni host.
+* Generare il piano FC zone per configurare le zone per il raggruppamento degli host e delle destinazioni iniziatori.
+* Valutare le caratteristiche e le funzionalità dei sistemi 7-Mode e identificare il funzionamento di queste funzionalità nella versione ONTAP selezionata per la transizione.
+
+
+
+
+== Spostamento di dati e configurazioni da 7-Mode a ONTAP
+
+La transizione basata sulla copia utilizza la tecnologia SnapMirror per copiare volumi e configurazioni 7-Mode da Data ONTAP 7G e 7-Mode a ONTAP.
+
+È possibile eseguire le seguenti attività utilizzando 7-Mode Transition Tool per la migrazione basata su copia:
+
+* Eseguire la migrazione di un gruppo di volumi standalone 7-Mode o di un gruppo di volumi 7-Mode nelle relazioni di SnapMirror dei volumi da sistemi che eseguono versioni 7-Mode diverse a qualsiasi versione da ONTAP 8.2.x e versioni successive supportate.
+* Eseguire controlli preliminari sui volumi inclusi in un progetto di transizione per verificarne la compatibilità per la transizione e visualizzare eventuali azioni correttive.
+* Applica le configurazioni 7-Mode a ONTAP prima di disconnettere l'accesso al client, riducendo il downtime.
++
+La transizione basata su copia supporta la transizione delle configurazioni NAS e SAN.
+
++
+
+NOTE: La transizione SAN è supportata solo per ONTAP 8.3 e versioni successive supportate.
+
+
+
+*Informazioni correlate*
+
+xref:concept_requirements_for_copy_based_transition.adoc[Requisiti per la transizione basata su copia]

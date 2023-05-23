@@ -1,0 +1,47 @@
+---
+permalink: copy-based/task_preparing_network_for_transition.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, prepare, network 
+summary: 'È necessario preparare la rete dati del cluster per la transizione creando porte logiche (VLAN e gruppi di interfacce).' 
+---
+= Preparazione della rete per la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario preparare la rete dati del cluster per la transizione creando porte logiche (VLAN e gruppi di interfacce).
+
+Il server NTP deve essere configurato e l'ora deve essere sincronizzata nei sistemi 7-Mode e nel cluster.
+
+.Fasi
+. Creare VLAN o gruppi di interfacce sui nodi del cluster di destinazione, se necessario:
++
+`*network port vlan create*`
+
++
+oppure
+
++
+`*network port ifgrp create*`
+
++
+Per fornire la connettività di rete dopo la transizione, è necessario trasferire gli indirizzi IP 7-Mode a una topologia di rete simile in ONTAP. Ad esempio, se gli indirizzi IP 7-Mode sono configurati su porte fisiche, gli indirizzi IP devono essere trasferiti alle porte fisiche appropriate in ONTAP. Analogamente, gli indirizzi IP configurati sulle porte o sui gruppi di interfacce VLAN devono essere trasferiti alle porte o ai gruppi di interfacce VLAN appropriati in ONTAP.
+
+. Se si desidera che le SVM si trovano nell'IPSpace non predefinito, creare gli IPspaces richiesti:
++
+`*network ipspace create*`
+
++
+Gli indirizzi IP 7-Mode o i nuovi LIF selezionati per la transizione vengono creati nell'IPSpace della SVM mappata.
+
++
+
+NOTE: Gli indirizzi IPv6 non possono essere trasferiti e devono essere configurati manualmente dopo la transizione.
+
+
+
+*Informazioni correlate*
+
+https://docs.netapp.com/us-en/ontap/networking/index.html["Gestione di rete e LIF"]

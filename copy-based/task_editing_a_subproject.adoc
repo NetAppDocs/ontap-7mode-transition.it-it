@@ -1,0 +1,26 @@
+---
+permalink: copy-based/task_editing_a_subproject.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, edit, project 
+summary: È possibile modificare un progetto per aggiungere o rimuovere volumi e per modificare le configurazioni di transizione. 
+---
+= Modifica di un progetto
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile modificare un progetto per aggiungere o rimuovere volumi e per modificare le configurazioni di transizione.
+
+* È necessario aver creato un progetto.
+* Non è necessario aver avviato il progetto che si desidera modificare.
+
+
+È possibile modificare un progetto per modificare i volumi selezionati per la transizione. È inoltre possibile modificare un progetto per modificare la mappatura SVM, la mappatura dei volumi e l'interfaccia, nonché la pianificazione delle copie dei dati. Non è possibile modificare il tipo di progetto o l'unità vFiler durante la modifica di un progetto.
+
+.Fasi
+. Dalla finestra *Dashboard*, selezionare il progetto che si desidera modificare.
+. Fare clic su *Edit Project* (Modifica progetto), quindi selezionare la fase desiderata dall'elenco a discesa.
+. Completare la procedura guidata per modificare il progetto.
+

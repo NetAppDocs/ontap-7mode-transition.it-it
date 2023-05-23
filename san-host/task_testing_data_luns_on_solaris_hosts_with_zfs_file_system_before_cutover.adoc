@@ -1,0 +1,154 @@
+---
+permalink: san-host/task_testing_data_luns_on_solaris_hosts_with_zfs_file_system_before_cutover.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, data, lun, solaris, zfs, cutover, copy, based 
+summary: 'Se si utilizza 7-Mode Transition Tool (7MTT) 2.2 o versione successiva e Data ONTAP 8.3.2 o versione successiva per la transizione dei LUN dati ZFS host Solaris, è possibile testare i LUN Data ONTAP in cluster sottoposti a transizione per verificare che sia possibile montare il dispositivo MPIO prima della fase di cutover.' 
+---
+= Test delle LUN dei dati su host Solaris con file system ZFS prima della fase di cutover delle transizioni basate sulla copia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si utilizza 7-Mode Transition Tool (7MTT) 2.2 o versione successiva e Data ONTAP 8.3.2 o versione successiva per la transizione dei LUN di dati ZFS dell'host Solaris, è possibile testare i LUN Data ONTAP in cluster sottoposti a transizione per verificare che sia possibile montare il dispositivo MPIO prima della fase di cutover.
+
+* L'host di origine con LUN dati ZFS deve essere offline prima di iniziare la transizione della fase di test.
++
+Per ulteriori informazioni, consulta la sezione _Oracle Doc ID 1316472.1: La copia LUN non è supportata mentre ZFS zpool è online_.
+
+* Le nuove LUN Data ONTAP in cluster devono essere mappate all'host di test e le LUN devono essere pronte per la transizione.
+* L'esportazione dello zpool sull'host di produzione causa l'interruzione dell'applicazione; tutte le operazioni di i/o devono essere interrotte prima del LUN 7-Mode.
+
+
+È necessario mantenere la parità hardware tra l'host di test e l'host di origine ed eseguire le seguenti operazioni sull'host di test.
+
+Le LUN Data ONTAP in cluster sono in modalità di lettura/scrittura durante il test. Si convertono in modalità di sola lettura quando il test è completo e si sta preparando per la fase di cutover.
+
+. Sull'host di produzione (di origine), esportare lo zpool:
++
+`*#zpool export _pool-name_*`
+
++
+[listing]
+----
+# zpool export n_pool
+
+# zpool import
+  pool: n_pool
+    id: 5049703405981005579
+ state: ONLINE
+action: The pool can be imported using its name or numeric identifier.
+config:
+
+        n_pool                                   ONLINE
+          c0t60A98000383035356C2447384D396550d0  ONLINE
+          c0t60A98000383035356C2447384D39654Ed0  ONLINE
+----
+. Una volta completata la copia dei dati di riferimento, selezionare *Test Mode* nell'interfaccia utente 7MTT.
+. Nell'interfaccia utente 7MTT, fare clic su *Apply Configuration* (Applica configurazione).
++
+
+NOTE: Dopo questo passaggio, è possibile impostare nuovamente l'applicazione in linea e avviare le operazioni di i/o su LUN 7-Mode. Le fasi successive non causano interruzioni dell'applicazione.
+
+. Sull'host di produzione, importare lo zpool:
++
+`*#zpool import _pool-name_*`
+
++
+[listing]
+----
+# zpool import n_pool
+----
+. Sull'host di test, eseguire nuovamente la scansione delle nuove LUN Data ONTAP in cluster:
++
+.. Identificare le porte host FC (tipo fc-fabric): +
+`*#cfgadm –l*`
+.. Disconfigurare la prima porta del fabric fc: +
+`*#cfgadm –c unconfigure c1*`
+.. Configurare la prima porta del fabric fc: +
+`*#cfgadm –c unconfigure c2*`
+.. Ripetere la procedura per le altre porte fc-fabric.
+.. Visualizzare le informazioni sulle porte host e sui dispositivi collegati: +
+`*# cfgadm –al*`
+.. Ricaricare il driver: +
+`*# devfsadm –Cv*`
++
+`*# devfsadm –i iscsi*`
+
+
+
+. Verificare che i LUN Clustered Data ONTAP siano presenti:
++
+`*#sanlun lun show*`
+
++
+[listing]
+----
+# sanlun lun show
+controller(7mode)/                    device                                            host                  lun
+vserver(Cmode)       lun-pathname     filename                                          adapter    protocol   size    mode
+--------------------------------------------------------------------------------------------------------------------------
+vs_5           /vol/zfs/zfs2    /dev/rdsk/c5t600A0980383030444D2B466542485935d0s2 scsi_vhci0 FCP        6g      C
+vs_5           /vol/zfs/zfs1    /dev/rdsk/c5t600A0980383030444D2B466542485934d0s2 scsi_vhci0 FCP        6g      C
+vs_5           /vol/ufs/ufs2    /dev/rdsk/c5t600A0980383030444D2B466542485937d0s2 scsi_vhci0 FCP        5g      C
+vs_5           /vol/ufs/ufs1    /dev/rdsk/c5t600A0980383030444D2B466542485936d0s2 scsi_vhci0 FCP        5g      C
+----
+. Verificare che il test di zpool pianificato sia disponibile per l'importazione:
++
+`*#zpool import*`
+
++
+[listing]
+----
+# zpool import
+  pool: n_pool
+    id: 5049703405981005579
+ state: ONLINE
+action: The pool can be imported using its name or numeric identifier.
+config:
+
+        n_pool                                   ONLINE
+          c5t600A0980383030444D2B466542485935d0  ONLINE
+          c5t600A0980383030444D2B466542485934d0  ONLINE
+----
+. Importare lo zpool utilizzando il nome del pool o l'ID del pool:
++
+** `*#zpool import pool-name*`
+** `*#zpool import pool-id*`
+
+
++
+[listing]
+----
+#zpool import n_pool
+----
++
++
+
++
+[listing]
+----
+#zpool import 5049703405981005579
+----
+. Verificare che i set di dati ZFS siano montati:
++
+** `*zfs list*`
+** `*df -ah*`
+
+
++
+[listing]
+----
+# zfs list
+NAME           USED  AVAIL  REFER  MOUNTPOINT
+n_pool        2.67G  9.08G   160K  /n_pool
+n_pool/pool1  1.50G  2.50G  1.50G  /n_pool/pool1
+n_pool/pool2  1.16G  2.84G  1.16G  /n_pool/pool2
+----
+. Eseguire i test in base alle necessità.
+. Spegnere l'host di test.
+. Nell'interfaccia utente 7MTT, fare clic su *fine test*.
+
+
+Se le LUN Data ONTAP in cluster devono essere rimappate all'host di origine, è necessario preparare l'host di origine per la fase di cutover. Se i LUN Data ONTAP in cluster devono rimanere mappati all'host di test, non sono necessarie ulteriori operazioni sull'host di test.

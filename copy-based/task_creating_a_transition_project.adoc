@@ -1,0 +1,203 @@
+---
+permalink: copy-based/task_creating_a_transition_project.html 
+sidebar: sidebar 
+keywords: create, transition, project, ontap, copy, based, transition 
+summary: La creazione di un progetto di transizione comprende la selezione e il mapping dei volumi 7-Mode sulla macchina virtuale di storage, la mappatura delle interfacce e la creazione di pianificazioni di copia dei dati per le relazioni SnapMirror. 
+---
+= Creazione di un progetto di transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+La creazione di un progetto di transizione comprende la selezione e il mapping dei volumi 7-Mode sulla macchina virtuale di storage (SVM), la mappatura delle interfacce e la creazione di pianificazioni di copie dei dati per le relazioni SnapMirror.
+
+È necessario aver creato la SVM richiesta sul cluster.
+
+Tutti i volumi all'interno di un progetto vengono migrati nella stessa SVM. Se si desidera migrare i volumi in SVM diverse, è necessario creare più progetti.
+
+Se il cluster di destinazione esegue Data ONTAP 8.3.1 o versioni precedenti e si desidera eseguire l'operazione di pre-overing in modalità di lettura/scrittura per i volumi NAS, è necessario creare progetti separati per i volumi NAS e SAN. Questa azione è necessaria perché la modalità di lettura/scrittura di pre-overover non è supportata se si dispone di volumi SAN nel progetto.
+
+Se il progetto contiene volumi di conformità SnapLock e si desidera eseguire l'operazione di pre-over in modalità di lettura/scrittura per volumi di conformità non SnapLock, è necessario creare progetti separati per volumi di conformità SnapLock e volumi non SnapLock. Questa azione è necessaria perché la modalità di lettura/scrittura pre-over non è supportata se nel progetto sono presenti volumi di conformità SnapLock.
+
+.Fasi
+. Selezionare il metodo di migrazione *Copy-Based Transition* (transizione basata su copia) dalla pagina iniziale, quindi fare clic su *Start Planning* (Avvia pianificazione).
++
+Se il controller e il cluster richiesti dal nuovo progetto non sono stati aggiunti, immettere i dettagli nel riquadro Enter Device Credentials (Immetti credenziali dispositivo).
+
+. Verificare che tutti i Data ONTAP necessari che operano nei sistemi 7-Mode e nei sistemi ONTAP siano stati aggiunti allo strumento, quindi fare clic su *Avanti*.
++
+Viene visualizzata la pagina Select Source Volume (Seleziona volume di origine).
+
+. Selezionare i volumi 7-Mode che si desidera trasferire.
++
+.. Dal 7-Mode Controller pane, selezionare il 7-Mode controller o l'unità vFiler da cui si desidera aggiungere i volumi.
+.. Aggiungere i volumi che si desidera includere nel gruppo di progetti:
++
+|===
+| Se si desidera eseguire la transizione... | Quindi... 
+
+
+ a| 
+Volumi standalone
+ a| 
+Selezionare *Transition as stand-alone* (transizione standalone) per i volumi che si desidera trasferire.
+
+Se si seleziona il primo volume da questa colonna, viene creato un progetto standalone.
+
+
+
+ a| 
+Relazione di Volume SnapMirror
+ a| 
+... Selezionare *Transition with SnapMirror Relationship* (transizione con relazione SnapMirror) per tutti i volumi primari.
++
+Vengono creati due progetti: Un progetto primario per i volumi primari e un progetto secondario.
+
+... *Opzionale:* se il controller secondario non è incluso nel progetto, inserire i dettagli del controller nella finestra di dialogo Need additional storage system credentials (necessità di credenziali aggiuntive del sistema di storage).
+
+
+|===
++
+Se nel volume è presente almeno un LUN, il tipo di volume viene visualizzato come SAN.
+
++
+Il collegamento ipertestuale fornito nel nome del volume apre una finestra di dialogo che elenca i qtree e i LUN nel volume e i relativi attributi.
+
++
+
+TIP: È consigliabile che tutti i volumi all'interno di un singolo progetto siano della stessa definizione (standalone, primario o secondario). Ad esempio, un progetto dovrebbe contenere tutti i volumi standalone piuttosto che una combinazione di relazioni standalone e SnapMirror.
+
+.. Dopo aver selezionato tutti i volumi che si desidera includere nel progetto, fare clic su *Create Project and Continue* (Crea progetto e continua), immettere il nome del progetto e i dettagli del gruppo di progetti dalla finestra di dialogo visualizzata, quindi fare clic su *Save* (Salva) per creare il progetto.
+
+
+. Selezionare l'indirizzo IP 7-Mode e l'indirizzo IP multipath da utilizzare per la copia dei dati SnapMirror.
++
+.. Inserire l'indirizzo IP della copia dati 7-Mode.
++
+Per impostazione predefinita, questo campo è precompilato con l'indirizzo IP di gestione del sistema 7-Mode. Se necessario, è possibile modificare questo indirizzo IP in qualsiasi indirizzo IPv4 valido con l'autorizzazione per la copia dei dati.
+
+.. Se si desidera utilizzare più percorsi per il bilanciamento del carico dei trasferimenti di dati, immettere un indirizzo IP nel riquadro IP Configuration (Configurazione IP), quindi fare clic su *Next* (Avanti).
+
+
+. Dalla pagina Select SVM (Seleziona SVM), selezionare il cluster di destinazione e la SVM e attenersi alla seguente procedura:
++
+.. Selezionare il cluster di destinazione facendo clic sul nome del cluster nell'elenco a discesa Seleziona un sistema Clustered Data ONTAP.
++
+Le SVM vengono caricate nel riquadro Select SVM (Seleziona SVM).
+
+.. Selezionare la SVM di destinazione per la transizione dei volumi dal riquadro Select SVM (Seleziona SVM).
+.. Fare clic su *Avanti*.
+
+
++
+Per la transizione dei volumi 7-Mode a una configurazione MetroCluster in ONTAP, il sottotipo SVM deve essere `sync-source`.
+
++
++ se si seleziona una SVM che appartiene a Clustered Data ONTAP 8.2, viene visualizzata una finestra di dialogo per confermare se utenti e gruppi locali o condivisioni CIFS o file sono configurati sul sistema di storage 7-Mode. Lo strumento di transizione 7-Mode non supporta la transizione di utenti e gruppi locali a Clustered Data ONTAP 8.2. Se si dispone di utenti e gruppi locali, è possibile selezionare una SVM che appartiene a ONTAP 8.2.1 e versioni successive supportate.
+
+. Nella finestra di dialogo percorso di destinazione dei registri di controllo SVM, immettere un percorso nella SVM di destinazione per consentire la transizione della configurazione di controllo dal sistema di storage 7-Mode.
++
+Questo percorso viene utilizzato per salvare i registri di controllo nel sistema ONTAP.
+
+. Dalla pagina Map Volumes (Mappa volumi), selezionare i volumi di destinazione per la transizione per mappare ciascun volume di origine all'aggregato richiesto.
++
+.. Dal riquadro Map Origin Volumes to Aggregates on Target Cluster (Mappa volumi di origine in aggregati sul cluster di destinazione), selezionare gli aggregati in cui copiare i volumi 7-Mode.
+.. Per modificare il nome del volume di destinazione sul cluster, immettere un nome diverso nel campo *Volume di destinazione*.
+.. Fare clic su *Avanti*.
+
+
++
+Se tutti i volumi e le qtree inclusi nel progetto sono configurati per fornire solo richieste NFS, non è necessario fornire il percorso di audit perché la configurazione di audit non viene eseguita (anche se si fornisce il percorso di audit, questo input viene ignorato) .
+
+. Dal pannello Network Configuration (Configurazione di rete), fornire informazioni sui LIF che devono essere creati sulla SVM.
++
+
+NOTE: Non è possibile eseguire la transizione delle LIF FC e iSCSI. È necessario crearli manualmente sulla SVM.
+
++
+|===
+| Se si desidera... | Quindi... 
+
+
+ a| 
+Transizione di un indirizzo IP 7-Mode esistente
+ a| 
+.. Fare clic su *Select 7-Mode LIF* (Seleziona LIF 7-Mode*).
+.. Selezionare gli indirizzi IP 7-Mode richiesti e fornire i dettagli del nodo di destinazione e della porta di destinazione.
+.. Fare clic su *Save* (Salva).
+
+
+
+
+ a| 
+Creare una nuova LIF
+ a| 
+.. Fare clic su *Aggiungi nuovo LIF*.
+.. Nella finestra di dialogo visualizzata, immettere i dettagli del nuovo LIF.
+.. Fare clic su *Save* (Salva).
+
+
+|===
++
+Per fornire la connettività di rete dopo una transizione corretta, è necessario trasferire gli indirizzi IP 7-Mode a una topologia di rete simile in ONTAP. Ad esempio, se gli indirizzi IP 7-Mode sono configurati su porte fisiche, gli indirizzi IP devono essere trasferiti alle porte fisiche appropriate in ONTAP. Analogamente, gli indirizzi IP configurati sulle porte o sui gruppi di interfacce VLAN devono essere trasferiti alle porte o ai gruppi di interfacce VLAN appropriati in ONTAP.
+
+. Dopo aver aggiunto tutti gli indirizzi IP richiesti, fare clic su *Avanti*.
+. Nella pagina Configure Schedule (Configura pianificazione), configurare le pianificazioni delle copie dei dati per i trasferimenti baseline e incrementali, il numero di trasferimenti SnapMirror simultanei del volume e il limite di accelerazione per i trasferimenti SnapMirror per la transizione.
++
+È possibile fornire pianificazioni di copia dei dati e un limite di accelerazione per gestire in modo efficace le operazioni di copia dei dati di DR e di transizione. È possibile creare più pianificazioni, con un massimo di sette pianificazioni per ogni progetto. Ad esempio, è possibile creare pianificazioni personalizzate per i giorni feriali e i fine settimana.
+
++
+
+NOTE: Le pianificazioni sono effettive in base al fuso orario del controller 7-Mode di origine.
+
++
+.. Nel riquadro Configura pianificazione, fare clic su *Crea pianificazione*.
+.. Nella finestra di dialogo Create Data Copy Schedule (Crea pianificazione copia dati), immettere un nome per la nuova pianificazione.
+.. Nel riquadro giorni ricorrenti, selezionare *giornaliero* o *Seleziona giorni* per specificare i giorni in cui eseguire le operazioni di copia dei dati.
+.. Nel riquadro intervallo di tempo, specificare *ora di inizio* e *durata* per i trasferimenti di dati.
+.. Nel riquadro intervallo di tempo, specificare *frequenza di aggiornamento* per i trasferimenti incrementali oppure selezionare *aggiornamento continuo*.
++
+Se si abilitano aggiornamenti continui, gli aggiornamenti iniziano con un ritardo minimo di 5 minuti, a seconda della disponibilità di trasferimenti simultanei di SnapMirror.
+
+.. Nel riquadro Parameters for Transition Data Copy Operations (parametri per le operazioni di copia dei dati di transizione) (basato su Volume SnapMirror), specificare il numero massimo di trasferimenti SnapMirror simultanei del volume (come percentuale dei trasferimenti SnapMirror disponibili in fase di esecuzione e come numero) e il limite di accelerazione (larghezza di banda massima per tutti i volumi nel progetto).
++
+
+NOTE: I valori predefiniti forniti nei campi sono i valori consigliati. Quando si modificano i valori predefiniti, è necessario analizzare le pianificazioni di SnapMirror 7-Mode e assicurarsi che i valori forniti non influiscano su tali pianificazioni.
+
+.. Fare clic su *Create* (Crea).
++
+La nuova pianificazione viene aggiunta al riquadro Transition Schedule (Pianificazione transizione).
+
+.. Dopo aver aggiunto tutti i programmi di copia dei dati richiesti, fare clic su *Avanti*.
+
+
+. Se si dispone di volumi SnapLock da migrare, pianificare i volumi che richiedono la verifica della catena di custodia dopo la transizione.
++
+.. Selezionare i volumi SnapLock di origine che richiedono la verifica della catena di custodia.
++
+Il processo di verifica della catena di custodia è supportato solo per volumi SnapLock in lettura/scrittura 7-Mode e non per volumi in sola lettura. Per la verifica della catena di custodia sono supportati solo i volumi SnapLock con nomi file con caratteri ASCII.
+
+.. Fornire dettagli sul volume ONTAP che verrà utilizzato per memorizzare i dati delle impronte digitali generati durante l'operazione di verifica della catena di custodia.
++
+Il volume ONTAP deve già esistere nella SVM specificata.
+
+.. Fare clic su *Avanti*.
+
+
+
+
+*Informazioni correlate*
+
+xref:concept_guidelines_for_creating_a_data_copy_schedule.adoc[Considerazioni per la creazione di una pianificazione di copia dei dati]
+
+xref:task_creating_schedule_for_snapmirror_transfers.adoc[Creazione di una pianificazione di copia dei dati per i trasferimenti SnapMirror]
+
+xref:concept_managing_snapmirror_transfers_and_schedule.adoc[Gestione dei trasferimenti e della pianificazione di SnapMirror]
+
+xref:task_transitioning_volumes_by_excluding_a_subset_of_configurations.adoc[Personalizzare la transizione delle configurazioni 7-Mode utilizzando la CLI]
+
+xref:task_managing_logical_interfaces.adoc[Gestione delle interfacce logiche]
+
+xref:task_removing_volumes_from_a_project.adoc[Rimozione di volumi da un progetto]

@@ -1,0 +1,27 @@
+---
+permalink: inventory-collect/concept_collecting_host_and_storage_inventory_information_for_transition_assessment.html 
+sidebar: sidebar 
+keywords: ontap, 7, mode, transition, collect, storage, host, inventory, information 
+summary: 'Lo strumento di raccolta dell"inventario consente di raccogliere informazioni su sistemi, switch, host e applicazioni Clustered Data ONTAP e 7-Mode in esecuzione su questi host e di creare un report di inventario. È quindi possibile importare il report di inventario nel 7-Mode Transition Tool per la valutazione della transizione.' 
+---
+= Raccolta di informazioni sull'inventario di storage e host
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Lo strumento di raccolta dell'inventario consente di raccogliere informazioni su sistemi, switch, host e applicazioni Clustered Data ONTAP e 7-Mode in esecuzione su questi host e di creare un report di inventario. È quindi possibile importare il report di inventario nel 7-Mode Transition Tool per la valutazione della transizione.
+
+Lo strumento genera una guida per i report di inventario e un file XML per i report di inventario che contengono i dettagli di configurazione dei sistemi storage e host.
+
+Inventory Collect Tool utilizza i protocolli TLS o SSL per la comunicazione con i sistemi di storage 7-Mode e SSH o WMI per la comunicazione con gli host. Lo strumento comunica con il sistema di storage utilizzando il protocollo TLS se TLS è attivato sul sistema di storage. Se TLS è disattivato e SSLv3 è attivato su un sistema di storage, lo strumento utilizza SSLv3 per comunicare con il sistema di storage.
+
+
+NOTE: La procedura consigliata consiste nell'attivare TLS e disattivare SSLv3 sul sistema di storage per evitare vulnerabilità di sicurezza di SSLv3 (CVE-2014-3566).
+
+Se non è possibile installare 7-Mode Transition Tool nel proprio ambiente per motivi di sicurezza, è possibile importare il file XML del report di inventario generato da Inventory Collect Tool in 7-Mode Transition Tool (installato al di fuori del proprio data center) per generare un report di valutazione. È possibile utilizzare il report di valutazione per valutare le caratteristiche e le funzionalità dei sistemi e identificare il funzionamento di tali funzionalità nella versione di Clustered Data ONTAP selezionata per la transizione.
+
+Inventory Collect Tool è un'utility standalone che non richiede alcuna installazione.
+
+Consulta l'attuale 7-Mode Transition Tool link:http://docs.netapp.com/us-en/ontap-7mode-transition/releasenotes.html["Note di rilascio"] per informazioni aggiornate sulle release di destinazione supportate e sui problemi noti.

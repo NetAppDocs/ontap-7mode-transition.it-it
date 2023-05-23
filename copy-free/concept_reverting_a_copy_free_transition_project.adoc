@@ -1,0 +1,18 @@
+---
+permalink: copy-free/concept_reverting_a_copy_free_transition_project.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, performing, rollback, 7, mode 
+summary: 'Il rollback si riferisce all"interruzione della transizione al sistema ONTAP e al ripristino del sistema 7-Mode. Il rollback della transizione è manuale; tuttavia, 7-Mode Transition Tool fornisce l"elenco delle attività manuali da eseguire per un rollback.' 
+---
+= Esecuzione di un rollback della transizione a 7-Mode
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il rollback si riferisce all'interruzione della transizione al sistema ONTAP e al ripristino del sistema 7-Mode. Il rollback della transizione è manuale; tuttavia, 7-Mode Transition Tool fornisce l'elenco delle attività manuali da eseguire per un rollback.
+
+È possibile eseguire il rollback di un progetto di transizione nella fase di provisioning, esportazione, cablaggio, importazione o test di preproduzione di SVM. Non è possibile eseguire il rollback dopo il commit del progetto di transizione.
+
+I nuovi dati scritti o modificati, come LUN o cloni LUN, nei volumi in transizione andranno persi dopo un rollback. I volumi verranno ripristinati allo stato 7-Mode originale.

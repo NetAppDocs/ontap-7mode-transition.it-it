@@ -1,0 +1,14 @@
+---
+permalink: command-map/index.html 
+sidebar: sidebar 
+keywords: ontap, command, map, transition, index 
+summary: Associa i comandi 7-Mode ai relativi equivalenti in ONTAP 
+---
+= Mappa dei comandi per gli amministratori 7-Mode
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Questa guida mappa i comandi 7-Mode ai relativi equivalenti in ONTAP.

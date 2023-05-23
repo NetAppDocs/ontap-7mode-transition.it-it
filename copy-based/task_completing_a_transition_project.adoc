@@ -1,0 +1,62 @@
+---
+permalink: copy-based/task_completing_a_transition_project.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, complete, project 
+summary: Puoi completare una transizione completando i singoli progetti. Poiché questa operazione è disgregativa, è necessario valutare quando eseguirla. Durante la transizione di volumi in una relazione SnapMirror, il progetto secondario deve essere completato prima di completare la transizione del progetto primario. 
+---
+= Completamento di un progetto di transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Puoi completare una transizione completando i singoli progetti. Poiché questa operazione è disgregativa, è necessario valutare quando eseguirla. Durante la transizione di volumi in una relazione SnapMirror, il progetto secondario deve essere completato prima di completare la transizione del progetto primario.
+
+Il cutover dello storage viene completato in pochi minuti. Il tempo necessario ai client per il remount dei dati varia. La tempistica del cutover o della finestra di interruzione dello storage dipende dai seguenti fattori:
+
+* Aggiornamento finale
++
+L'aggiornamento finale dei dati dipende dalla quantità di modifiche apportate ai dati di origine dall'ultimo aggiornamento. I trasferimenti incrementali riducono al minimo la quantità di dati da trasferire durante il cutover.
+
+* Riconnessione dei client
++
+Se sono necessari aggiornamenti per ogni client per connettersi al cluster, il numero di client da aggiornare determina il tempo di cutover.
+
+
+
+Le interruzioni si applicano solo ai volumi che vengono migrati. Non è necessario spegnere l'intero sistema di storage 7-Mode di origine. I volumi sul sistema di origine che non vengono migrati possono rimanere online e accessibili.
+
+. Dalla dashboard di migrazione, selezionare il progetto che si desidera completare.
+. Disconnettere manualmente l'accesso al client.
+. Fare clic su *complete Transition* (completa transizione).
++
+.. Se si desidera mantenere i volumi di origine 7-Mode online dopo la transizione, deselezionare la casella di controllo *take source Volumes offline after Transition* (Rimuovi volumi di origine offline dopo la transizione).
++
+Per impostazione predefinita, questa opzione è selezionata e i volumi di origine vengono portati offline.
+
+.. Se è stata selezionata la casella di controllo SnapLock Volumes for Chain of Custody Verisation, selezionare la casella di controllo *i cape that i must take 7-Mode SnapLock Volumes offline during Chain of Custody Verisation* per mantenere i volumi SnapLock online dopo la transizione.
+.. Se è stata selezionata la transizione di una relazione SnapMirror tra cluster che eseguono ONTAP 9.3 o versioni successive supportate, selezionare la casella di controllo *i cape that i must convert manually relation type from data_Protection to Extended_data_Protection* (devo convertire manualmente il tipo di relazione SnapMirror da data_Protection a Extended_data_Protection*).
+.. Selezionare la casella di controllo *Personalizza il numero di trasferimenti SnapMirror simultanei e il limite di accelerazione per questa operazione* per specificare il numero di operazioni di copia dei dati SnapMirror e il limite di accelerazione.
+.. Fare clic su *continua*.
+
+
++
+Vengono visualizzati i risultati dell'operazione di cutover.
+
+
+
+Gli indirizzi IP 7-Mode selezionati per la transizione non sono configurati dal sistema di storage 7-Mode e le LIF associate create prima del cutover vengono portate nello stato di amministrazione. I volumi 7-Mode sono offline.
+
+Dal cluster, eseguire il comando vserver check lif-multi-tenancy run per verificare che i server dei nomi siano raggiungibili utilizzando le LIF in transizione.
+
+
+NOTE: Se è stata creata una nuova LIF, gli utenti e le applicazioni dei volumi in transizione devono essere rimappati ai dischi utilizzando i nuovi indirizzi IP e le nuove porte dopo che tutti i progetti sono stati completati.
+
+Se è stata completata la transizione di una relazione SnapMirror tra cluster che eseguono ONTAP 9.3 o versioni successive supportate, è necessario convertire la relazione SnapMirror dal tipo DP al tipo XDP.
+
+http://docs.netapp.com/ontap-9/topic/com.netapp.doc.pow-dap/home.html["Protezione dei dati"]
+
+*Informazioni correlate*
+
+xref:concept_guidelines_for_deciding_when_to_cutover.adoc[Linee guida per decidere quando eseguire il cutover]

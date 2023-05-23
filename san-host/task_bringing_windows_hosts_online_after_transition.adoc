@@ -1,0 +1,79 @@
+---
+permalink: san-host/task_bringing_windows_hosts_online_after_transition.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, windows, host, online 
+summary: 'Dopo aver eseguito la transizione dei LUN utilizzando 7-Mode Transition Tool (7MTT) per gli host Windows, è necessario completare diversi passaggi per portare l"host online e iniziare nuovamente la manutenzione dei dati.' 
+---
+= Portare online gli host Windows dopo la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dopo aver eseguito la transizione dei LUN utilizzando 7-Mode Transition Tool (7MTT) per gli host Windows, è necessario completare diversi passaggi per portare l'host online e iniziare nuovamente la manutenzione dei dati.
+
+Se si sta eseguendo una transizione senza copia (CFT), le procedure per `vol rehost` deve essere completo. Vedere link:https://docs.netapp.com/us-en/ontap-7mode-transition/copy-free/index.html["7-Mode Transition Tool Copy-Free Transition Guide"] per ulteriori informazioni.
+
+* Per le transizioni basate sulla copia (CBT), eseguire questi passaggi dopo aver completato l'operazione Storage Cutover nel 7-Mode Transition Tool (7MTT).
+* Per i CFT, eseguire questi passaggi dopo aver completato l'operazione di importazione e configurazione dei dati nel 7MTT.
++
+.. Generare il file di mappatura LUN 7-Mode su ONTAP:
++
+*** Per le transizioni basate sulla copia, eseguire il seguente comando dall'host in cui è installato 7MTT: +
+`*transition cbt export lunmap -p _project-name_ -o _file_path_*`
++
+Ad esempio:
+
++
+`*transition cbt export lunmap -p SanWorkLoad -o c:/Libraires/Documents/7-to-C-LUN-MAPPING.csv*`
+
+*** Per le transizioni senza copia, eseguire il seguente comando dal sistema in cui è installato 7MTT: +
+`*transition cft export lunmap -p _project-name_ -s _svm-name_ -o _output-file_*`
++
+
+NOTE: È necessario eseguire questo comando per ciascuna delle macchine virtuali di storage (SVM).
+
++
+Ad esempio:
+
++
+`*transition cft export lunmap -p SANWorkLoad -s svml -o c:/Libraries/Documents/7-to-C-LUN-MAPPING-svml.csv*`
+
+
+
+.. Se l'host Windows è stato avviato DA SAN e il LUN di avvio è stato sottoposto a transizione, accendere l'host.
+.. Aggiornare il BIOS FC per consentire l'avvio del sistema dal LUN sul controller Data ONTAP in cluster.
++
+Per ulteriori informazioni, consultare la documentazione dell'HBA.
+
+.. Sull'host Windows, eseguire nuovamente la scansione dei dischi da Gestione disco.
+.. Ottenere i numeri di serie del LUN, gli ID LUN e i corrispondenti numeri di dischi fisici Windows delle LUN mappate all'host.
++
+*** Per i sistemi che eseguono Data ONTAP ONTAPDSM: Utilizzare lo snap-in estensione gestione di Data ONTAPDSM o il cmdlet Get-sandisk di Windows PowerShell.
+*** Per i sistemi che eseguono MSDSM: Utilizzare lo strumento di raccolta dell'inventario (ICT).
++
+L'ID LUN, il numero di serie del LUN e il numero di serie corrispondente vengono acquisiti nella scheda LUN host SAN.
+
+
+
+.. Utilizzare i numeri di serie del LUN, gli ID LUN e i corrispondenti numeri di dischi fisici Windows delle LUN insieme all'output della mappa del LUN e ai dati raccolti nello stato di pre-transizione, per determinare se le LUN sono passate correttamente.
+.. Si noti se i numeri dei dischi fisici dei LUN in transizione sono cambiati.
+.. Porta online i tuoi dischi.
++
+*** Utilizzare Gestione disco di Windows per portare i dischi online che non fanno parte del failover del cluster.
+*** Utilizzare failover Cluster Manager per portare i dischi online che fanno parte del failover del cluster.
+
+
+.. Se l'host in fase di transizione esegue Windows Server 2003 e il dispositivo quorum è stato migrato, avviare i servizi cluster su tutti i nodi del cluster.
+.. Se Hyper-V è attivato sull'host e i dispositivi pass-through sono configurati sulle macchine virtuali, modificare le impostazioni da Hyper-V Manager.
++
+Il numero di disco fisico del LUN corrispondente al dispositivo pass-through potrebbe essere cambiato in seguito alla transizione.
+
+
+
+
+
+*Informazioni correlate*
+
+xref:concept_what_the_inventory_collect_tool_is.adoc[Che cos'è Inventory Collect Tool]

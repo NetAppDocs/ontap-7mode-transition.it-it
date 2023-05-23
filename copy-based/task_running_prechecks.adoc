@@ -1,0 +1,42 @@
+---
+permalink: copy-based/task_running_prechecks.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, run, prechecks 
+summary: È possibile eseguire controlli preliminari per identificare eventuali problemi prima di avviare una transizione. I controlli preliminari consentono di verificare che le origini 7-Mode, le destinazioni ONTAP e le configurazioni siano valide per la transizione. È possibile eseguire i controlli preliminari in qualsiasi numero di volte. 
+---
+= Esecuzione dei controlli preliminari
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile eseguire controlli preliminari per identificare eventuali problemi prima di avviare una transizione. I controlli preliminari consentono di verificare che le origini 7-Mode, le destinazioni ONTAP e le configurazioni siano valide per la transizione. È possibile eseguire i controlli preliminari in qualsiasi numero di volte.
+
+I controlli preliminari eseguono più di 200 controlli diversi. Ad esempio, lo strumento verifica la presenza di elementi, ad esempio se i volumi sono online e se esiste un accesso alla rete tra i sistemi.
+
+.Fasi
+. Da Dashboard, selezionare il progetto per cui si desidera eseguire le verifiche preliminari.
+. Fare clic su *Esegui controlli preliminari*.
++
+Al termine delle verifiche preliminari, nella finestra di dialogo viene visualizzato il riepilogo dei risultati.
+
++
+
+NOTE: L'esecuzione delle verifiche preliminari richiede in genere solo pochi minuti, ma la durata della fase di verifica preliminare dipende dal numero e dal tipo di errori o avvisi risolti.
+
+. Scegliere un'opzione in *Applica filtro tipo* per filtrare i risultati:
++
+** Per visualizzare tutti i messaggi relativi alla sicurezza, selezionare *Error*, *Warning*, *Informational* e *Security Only*.
+** Per visualizzare tutti i messaggi di errore relativi alla sicurezza, selezionare *errore* e *solo sicurezza*.
+** Per visualizzare tutti i messaggi di avviso relativi alla sicurezza, selezionare **Avviso**e *solo sicurezza*.
+** Per visualizzare tutti i messaggi informativi relativi alla sicurezza, selezionare *Informational* e *Security Only*.
+
+
+. Per salvare i risultati raw in formato CSV (comma-Separated Values) ed esportare i risultati, fare clic su *Save as CSV* (Salva come CSV).
++
+È possibile visualizzare le operazioni di transizione eseguite durante la transizione insieme al tipo di operazione, allo stato, all'ora di inizio, all'ora di fine e ai risultati nella scheda Operation History (Cronologia operazioni) del pannello Dashboard.
+
+
+
+Prima di avviare la copia dei dati, è necessario risolvere tutti gli errori rilevati dai controlli preliminari. È inoltre consigliabile risolvere tutti gli avvisi prima di procedere con il processo di migrazione. La risoluzione può essere la risoluzione del problema di origine del messaggio di avviso, l'implementazione di una soluzione alternativa o l'accettazione del risultato del problema.

@@ -1,0 +1,26 @@
+---
+permalink: copy-based/concept_considerations_for_space_when_transitioning_san_volumes.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, space, considerations, san, volumes 
+summary: 'Durante la transizione, è necessario assicurarsi che sia disponibile spazio sufficiente nei volumi. Oltre allo spazio necessario per memorizzare i dati e le copie Snapshot, il processo di transizione richiede anche 1 MB di spazio per LUN per l"aggiornamento di alcuni metadati del file system.' 
+---
+= Considerazioni sullo spazio durante la transizione dei volumi SAN
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Durante la transizione, è necessario assicurarsi che sia disponibile spazio sufficiente nei volumi. Oltre allo spazio necessario per memorizzare i dati e le copie Snapshot, il processo di transizione richiede anche 1 MB di spazio per LUN per l'aggiornamento di alcuni metadati del file system.
+
+Prima del cutover, è possibile utilizzare `df -h` Sul volume 7-Mode per verificare se nel volume è disponibile uno spazio libero di 1 MB per LUN. Il volume deve inoltre disporre di spazio libero equivalente alla quantità di dati che si prevede vengano scritti nel volume prima del cutover finale. Se il volume non dispone di spazio libero sufficiente, è necessario aggiungere la quantità di spazio richiesta al volume 7-Mode.
+
+Se la transizione delle LUN non riesce a causa della mancanza di spazio nel volume di destinazione, viene generato il seguente messaggio EMS: `LUN.vol.proc.fail.no.space: Processing for LUNs in volume vol1 failed due to lack of space`.
+
+In questo caso, è necessario impostare `filesys-size-fixed` attributo a. `false` Sul volume di destinazione, quindi aggiungere 1 MB per LUN di spazio libero al volume.
+
+Se sono presenti volumi contenenti LUN con spazio riservato, l'aumento del volume di 1 MB per LUN potrebbe non fornire spazio sufficiente. In questi casi, la quantità di spazio aggiuntivo da aggiungere è la dimensione della riserva Snapshot per il volume. Una volta aggiunto spazio al volume di destinazione, è possibile utilizzare `lun transition start` Comando per la transizione dei LUN.
+
+*Informazioni correlate*
+
+http://docs.netapp.com/ontap-9/index.jsp["Documentazione NetApp: ONTAP 9"]

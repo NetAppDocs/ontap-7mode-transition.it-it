@@ -1,0 +1,21 @@
+---
+permalink: copy-based/concept_considerations_for_transitioning_of_snaplock_enterprise_volumes.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, snaplock, enterprise, volumes 
+summary: Lo strumento di transizione 7-Mode supporta la transizione di volumi aziendali SnapLock e SnapLock autonomi che si trovano in una relazione SnapMirror. 
+---
+= Considerazioni per la transizione dei volumi aziendali SnapLock
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Lo strumento di transizione 7-Mode supporta la transizione di volumi aziendali SnapLock e SnapLock autonomi che si trovano in una relazione SnapMirror.
+
+Il flusso di lavoro per la transizione dei volumi aziendali SnapLock è lo stesso dei volumi FlexVol.
+
+Le relazioni di SnapMirror vengono preservate durante la transizione.
+
+
+NOTE: Lo strumento di transizione 7-Mode supporta solo transizioni simili per le relazioni SnapMirror dei volumi aziendali SnapLock. Vale a dire, sia i volumi di origine che quelli di destinazione devono essere i volumi aziendali SnapLock.

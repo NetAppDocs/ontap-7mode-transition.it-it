@@ -1,0 +1,34 @@
+---
+permalink: snapmirror/concept_considerations_for_using_snapmirror_for_transition.html 
+sidebar: sidebar 
+keywords: ontap, 7, transition, mode, snapmirror, operations, snapvault, considerations 
+summary: 'È necessario tenere presente alcune considerazioni quando si eseguono contemporaneamente operazioni di transizione con SnapMirror o SnapVault che si verificano nel sistema 7-Mode, come il numero massimo di trasferimenti SnapMirror simultanei, pianificazioni di copie dei dati e l"utilizzo di percorsi multipli per la transizione.' 
+---
+= Considerazioni sull'utilizzo di SnapMirror per la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario tenere presente alcune considerazioni quando si eseguono contemporaneamente operazioni di transizione con SnapMirror o SnapVault che si verificano nel sistema 7-Mode, come il numero massimo di trasferimenti SnapMirror simultanei, pianificazioni di copie dei dati e l'utilizzo di percorsi multipli per la transizione.
+
+
+
+== Numero massimo di trasferimenti SnapMirror simultanei
+
+Durante la transizione, il numero massimo di trasferimenti simultanei di SnapMirror supportati sui sistemi 7-Mode e ONTAP dipende dal numero di operazioni di replica di SnapMirror consentite per un modello di sistema storage specifico.
+
+Per informazioni sul numero massimo di trasferimenti SnapMirror di volumi simultanei per il modello di sistema in uso, consultare la link:https://library.netapp.com/ecm/ecm_get_file/ECMP1635994["Guida al backup e ripristino online della protezione dei dati di Data ONTAP per 7-Mode"].
+
+
+
+== Pianificazioni delle copie dei dati
+
+Le pianificazioni delle copie dei dati per le operazioni di transizione non devono sovrapporsi alle pianificazioni esistenti per le operazioni SnapMirror o SnapVault in esecuzione sul sistema 7-Mode.
+
+
+
+== Utilizzo di percorsi multipli per la transizione
+
+È possibile specificare due percorsi per la transizione utilizzando un indirizzo IP per la copia dei dati e un indirizzo IP multipath. Tuttavia, entrambi i percorsi possono essere utilizzati solo per il bilanciamento del carico, non per il failover.

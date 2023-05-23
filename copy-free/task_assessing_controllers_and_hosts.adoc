@@ -1,0 +1,26 @@
+---
+permalink: copy-free/task_assessing_controllers_and_hosts.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, assess, controllers, hosts 
+summary: È possibile raccogliere e valutare le informazioni relative a controller e host utilizzando 7-Mode Transition Tool o Inventory Collect Tool, a seconda delle normative di sicurezza del proprio ambiente. 
+---
+= Valutazione di controller e host
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile raccogliere e valutare le informazioni relative a controller e host utilizzando 7-Mode Transition Tool o Inventory Collect Tool, a seconda delle normative di sicurezza del proprio ambiente.
+
+* 7-Mode Transition Tool raccoglie le informazioni di inventario relative a controller e host aggiungendo i sistemi o utilizzando il report di inventario generato da Inventory Collect Tool.
++
+Il 7-Mode Transition Tool valuta quindi le informazioni di inventario e crea il report di valutazione della transizione.
+
+* Quando si esegue la valutazione della transizione, è necessario tenere presenti le seguenti considerazioni:
++
+** Non eseguire contemporaneamente operazioni di valutazione e migrazione su un controller.
+** Si consiglia di evitare di eseguire operazioni di valutazione su controller di storage attivi durante le ore di punta.
+
+
+

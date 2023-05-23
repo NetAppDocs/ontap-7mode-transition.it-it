@@ -1,0 +1,15 @@
+---
+permalink: san-host/reference_trademark.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, trademark 
+summary: Informazioni sui marchi per LA SAN host Transition and Remediation Guide. 
+---
+= Marchio
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+NETAPP, il logo NETAPP e i marchi elencati nella pagina dei marchi NetApp sono marchi di NetApp, Inc. Altri nomi di società e prodotti potrebbero essere marchi dei rispettivi proprietari.
+
+http://www.netapp.com/us/legal/netapptmlist.aspx[]

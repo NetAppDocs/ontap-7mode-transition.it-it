@@ -1,0 +1,53 @@
+---
+permalink: copy-free/concept_severity_levels_for_precheck_messages.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, severity, levels, precheck, messsages 
+summary: 'È possibile verificare se è possibile eseguire la transizione dei volumi 7-Mode eseguendo l"operazione di pre-controllo della transizione. Il controllo preliminare della transizione riporta tutti i problemi di transizione. Ai problemi di transizione vengono assegnati diversi livelli di severità, a seconda dell"impatto del problema sul processo di transizione.' 
+---
+= Livelli di severità per i messaggi di pre-controllo
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile verificare se è possibile eseguire la transizione dei volumi 7-Mode eseguendo l'operazione di pre-controllo della transizione. Il controllo preliminare della transizione riporta tutti i problemi di transizione. Ai problemi di transizione vengono assegnati diversi livelli di severità, a seconda dell'impatto del problema sul processo di transizione.
+
+I problemi rilevati dai controlli preliminari sono classificati nelle seguenti categorie:
+
+* *Errore*
++
+Configurazioni che non possono essere transitate.
+
++
+Non è possibile continuare la transizione se si verifica anche un errore. Di seguito sono riportati alcuni esempi di configurazioni nel sistema 7-Mode che causano un errore:
+
++
+** Volumi tradizionali
+** Volumi SnapLock
+** Volumi offline
+
+
+* *Attenzione*
++
+Configurazioni che possono causare problemi minori dopo la transizione.
+
++
+Anche le funzionalità supportate in ONTAP, ma non in transizione dallo strumento di transizione 7-Mode, generano un messaggio di avviso. È possibile continuare la transizione con questi avvisi. Tuttavia, dopo la transizione, alcune di queste configurazioni potrebbero andare perse o potrebbe essere necessario completare alcune attività manuali per abilitare queste configurazioni in ONTAP.
+
++
+Di seguito sono riportati alcuni esempi di configurazioni del sistema 7-Mode che generano un avviso:
+
++
+** IPv6
+** NFSv2
+** Configurazioni NDMP
+** Gruppi di interfacce e VLAN
+** RIP (Routing Information Protocol)
+
+
+* *Informazioni*
++
+Configurazioni che sono state correttamente transitate.
+
+

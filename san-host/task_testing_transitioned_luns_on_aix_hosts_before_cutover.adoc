@@ -1,0 +1,53 @@
+---
+permalink: san-host/task_testing_transitioned_luns_on_aix_hosts_before_cutover.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, lun, aix, cutover, phase, copy, based, test 
+summary: 'Se si utilizza 7-Mode Transition Tool (7MTT) 2.2 o versione successiva e Data ONTAP 8.3.2 o versione successiva per la transizione dei LUN host AIX, è possibile testare i LUN Data ONTAP in cluster sottoposti a transizione per verificare che sia possibile montare il dispositivo MPIO prima della fase di cutover. L"host di origine può continuare a eseguire i/o sui LUN 7-Mode di origine durante il test.' 
+---
+= Test dei LUN in transizione sugli host AIX prima della fase di cutover delle transizioni basate sulla copia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si utilizza 7-Mode Transition Tool (7MTT) 2.2 o versione successiva e Data ONTAP 8.3.2 o versione successiva per la transizione dei LUN host AIX, è possibile testare i LUN Data ONTAP in cluster sottoposti a transizione per verificare che sia possibile montare il dispositivo MPIO prima della fase di cutover. L'host di origine può continuare a eseguire i/o sui LUN 7-Mode di origine durante il test.
+
+I LUN devono essere preparati per la transizione.
+
+È necessario mantenere la parità hardware tra l'host di test e l'host di origine ed eseguire le seguenti operazioni sull'host di test.
+
+Le LUN Data ONTAP in cluster sono in modalità di lettura/scrittura durante il test. Si convertono in modalità di sola lettura quando il test è completo e si sta preparando per la fase di cutover.
+
+.Fasi
+. Una volta completata la copia dei dati di riferimento, selezionare *Test Mode* nell'interfaccia utente 7MTT.
+. Nell'interfaccia utente 7MTT, fare clic su *Apply Configuration* (Applica configurazione).
+. Sull'host di test, eseguire nuovamente la scansione delle nuove LUN Data ONTAP in cluster:
++
+`*cfgmgr*`
+
+. Verificare che i nuovi LUN Clustered Data ONTAP siano presenti:
++
+`*sanlun lun show*`
+
+. Verificare lo stato del gruppo di volumi:
++
+`*lsvg vg_name*`
+
+. Montare ciascuno dei volumi logici:
++
+`*mount -o log/dev/loglv00 _file_system_mount_point_*`
+
+. Verificare i punti di montaggio:
++
+`*df*`
+
+. Eseguire i test in base alle necessità.
+. Spegnere l'host di test:
++
+`*shutdown -h*`
+
+. Nell'interfaccia utente 7MTT, fare clic su *Finish Testing* (fine test).
+
+
+Se le LUN Data ONTAP in cluster devono essere rimappate all'host di origine, è necessario preparare l'host di origine per la fase di cutover. Se i LUN Data ONTAP in cluster devono rimanere mappati all'host di test, non sono necessarie ulteriori operazioni sull'host di test.

@@ -1,0 +1,45 @@
+---
+permalink: copy-free/task_selecting_source_7_mode_systems_for_transition.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, create, project 
+summary: Il primo passo nella pianificazione di un progetto di transizione consiste nel selezionare la coppia ha 7-Mode di origine da cui si desidera eseguire la transizione di shelf di dischi, aggregati, volumi e configurazioni, quindi creare un progetto di transizione. 
+---
+= Creazione di un progetto di transizione senza copia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Il primo passo nella pianificazione di un progetto di transizione consiste nel selezionare la coppia ha 7-Mode di origine da cui si desidera eseguire la transizione di shelf di dischi, aggregati, volumi e configurazioni, quindi creare un progetto di transizione.
+
+* I controller 7-Mode della coppia ha devono eseguire una versione ONTAP supportata su una piattaforma supportata per una transizione senza copia.
++
+https://mysupport.netapp.com/matrix["Tool di matrice di interoperabilità NetApp"]
+
+* Entrambi i controller nella configurazione ha devono essere integri.
++
+.. Selezionare il metodo di migrazione *Copy-Free Transition* dalla home page e fare clic su *Start Planning* (Avvia pianificazione).
++
+Se il controller e il cluster richiesti per un nuovo progetto non vengono aggiunti, è possibile immettere i dettagli nel riquadro Enter Device Credentials (Immetti credenziali dispositivo).
+
+.. Selezionare la coppia ha 7-Mode di origine che si desidera trasferire.
+.. Fare clic su *Create Project* (Crea progetto).
++
+... Nella finestra Dettagli progetto, specificare un nome per il progetto.
+... Selezionare un gruppo di progetti a cui aggiungere il progetto.
++
+È possibile creare un nuovo gruppo di progetti o aggiungerlo al gruppo predefinito.
+
++
+La creazione di un gruppo di progetti consente di raggruppare e monitorare i progetti correlati.
+
+... Fare clic su *Save* (Salva).
++
+Viene visualizzata la schermata Select Target Cluster (Seleziona cluster di destinazione).
+
+
+
+
+
+

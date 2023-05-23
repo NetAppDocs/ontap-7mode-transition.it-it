@@ -1,0 +1,80 @@
+---
+permalink: copy-based/reference_limits_for_transition.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, limits 
+summary: Quando si eseguono transizioni di volumi utilizzando 7-Mode Transition Tool, è necessario prendere in considerazione alcuni limiti per la valutazione, come il numero di controller e host che possono essere valutati simultaneamente. Per la migrazione, è necessario esaminare il numero di volumi in un progetto e il numero di progetti che possono essere eseguiti contemporaneamente. 
+---
+= Limiti per la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando si eseguono transizioni di volumi utilizzando 7-Mode Transition Tool, è necessario prendere in considerazione alcuni limiti per la valutazione, come il numero di controller e host che possono essere valutati simultaneamente. Per la migrazione, è necessario esaminare il numero di volumi in un progetto e il numero di progetti che possono essere eseguiti contemporaneamente.
+
+La seguente tabella elenca il numero di controller e host che possono essere valutati contemporaneamente:
+
+|===
+| Parametro | Limite massimo 
+
+
+ a| 
+Numero di controller
+ a| 
+50
+
+
+
+ a| 
+Numero di host
+ a| 
+20
+
+
+
+ a| 
+Numero di host ESXi
+ a| 
+10
+
+|===
+
+NOTE: Il numero massimo di controller 7-Mode in una singola valutazione dipende dal numero di oggetti, come il numero di volumi, qtree, quota ed esportazioni.
+
+La seguente tabella elenca il numero di volumi in un progetto e il numero di progetti che possono essere eseguiti contemporaneamente durante la migrazione:
+
+|===
+| Parametro | Limite massimo 
+
+
+ a| 
+Numero di volumi in un progetto
+ a| 
+160
+
+
+
+ a| 
+Limite consigliato per il numero totale di volumi in tutti i progetti attivi nell'interfaccia web in qualsiasi momento
+ a| 
+240
+
+
+
+ a| 
+Numero massimo di progetti attivi in un dato momento
+ a| 
+50
+
+
+NOTE: Se si dispone di 50 progetti attivi, è possibile replicare i dati da 50 sistemi di storage 7-Mode e le relative destinazioni SnapMirror associate.
+
+
+
+ a| 
+Numero di pianificazioni di copie dei dati per progetto
+ a| 
+7
+
+|===

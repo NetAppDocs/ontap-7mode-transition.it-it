@@ -1,0 +1,28 @@
+---
+permalink: san-host/task_rolling_back_clustered_ontap_luns_back_to_7_mode_on_windows_hosts.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, lun, windows, hosts 
+summary: Se le LUN ONTAP non funzionano come previsto dopo la transizione da Data ONTAP in 7-Mode, è possibile eseguire il rollback da ONTAP a LUN 7-Mode su un host Windows. 
+---
+= Rollback dei LUN ONTAP a LUN 7-Mode su host Windows
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se le LUN ONTAP non funzionano come previsto dopo la transizione da Data ONTAP in 7-Mode, è possibile eseguire il rollback da ONTAP a LUN 7-Mode su un host Windows.
+
+I LUN 7-Mode devono essere rimappati all'host.
+
+.Fasi
+. Utilizzare Hyper-V Manager per arrestare tutte le macchine virtuali (VM) in esecuzione sulle LUN.
+. Utilizzare Gestione disco di Windows per portare le LUN offline.
+. Utilizzare Cluster Disk Manager per portare i dischi del cluster offline.
+. Spegnere l'host.
+. Tornare a Data ONTAP in modalità 7.
+. Avviare l'host.
+. Utilizza Gestione disco di Windows per portare online i LUN 7-Mode.
+. Utilizzare Cluster Disk Manager per portare online i dischi del cluster.
+. Utilizza Hyper-V Manager per portare online le macchine virtuali.
+

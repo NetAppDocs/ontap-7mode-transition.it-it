@@ -1,0 +1,78 @@
+---
+permalink: copy-free/task_svm_and_volume_mapping.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, map, svm, volumes 
+summary: 'È necessario mappare ciascun controller 7-Mode della coppia ha a una SVM di destinazione. Se si dispone di unità vFiler, selezionare una SVM di destinazione per ciascuna unità vFiler. I volumi dal controller 7-Mode o dall"unità vFiler vengono trasferiti alla SVM mappata.' 
+---
+= Mappatura di SVM e volumi
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario mappare ciascun controller 7-Mode della coppia ha a una SVM di destinazione. Se si dispone di unità vFiler, selezionare una SVM di destinazione per ciascuna unità vFiler. I volumi dal controller 7-Mode o dall'unità vFiler vengono trasferiti alla SVM mappata.
+
+È necessario aver creato le SVM sul cluster di destinazione.
+
+https://docs.netapp.com/us-en/ontap/concept_administration_overview.html["Gestione del cluster con System Manager"]
+
+https://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-cm-sag/home.html["Amministrazione del sistema"]
+
+Un'unità vFiler può essere mappata solo a una singola SVM. I volumi di qualsiasi altro controller 7-Mode o unità vFiler non possono essere trasferiti a una SVM mappata.
+
+.Fasi
+. Nella scheda SVM and Volume Mapping (SVM e mappatura volume), selezionare la SVM di destinazione in cui si desidera trasferire i volumi da ciascun controller 7-Mode o unità vFiler.
++
+La SVM di destinazione può trovarsi nell'IPSpace predefinito o non predefinito.
+
+. A seconda che si desideri applicare la stessa policy del percorso di giunzione per i volumi in tutte le SVM o una diversa policy del percorso di giunzione per i volumi in ciascuna SVM, scegliere una delle seguenti azioni:
++
+|===
+| Se si desidera... | Quindi... 
+
+
+ a| 
+Applicare la stessa policy di percorso di giunzione a tutte le SVM
+ a| 
+.. Fare clic su *Apply* (Applica).
+.. Selezionare un'opzione per la policy del percorso di giunzione.
+.. Fare clic su *OK*.
+
+
+
+
+ a| 
+Specificare la policy del percorso di giunzione per ogni SVM
+ a| 
+Selezionare la policy del percorso di giunzione dall'elenco a discesa per ciascuna SVM di destinazione.
+
+|===
++
+Il criterio del percorso di giunzione specifica il percorso con cui devono essere montati i volumi Data ONTAP in cluster di destinazione per l'accesso del client. È possibile aggiungere uno dei seguenti valori per la policy del percorso di giunzione:
+
++
+** *Preservare i percorsi di montaggio 7-Mode*
++
+Conserva gli stessi percorsi di giunzione utilizzati sui volumi 7-Mode di origine e i volumi vengono montati con percorsi di giunzione nel formato `/vol/__source_volume_name__` dopo la transizione.
+
+** *Utilizzare il nome del volume Clustered Data ONTAP*
++
+Tutti i volumi Data ONTAP in cluster di destinazione vengono montati con percorsi di giunzione con il nome del volume Data ONTAP in cluster nel formato `_/target_volume_name_` dopo la transizione.
+
+** *Utilizzare il nome del volume 7-Mode*
++
+Tutti i volumi Data ONTAP in cluster di destinazione sono montati con percorsi di giunzione con il nome del volume 7-Mode nel formato `_/source_volume_name_` dopo la transizione.
+
+
+
+. Fare clic su image:../media/delete_me_edit_schedule.gif["Icona Edit (Modifica)"] Per modificare il nome del volume Clustered Data ONTAP di destinazione.
++
+Per impostazione predefinita, il volume Clustered Data ONTAP di destinazione ha lo stesso nome del volume 7-Mode. Se un volume con lo stesso nome del volume 7-Mode esiste già su SVM, al volume di destinazione viene assegnato automaticamente un nuovo nome.
+
+. Fare clic su *Save Mapping* (Salva mappatura) per ogni SVM mappata.
+. Fare clic su *Avanti*.
++
+Viene visualizzata la schermata Networking (rete).
+
+

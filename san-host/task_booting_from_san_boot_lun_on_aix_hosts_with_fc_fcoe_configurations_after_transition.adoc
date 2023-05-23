@@ -1,0 +1,65 @@
+---
+permalink: san-host/task_booting_from_san_boot_lun_on_aix_hosts_with_fc_fcoe_configurations_after_transition.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, booting, san, lun, aix, host, fc, fcoe, configuration 
+summary: 'Dopo la transizione di un LUN di avvio SAN su un host AIX con una configurazione FC o FCoE, è necessario eseguire alcuni passaggi per avviare l"host dal LUN di avvio SAN.' 
+---
+= Avvio da LUN di boot SAN su host AIX con configurazioni FC/FCoE dopo la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dopo la transizione di un LUN di avvio SAN su un host AIX con una configurazione FC o FCoE, è necessario eseguire alcuni passaggi per avviare l'host dal LUN di avvio SAN.
+
+Per le transizioni basate sulla copia, è necessario eseguire questi passaggi dopo aver completato l'operazione Storage Cutover nello strumento di transizione 7-Mode. Le transizioni senza copia non sono supportate sugli host AIX.
+
+. Accedere a hardware Management Console (HMC), quindi avviare l'host dal menu SMS.
+. Selezionare l'host.
+. Selezionare *Operations* > *Activate* > *Profile*.
+. Fare clic sulla scheda Advanced (Avanzate).
+. Selezionare *SMS*, quindi fare clic su *OK*.
+. Nel menu principale di SMS, digitare `*5*` per selezionare *5. Selezionare Boot Options* (Opzioni di avvio).
+. Invio `*1*` per selezionare *1. Selezionare Installa/Boot Device*.
+. Invio `*5*` per selezionare *5. Elenca tutti i dispositivi*.
+. Inserire il numero di dispositivo del LUN di avvio SAN ONTAP con cui si desidera avviare.
++
+Nell'esempio seguente, il LUN desiderato è l'opzione 5:
+
++
+[listing]
+----
+Select Device
+Device 	Current 	Device
+Number		Position	Name
+1.   -   PCIe2 4-port 1GbE Adapter
+     ( loc=U78CB.001.WZS062Y-P1-C12-T1 )
+2.   -   PCIe2 4-port 1GbE Adapter
+     ( loc=U78CB.001.WZS062Y-P1-C12-T2 )
+3.   -   PCIe2 4-port 1GbE Adapter
+     ( loc=U78CB.001.WZS062Y-P1-C12-T3 )
+4.   -   PCIe2 4-port 1GbE Adapter
+     ( loc=U78CB.001.WZS062Y-P1-C12-T4 )
+5.   -   107 GB		FC Harddisk, part=2 (AIX 7.1.0)
+     ( loc=U78CB.001.WZS062Y-P1-C7-T1-W232200a09830ca3a-L0000000000000000 )
+6.   -   107 GB		FC Harddisk, part=2 (AIX 7.1.0)
+     ( loc=U78CB.001.WZS062Y-P1-C7-T2-W232200a09830ca3a-L0000000000000000 )
+---------------------------------------------------------------
+Navigation keys:
+M = return to Main Menu  N = Next page of list
+ESC key = return to previous screen   X = eXit System Management Services
+---------------------------------------------------------------
+Type menu item number and press Enter or select Navigation keys: 5
+----
+. Invio `*2*` per selezionare *2. Avvio in modalità normale*.
+. Invio `*1*` Per uscire dal menu SMS.
+. Attendere l'avvio del sistema operativo.
+. Visualizzare il nome del percorso del LUN:
++
+`*sanlun lun show*`
+
++
+L'output nella colonna modalità dovrebbe essere cambiato da `7` a. `C`.
+
+

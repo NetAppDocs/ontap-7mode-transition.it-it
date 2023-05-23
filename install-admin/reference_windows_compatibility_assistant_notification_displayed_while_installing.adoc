@@ -1,0 +1,16 @@
+---
+permalink: install-admin/reference_windows_compatibility_assistant_notification_displayed_while_installing.html 
+sidebar: sidebar 
+keywords: ontap, 7, mode, install, windows, assistant, notification, compatibility 
+summary: 'A volte, durante l"installazione dello strumento, viene visualizzata la notifica di Windows Program Compatibility Assistant che indica che il programma potrebbe non essere stato installato correttamente. Questa notifica non indica necessariamente che il programma non è stato installato correttamente.' 
+---
+= Durante l'installazione dello strumento, viene visualizzata la notifica di Windows Program Compatibility Assistant
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+A volte, durante l'installazione dello strumento, viene visualizzata la notifica di Windows Program Compatibility Assistant che indica che il programma potrebbe non essere stato installato correttamente. Questa notifica non indica necessariamente che il programma non è stato installato correttamente.
+
+È possibile ignorare questa notifica facendo clic su *questo programma è stato installato correttamente*.

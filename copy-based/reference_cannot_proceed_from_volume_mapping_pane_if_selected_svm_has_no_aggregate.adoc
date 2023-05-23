@@ -1,0 +1,20 @@
+---
+permalink: copy-based/reference_cannot_proceed_from_volume_mapping_pane_if_selected_svm_has_no_aggregate.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, volume, mapping, pane, svm, aggregate, cannot, error 
+summary: 'Lo strumento visualizza un messaggio di errore, SVM non ha aggregato assegnato. Assegnare alcuni aggregati alla SVM e fare clic sul pulsante Refresh (Aggiorna) nel riquadro Volume mapping (mappatura volume) se la SVM selezionata non ha aggregato diverso dall"aggregato del nodo root.' 
+---
+= Impossibile procedere dal riquadro di mappatura del volume se la SVM selezionata non ha aggregato
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+L'apparecchio visualizza un messaggio di errore, `SVM does not have aggregate assigned. Please assign some aggregates to the SVM and click on the refresh button`, Nel riquadro *Volume mapping* se la SVM selezionata non ha aggregato diverso dall'aggregato del nodo root.
+
+
+
+== Soluzione alternativa
+
+Aggiungere un aggregato alla SVM in Clustered Data ONTAP.

@@ -1,0 +1,32 @@
+---
+permalink: copy-based/task_acknowledging_errors_to_continue_with_transition.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, continue, ignorable, errors 
+summary: 'Durante la transizione, potrebbero verificarsi alcuni errori che bloccano la transizione. Puoi scegliere di ignorare alcuni di questi errori riconoscendo i problemi attraverso la CLI del 7-Mode Transition Tool. Per continuare con la transizione, eseguire nuovamente l"operazione non riuscita dopo aver ignorato l"errore.' 
+---
+= Continuare con la transizione se si verificano errori ignorabili
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Durante la transizione, potrebbero verificarsi alcuni errori che bloccano la transizione. Puoi scegliere di ignorare alcuni di questi errori riconoscendo i problemi attraverso la CLI del 7-Mode Transition Tool. Per continuare con la transizione, eseguire nuovamente l'operazione non riuscita dopo aver ignorato l'errore.
+
+Quando si riconosce un errore, significa che si è compreso l'impatto di questi errori e li si è riconosciuti.
+
+È necessario eseguire nuovamente l'operazione di transizione dopo aver ignorato l'errore. In alcuni casi, dopo aver riconosciuto il problema, Data ONTAP esegue azioni correttive sugli aggregati e sui volumi interessati al momento dell'esecuzione successiva dell'operazione.
+
+.Fasi
+. Se l'operazione di transizione genera errori ignorabili, eseguire il seguente comando dalla CLI 7-Mode Transition Tool:
++
+`*transition cbt ignorableerrors add -p _project_name_ -c _ignorable_errorcategory_*`
+
++
+`_ignorable_errorcategory_` è il tipo di errore che è possibile ignorare.
+
+. Eseguire nuovamente l'operazione di transizione.
++
+L'errore di blocco viene modificato in un avviso e l'errore viene visualizzato come `acknowledged`. È possibile continuare la transizione con l'avviso.
+
+

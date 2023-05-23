@@ -1,0 +1,73 @@
+---
+permalink: copy-based/concept_port_requirements_for_communicating_with_7mtt.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, port, requirements, communicating, tool 
+summary: 7-Mode Transition Tool comunica con il sistema 7-Mode e il cluster su determinate porte. Assicurarsi che queste porte sul sistema 7-Mode e sul cluster siano aperte per consentire la comunicazione con 7-Mode Transition Tool. 
+---
+= Requisiti delle porte per la comunicazione con 7-Mode Transition Tool
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+7-Mode Transition Tool comunica con il sistema 7-Mode e il cluster su determinate porte. Assicurarsi che queste porte sul sistema 7-Mode e sul cluster siano aperte per consentire la comunicazione con 7-Mode Transition Tool.
+
+
+
+== Porte che devono essere aperte nei sistemi 7-Mode
+
+7-Mode Transition Tool comunica con i sistemi 7-Mode utilizzando HTTPS sulla porta 443.
+
+Il cluster richiede le seguenti porte per comunicare con i sistemi 7-Mode per la replica SnapMirror:
+
+* 10565/TCP
+* 10566/TCP
+* 10567/TCP
+* 10568/TCP
+* 10569/TCP
+* 10670/TCP
+
+
+
+
+== Porte che devono essere aperte sul cluster
+
+7-Mode Transition Tool comunica con il cluster utilizzando HTTPS sulla porta 443.
+
+I sistemi 7-Mode richiedono le seguenti porte per comunicare con il cluster per la replica SnapMirror:
+
+* 10565/TCP
+* 10566/TCP
+* 10567/TCP
+* 10568/TCP
+* 10569/TCP
+* 10670/TCP
+* 11105/TCP
+
+
+Inoltre, 7-Mode Transition Tool esegue un'operazione ping dalle LIF dell'intercluster all'indirizzo IP della copia dei dati del sistema 7-Mode per verificarne la raggiungibilità.
+
+
+
+== Porte che devono essere aperte nello strumento di transizione 7-Mode
+
+La porta 8444 dello strumento di transizione 7-Mode deve essere aperta per l'interfaccia Web.
+
+Per la transizione di netgroup e utenti e gruppi locali CIFS, devono essere soddisfatti i seguenti requisiti:
+
+* La porta 8088 del 7-Mode Transition Tool deve essere disponibile.
++
+In alternativa alla porta 8088, è necessario modificare la porta specificata da `tool.http.port` nel `transition-tool.conf` File della directory di installazione di 7-Mode Transition Tool.
+
++
+
+NOTE: Riavviare il servizio 7-Mode Transition Tool dopo aver modificato la porta nel file di configurazione.
+
+* Ciascun nodo del cluster deve avere almeno una LIF di dati configurata per la SVM di destinazione.
+* Tutti i file LIF dei dati SVM devono essere in grado di comunicare con la porta 7-Mode Transition Tool 8088 o con la porta specificata da `tool.http.port` nel `transition-tool.conf` file.
++
+
+NOTE: È necessario verificare che i firewall non blocchino questo traffico.
+
+

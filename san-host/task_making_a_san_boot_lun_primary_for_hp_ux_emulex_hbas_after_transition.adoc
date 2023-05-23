@@ -1,0 +1,74 @@
+---
+permalink: san-host/task_making_a_san_boot_lun_primary_for_hp_ux_emulex_hbas_after_transition.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, san, boot, lun, primary, hp, ux, emulex, hba 
+summary: 'Se il Data ONTAP in uso nell"host HP-UX 7-Mode è stato avviato CON SAN, è necessario impostare il LUN di avvio SAN come LUN di avvio primario dopo la transizione a Clustered Data ONTAP.' 
+---
+= Rendere un LUN di boot SAN il LUN di boot primario per gli HBA Emulex HP-UX dopo la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se il Data ONTAP in uso nell'host HP-UX 7-Mode è stato avviato CON SAN, è necessario impostare il LUN di avvio SAN come LUN di avvio primario dopo la transizione a Clustered Data ONTAP.
+
+La migrazione dei dati deve essere completata e il LUN di avvio deve essere mappato all'host dal nodo Clustered Data ONTAP.
+
+Per le transizioni basate sulla copia, eseguire questi passaggi dopo aver completato l'operazione Storage Cutover nello strumento di transizione 7-Mode. Le transizioni senza copia non sono supportate sugli host HP-UX.
+
+.Fasi
+. Dal prompt della shell, elencare gli HBA Emulex:
++
+`*drivers*`
+
+. Selezionare Emulex HBA, quindi premere Invio.
+. Selezionare *Setup Utility*.
+. Selezionare *Configura parametri di avvio*.
+. Selezionare *Configure Boot Devices* (Configura dispositivi di avvio).
+. Selezionare un dispositivo dall'elenco, quindi premere Invio.
+. Selezionare *Scan targets* (destinazione scansione).
+. Selezionare il LUN con il percorso di avvio desiderato, quindi premere Invio.
+. Selezionare *Peripheral dev* come modalità, quindi premere Invio.
+. Selezionare *Boot this device via WWN* (Avvia questo dispositivo tramite WWN*), quindi premere Invio.
++
+Viene visualizzato il LUN di avvio.
+
+. Premere *Esc* fino a tornare al prompt della shell.
+. Visualizzare il LUN per ottenere il percorso del LUN da cui si desidera eseguire l'avvio:
++
+`*map -r*`
+
++
+I percorsi LUN sono elencati nella colonna Device (dispositivo). I dischi SAN avviabili vengono visualizzati sotto la colonna della tabella di mappatura e presentano "`WWN`" e "`Part 1`" nella stringa di output.
+
+. Immettere il percorso LUN del LUN di avvio SAN.
++
+Un esempio di percorso LUN è fs0.
+
+. Uscire dalla shell EFI:
++
+`*cd efi*`
+
+. Inserire la directory HPUX:
++
+`*cd hpux*`
+
+. Fare in modo che il nuovo LUN di avvio SAN di Clustered Data ONTAP sia il LUN di avvio primario:
++
+`*bcfg boot add 1 hpux.efi "HP-UX-Primary Boot"*`
+
+. Aggiornare manualmente il BIOS HBA inserendo una voce in EFI per IL LUN di avvio SAN.
+. Creare un percorso di boot alternativo:
++
+`*bcfg boot add 2 hpux.efi “HPUX alternate boot”*`
+
+. Creare un terzo percorso di boot:
++
+`*bcfg boot add 2 hpux.efi “HPUX third boot”*`
+
+. Creare un quarto percorso di boot:
++
+`*bcfg boot add 2 hpux.efi “HPUX fourth boot”*`
+
+

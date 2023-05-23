@@ -1,0 +1,32 @@
+---
+permalink: install-admin/reference_installation_or_uninstallation_of_7mtt_is_blocked.html 
+sidebar: sidebar 
+keywords: ontap, 7, mode, install, uninstall, transition, tool, blocked 
+summary: 'Quando si utilizza il programma di installazione di 7-Mode Transition Tool o il programma di disinstallazione per eseguire qualsiasi operazione (ad esempio installazione, riparazione, reinstallazione, aggiornamento, disinstallazione), Viene visualizzato il seguente messaggio di errore: È in esecuzione un"altra istanza di installazione o disinstallazione dello strumento di transizione 7-Mode di NetApp. È possibile eseguire una sola istanza alla volta.' 
+---
+= L'installazione o la disinstallazione di 7-Mode Transition Tool è bloccata
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Quando si utilizza il programma di installazione di 7-Mode Transition Tool o il programma di disinstallazione per eseguire qualsiasi operazione (ad esempio installazione, riparazione, reinstallazione, aggiornamento, disinstallazione), viene visualizzato il seguente messaggio di errore: `Another instance of NetApp 7-Mode Transition Tool Setup or Uninstall is running. Only one instance can run at a time`.
+
+
+
+== Soluzione alternativa
+
+Prima di iniziare, assicurarsi che non vi siano istanze o finestre di dialogo aperte di 7-Mode Transition Tool. In caso contrario, potrebbe essere necessario eseguire nuovamente la procedura.
+
+. Aprire *Registry* facendo clic su *Start*.
+. In *Cerca programmi e file*, immettere `*RegEdit*`.
+. Quando l'Editor del Registro di sistema è aperto, individuare l'hive del Registro di sistema HKEY_LOCAL_MACHINE.
+. Espandere l'hive HKEY_LOCAL_MACHINE facendo clic sull'icona di espansione a sinistra dell'icona della cartella.
+. Continuare ad espandere le chiavi di registro e le sottochiavi fino a individuare `HKEY_LOCAL_MACHINE\ SOFTWARE \NetApp \7-Mode Transition Tool`.
+. Fare clic su *7-Mode Transition Tool*.
+. Fare clic con il pulsante destro del mouse SU INSTALLATION_STATUS e selezionare *Modify*.
+. Modificare il valore da INSTALLER_RUNNING a INSTALLED e fare clic su *OK*.
+
+
+A questo punto, dovrebbe essere possibile eseguire qualsiasi operazione utilizzando il programma di installazione di 7-Mode Transition Tool o il programma di disinstallazione.

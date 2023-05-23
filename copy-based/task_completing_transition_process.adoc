@@ -1,0 +1,44 @@
+---
+permalink: copy-based/task_completing_transition_process.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, complete 
+summary: 'Poiché l"operazione completa è un"interruzione, è necessario valutare quando eseguirla. Durante la transizione di volumi in una relazione SnapMirror, il progetto secondario deve essere completato prima di completare la transizione del progetto primario.' 
+---
+= Completamento della transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Poiché l'operazione completa è un'interruzione, è necessario valutare quando eseguirla. Durante la transizione di volumi in una relazione SnapMirror, il progetto secondario deve essere completato prima di completare la transizione del progetto primario.
+
+.Fasi
+. Eseguire una copia dei dati dai volumi 7-Mode ai volumi ONTAP:
++
+`*transition cbt update -p _project_name_ -t _available-transfers-percentage_ -c _snapmirror-throttlemax-cap-concurrent-transfers_ -x -r interactive*`
+
++
+In questo modo si riduce il downtime durante il cutover dello storage.
+
+. Manuale: Disconnettere l'accesso al client.
+. Completare il processo di transizione:
++
+`*transition cbt cutover -p _project_name_ -t _available-transfers-percentage_ -c _max-cap-concurrent-transfers_ -x _snapmirror-throttle_ -r interactive -o [true|false]*`
+
++
+Per impostazione predefinita, i volumi 7-Mode vengono resi offline. Per mantenere i volumi 7-Mode online, impostare `-o` opzione a. `false`.
+
++
+
+NOTE: Se il cutover non riesce per qualche motivo, ad esempio il sistema 7-Mode o il cluster non è raggiungibile, è necessario risolvere i problemi ed eseguire `transition cutover` di nuovo comando.
+
++
+Per ulteriori informazioni sui comandi, vedere le pagine man.
+
++
+La sessione di transizione passa allo stato di cutover. Se il cutover ha esito positivo, la sessione passa allo stato completato.
+
+
+
+È necessario eseguire qualsiasi attività post-transizione e riconnettere i client ai volumi ONTAP.

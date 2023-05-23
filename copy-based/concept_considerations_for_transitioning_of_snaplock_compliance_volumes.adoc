@@ -1,0 +1,26 @@
+---
+permalink: copy-based/concept_considerations_for_transitioning_of_snaplock_compliance_volumes.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, snaplock, compliance, volumes 
+summary: Lo strumento di transizione 7-Mode supporta la transizione dei volumi standalone di conformità SnapLock e dei volumi di conformità SnapLock che sono in relazione con SnapMirror. 
+---
+= Considerazioni per la transizione dei volumi di conformità SnapLock
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Lo strumento di transizione 7-Mode supporta la transizione dei volumi standalone di conformità SnapLock e dei volumi di conformità SnapLock che sono in relazione con SnapMirror.
+
+Il flusso di lavoro per la transizione dei volumi standalone di conformità SnapLock è lo stesso di quello per la transizione dei volumi FlexVol.
+
+La transizione delle relazioni di SnapMirror per i volumi di conformità SnapLock non è automatizzata dallo strumento di transizione 7-Mode. È necessario eseguire la transizione dei volumi di conformità SnapLock primario e secondario come volumi autonomi e quindi risincronizzare manualmente le relazioni.
+
+È possibile includere i volumi di conformità SnapLock (sia standalone che in quelli che si trovano nelle relazioni SnapMirror) come volume standalone in progetti standalone, primari e secondari.
+
+La modalità di lettura/scrittura precutover non è supportata per i progetti con volumi di conformità SnapLock. È consigliabile creare progetti separati per i volumi di conformità SnapLock e per i volumi di conformità non SnapLock, in quanto la modalità di lettura/scrittura pre-overing non è supportata se i volumi di conformità SnapLock sono inclusi nel progetto.
+
+Durante l'operazione di cutover, se il volume selezionato è un volume di conformità SnapLock e rappresenta la destinazione di una relazione SnapMirror, la relazione di SnapMirror tra il volume 7-Mode e il volume ONTAP viene eliminata senza l'operazione di interruzione di SnapMirror. Questa azione consente ai volumi di conformità ONTAP SnapLock secondari di rimanere in modalità di sola lettura. I volumi di conformità ONTAP SnapLock secondari devono essere in modalità di sola lettura affinché l'operazione di risincronizzazione sia eseguita correttamente tra i volumi di conformità SnapLock primario e secondario.
+
+Vedere https://kb.netapp.com/Advice_and_Troubleshooting/Data_Protection_and_Security/SnapMirror/How_to_transition_the_7-Mode_SnapLock_Compliance_volumes_with_SnapMirror_relationship_to_clustered_Data_ONTAP["Come eseguire la transizione dei volumi di conformità SnapLock 7-Mode con la relazione SnapMirror a Clustered Data ONTAP"]

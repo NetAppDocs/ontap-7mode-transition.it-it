@@ -1,0 +1,26 @@
+---
+permalink: copy-free/concept_collecting_and_assessing_inventory_information.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, collecting, assessing, inventory, information 
+summary: 'È possibile raccogliere informazioni sull"inventario da controller, host e switch FC. È quindi possibile valutare le caratteristiche e le funzionalità di questi sistemi e identificare il funzionamento di tali funzionalità nella versione di ONTAP selezionata per la transizione.' 
+---
+= Raccolta e valutazione delle informazioni di inventario
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile raccogliere informazioni sull'inventario da controller, host e switch FC. È quindi possibile valutare le caratteristiche e le funzionalità di questi sistemi e identificare il funzionamento di tali funzionalità nella versione di ONTAP selezionata per la transizione.
+
+È possibile raccogliere le informazioni sull'inventario in due modi:
+
+* Se la sicurezza dell'ambiente lo consente, è possibile installare 7-Mode Transition Tool e utilizzarlo per raccogliere le informazioni di inventario.
+* È possibile importare il report XML dell'inventario generato da Inventory Collect Tool, quindi eseguire la valutazione.
+
+
+In entrambi i casi, è necessario utilizzare la versione più recente di Inventory Collect Tool per raccogliere l'inventario.
+
+Per valutare le informazioni di inventario per una transizione senza copia, è necessario selezionare entrambi i nodi della coppia ha 7-Mode di origine. Anche se la valutazione viene eseguita per nodo, se un singolo nodo non è idoneo per la transizione, non è possibile eseguire la transizione dell'intera coppia ha.
+
+image::../media/delete_me_cbt_assessment_workflow.gif[delete me cbt assessment workflow]

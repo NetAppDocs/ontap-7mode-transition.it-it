@@ -1,0 +1,37 @@
+---
+permalink: san-host/task_setting_up_esxi_hosts_configured_for_san_boot_after_transition.html 
+sidebar: sidebar 
+keywords: esxi, configured, boot, ontap, san, host, transition 
+summary: 'Se l"host ESXi è stato configurato per l"avvio SAN prima della transizione da Data ONTAP in modalità 7, è necessario eseguire diversi passaggi prima di utilizzare l"host dopo la transizione.' 
+---
+= Configurazione degli host ESXi configurati per l'avvio SAN dopo la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se l'host ESXi è stato configurato per l'avvio SAN prima della transizione da Data ONTAP in modalità 7, è necessario eseguire diversi passaggi prima di utilizzare l'host dopo la transizione.
+
+* Per le transizioni basate sulla copia, eseguire questi passaggi prima di avviare l'operazione Storage Cutover in 7MTT.
+* Per le transizioni senza copia, eseguire questi passaggi prima di avviare l'operazione Export & Halt 7-Mode Systems nel 7MTT.
+
+
+.Fasi
+. Riconfigurare il BIOS HBA FC e FCoE per l'avvio dal LUN di avvio SAN del sistema Clustered Data ONTAP.
+. Avviare l'host ESXi.
+. Ripristinare le impostazioni di pre-transizione delle configurazioni host.
+. Per gli host iSCSI, vedere come riconfigurare VMware iSCSI Initiator.
++
+xref:concept_reconfiguration_of_vmware_software_iscsi_initiator.adoc[Riconfigurare VMware iSCSI Initiator]
+
+. Rimontare gli archivi dati VMFS creati dal LUN di avvio nell'installazione predefinita.
+
+
+*Informazioni correlate*
+
+xref:task_remounting_vmfs_volumes_after_transition_using_vsphere_client.adoc[Rimontare i volumi VMFS dopo la transizione utilizzando vSphere Client]
+
+xref:task_remounting_vmfs_volumes_after_transition_using_esxi_cli_console.adoc[Rimontare i volumi VMFS dopo la transizione utilizzando la CLI ESXi]
+
+https://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-cm-sanag/home.html["Amministrazione SAN"]

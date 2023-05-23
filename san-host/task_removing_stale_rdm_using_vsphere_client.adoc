@@ -1,0 +1,42 @@
+---
+permalink: san-host/task_removing_stale_rdm_using_vsphere_client.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, remove, stal, rdm, vsphere, client 
+summary: Tutte le LUN RDM diventano obsolete durante la transizione da ONTAP in 7-Mode a Clustered Data ONTAP. Dopo la transizione, gli RDM devono essere rimossi e ricollegati prima che i LUN possano iniziare a gestire i dati. 
+---
+= Rimozione di RDM obsoleti con vSphere Client
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Tutte le LUN RDM diventano obsolete durante la transizione da ONTAP in 7-Mode a Clustered Data ONTAP. Dopo la transizione, gli RDM devono essere rimossi e ricollegati prima che i LUN possano iniziare a gestire i dati.
+
+È necessario disporre del nome della macchina virtuale e del percorso del disco RDM dal _Inventory Assessment Workbook_.
+
+.Fasi
+. Aprire l'host ESXi o vCenter Server che gestisce l'host ESXi.
+. Fare clic con il pulsante destro del mouse sulla macchina virtuale, quindi selezionare *Edit Settings* (Modifica impostazioni).
++
+Viene visualizzata la finestra VM Properties (Proprietà macchina virtuale).
+
+. Selezionare il disco rigido dall'elenco dei dispositivi che utilizzano il percorso del disco nel _Inventory Assessment Workbook_.
+. Prendere nota di *Virtual Device Node* e *Compatibility Mode* dalla finestra delle proprietà della macchina virtuale.
++
+Virtual Device Node (nodo dispositivo virtuale): SCSI 0:2
+
++
+Compatibility Mode (modalità di compatibilità): Fisico
+
+. Fare clic su *Rimuovi*.
+. Selezionare *Remove from virtual machine (Rimuovi dalla macchina virtuale) ed eliminare i file dal disco*.
+. Fare clic su *OK*.
++
+Viene visualizzato un messaggio di errore simile al seguente. È possibile ignorare questo messaggio.
+
++
+image::../media/reconfigure_virtual_machine.gif[riconfigurare la macchina virtuale]
+
+. Fare clic su *Chiudi*.
+

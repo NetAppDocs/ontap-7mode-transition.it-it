@@ -1,0 +1,92 @@
+---
+permalink: copy-free/concept_san_transition_supported_and_unsupported_configurations_and_required_manual_steps.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, san, transition, supported, unsupported, required, manual, steps 
+summary: È necessario conoscere le configurazioni SAN che sono state eseguite dallo strumento di transizione 7-Mode. È inoltre necessario conoscere le funzionalità SAN 7-Mode non supportate in ONTAP, in modo da poter intraprendere le azioni necessarie prima della transizione. 
+---
+= Transizione SAN: Configurazioni supportate e non supportate e procedure manuali richieste
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È necessario conoscere le configurazioni SAN che sono state eseguite dallo strumento di transizione 7-Mode. È inoltre necessario conoscere le funzionalità SAN 7-Mode non supportate in ONTAP, in modo da poter intraprendere le azioni necessarie prima della transizione.
+
+Verificare tutti i messaggi di errore e di avviso relativi al controllo preliminare per valutare l'impatto di tali configurazioni sulla transizione.
+
+
+
+== Configurazioni in transizione
+
+7-Mode Transition Tool consente di eseguire la transizione delle seguenti configurazioni SAN:
+
+* Servizi FC e iSCSI
+* mappe igroups e LUN
++
+[NOTE]
+====
+** gli igroup 7-Mode che non sono mappati ad alcuna LUN non vengono trasferiti alle SVM di destinazione.
+** Per Clustered Data ONTAP 8.3.0 e 8.3.1, la transizione delle configurazioni di mappatura di igroups e LUN non è supportata durante l'operazione di pre-cluutover.
++
+Gli igroups richiesti vengono invece creati durante l'operazione di cutover. Per i volumi primari e autonomi, le LUN vengono mappate a igroups durante l'operazione di cutover. Tuttavia, per i volumi secondari, la mappatura delle LUN in igroups non è supportata durante l'operazione di cutover. È necessario mappare manualmente le LUN secondarie dopo aver completato la transizione dei volumi primari.
+
+** Per ONTAP 8.3.2 e versioni successive supportate, le configurazioni di mappatura di igroups e LUN vengono applicate durante l'operazione di pre-uscita.
+
+
+====
+
+
+
+
+== Configurazioni non supportate in ONTAP
+
+Le configurazioni non supportate in ONTAP sono le seguenti:
+
+* Cloni LUN snapshot con copia di Snapshot 7-Mode
++
+I cloni LUN snapshot con copia di backup presenti nelle copie Snapshot non sono supportati per alcuna operazione di ripristino. Queste LUN non sono accessibili in ONTAP. È necessario dividere o eliminare i cloni LUN 7-Mode Snapshot con copia supportata prima della transizione.
+
+* LUN con un valore del parametro ostipe di vld, image o qualsiasi stringa definita dall'utente
++
+È necessario modificare il valore del parametro ostype per tali LUN o eliminare i LUN prima della transizione.
+
+* Suddivisione del clone del LUN
++
+Prima della transizione, è necessario attendere il completamento delle operazioni di split del clone LUN attivo oppure interrompere la split del clone LUN ed eliminare il LUN.
+
+
+
+Le seguenti funzionalità 7-Mode consentono di continuare con il processo di transizione, ma non sono supportate in ONTAP:
+
+* Il `lun share` comando
++
+Condivisione di un LUN su protocolli NAS
+
+* SnapValidator
+
+
+
+
+== Configurazioni che devono essere eseguite manualmente
+
+Le seguenti configurazioni devono essere eseguite manualmente:
+
+* LIF SAN
++
+È necessario creare manualmente i file LIF prima della transizione.
+
+* Portset
++
+È necessario configurare manualmente gli igroups associati a un portset dopo la transizione.
+
+* Informazioni sull'elenco di accesso iSCSI
+* Configurazione iSNS
+* Configurazioni iSCSI CHAP e RADIUS
+
+
+*Informazioni correlate*
+
+https://docs.netapp.com/ontap-9/topic/com.netapp.doc.cdot-famg-nfs/home.html["Gestione NFS"]
+
+https://docs.netapp.com/us-en/ontap/networking/index.html["Gestione di rete e LIF"]

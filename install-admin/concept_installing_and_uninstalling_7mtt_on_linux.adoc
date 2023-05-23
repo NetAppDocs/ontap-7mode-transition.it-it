@@ -1,0 +1,19 @@
+---
+permalink: install-admin/concept_installing_and_uninstalling_7mtt_on_linux.html 
+sidebar: sidebar 
+keywords: ontap, 7, mode, install, uninstall, linux, transition, copy, based 
+summary: 'È possibile scaricare e installare 7-Mode Transition Tool su un sistema Linux utilizzando l"interfaccia della riga di comando. Se necessario, è possibile disinstallare 7-Mode Transition Tool.' 
+---
+= Installazione o disinstallazione di 7-Mode Transition Tool su Linux (solo transizione basata su copia)
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile scaricare e installare 7-Mode Transition Tool su un sistema Linux utilizzando l'interfaccia della riga di comando. Se necessario, è possibile disinstallare 7-Mode Transition Tool.
+
+Su un sistema Linux è possibile eseguire solo la transizione basata su copia. La transizione senza copia non è supportata su Linux.
+
+
+IMPORTANT: L'interfaccia web di 7-Mode Transition Tool non è supportata su Linux. È necessario utilizzare la CLI per eseguire attività di transizione basate su copia su un sistema Linux.

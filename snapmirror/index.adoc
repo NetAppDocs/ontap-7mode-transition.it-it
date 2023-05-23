@@ -1,0 +1,14 @@
+---
+permalink: snapmirror/index.html 
+sidebar: sidebar 
+keywords: ontap, 7, mode, snapmirror, transition, index, data 
+summary: Descrive la transizione dei dati dai sistemi 7-Mode a ONTAP utilizzando i comandi SnapMirror. 
+---
+= Transizione dei dati 7-Mode con tecnologia SnapMirror®
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Descrive la transizione dei dati dai sistemi 7-Mode a ONTAP utilizzando i comandi SnapMirror.

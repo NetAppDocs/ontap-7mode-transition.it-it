@@ -1,0 +1,20 @@
+---
+permalink: copy-based/concept_impact_of_takeover_and_giveback_on_transition.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, impact, takeover, giveback 
+summary: Operazioni di transizione, come preparazione, avvio, pausa, ripresa o completamento della transizione, errore durante un takeover o un giveback del controller. 
+---
+= Impatto del takeover e del giveback sulla transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Operazioni di transizione, come preparazione, avvio, pausa, ripresa o completamento della transizione, errore durante un takeover o un giveback del controller.
+
+Se un'operazione di transizione non riesce a causa di un takeover, è necessario attendere il completamento del giveback, quindi eseguire nuovamente l'operazione di transizione.
+
+Se si verifica un controllo durante un trasferimento di riferimento, il trasferimento non riesce. Per riprendere il trasferimento di riferimento dal punto in cui è stato interrotto, è necessario attendere il completamento del giveback.
+
+La copia dei dati riprende in base alla pianificazione configurata.

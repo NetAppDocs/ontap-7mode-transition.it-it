@@ -1,0 +1,14 @@
+---
+permalink: san-host/concept_transitioning_solaris_host_data_luns_with_sun_volume_manager.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, solarist, host, data, lun, sun, volume, manager 
+summary: 'Se si esegue la transizione di un LUN di dati host Solaris con Gestione volumi Solaris da Data ONTAP in 7-Mode a Clustered Data ONTAP utilizzando il tool di transizione 7-Mode (7MTT), è necessario eseguire passaggi specifici prima e dopo la transizione per risolvere i problemi di transizione sull"host.' 
+---
+= Transizione dei LUN dei dati host Solaris con Sun Volume Manager
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si esegue la transizione di un LUN di dati host Solaris con Gestore volumi Solaris da Data ONTAP in 7-Mode a Clustered Data ONTAP utilizzando il tool di transizione 7-Mode (7MTT), è necessario eseguire passaggi specifici prima e dopo la transizione per risolvere i problemi di transizione sull'host.

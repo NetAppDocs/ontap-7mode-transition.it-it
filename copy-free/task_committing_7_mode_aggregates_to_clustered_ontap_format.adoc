@@ -1,0 +1,25 @@
+---
+permalink: copy-free/task_committing_7_mode_aggregates_to_clustered_ontap_format.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, commit, project 
+summary: 'L"ultima fase della transizione consiste nell"eseguire il commit del progetto di transizione senza copia. Dopo aver eseguito il commit degli aggregati, non è possibile eseguire un rollback in 7-Mode.' 
+---
+= Impegno del progetto di transizione senza copia
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+L'ultima fase della transizione consiste nell'eseguire il commit del progetto di transizione senza copia. Dopo aver eseguito il commit degli aggregati, non è possibile eseguire un rollback in 7-Mode.
+
+È necessario aver verificato manualmente i dati e le configurazioni in transizione e i carichi di lavoro e le applicazioni testati.
+
+Tutte le copie Snapshot a livello aggregato create nella fase di esportazione vengono eliminate.
+
+.Fasi
+. Fare clic su *Commit*.
+. Nel messaggio di avviso visualizzato, fare clic su *Sì*.
+
+
+Tutte le restrizioni della fase di test di pre-produzione vengono rimosse e i volumi in transizione possono servire i dati di produzione, se non vengono eseguiti nella fase di test di pre-produzione.

@@ -1,0 +1,14 @@
+---
+permalink: san-host/concept_aix_host_remediation.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, aix, host, remediation 
+summary: 'Se si utilizza 7-Mode Transition Tool (7MTT) per passare da Data ONTAP in 7-Mode a Clustered Data ONTAP in un ambiente SAN, è necessario eseguire una serie di passaggi sull"host AIX prima e dopo la transizione per evitare complicazioni di transizione.' 
+---
+= Risoluzione degli host DI AIX
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si utilizza 7-Mode Transition Tool (7MTT) per passare da Data ONTAP in 7-Mode a Clustered Data ONTAP in un ambiente SAN, è necessario eseguire una serie di passaggi sull'host AIX prima e dopo la transizione per evitare complicazioni di transizione.

@@ -1,0 +1,33 @@
+---
+permalink: copy-free/concept_when_to_revert_and_when_to_call_technical_support_transition.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, roll, back, transition, technical, support 
+summary: È possibile eseguire il rollback senza assistenza quando si esegue un rollback su cluster di test o di laboratorio, ma è necessario contattare il supporto tecnico se si verificano problemi durante o dopo la transizione o se si desidera eseguire il rollback di una transizione su un cluster di produzione. 
+---
+= Quando eseguire il rollback di una transizione e quando chiamare il supporto tecnico
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile eseguire il rollback senza assistenza quando si esegue un rollback su cluster di test o di laboratorio, ma è necessario contattare il supporto tecnico se si verificano problemi durante o dopo la transizione o se si desidera eseguire il rollback di una transizione su un cluster di produzione.
+
+
+IMPORTANT: Non tentare di eseguire il rollback di una transizione in un ambiente di produzione senza l'assistenza del supporto tecnico.
+
+Se si verifica una delle seguenti circostanze, contattare immediatamente il supporto tecnico:
+
+* Il processo di transizione non riesce e non può essere completato e non si è certi di cosa fare.
+* Il processo di transizione termina, ma il cluster non è utilizzabile in un ambiente di produzione.
+* Il processo di transizione termina e il cluster entra in produzione, ma non sei soddisfatto del suo comportamento.
+* Il processo di transizione termina per alcuni dati e configurazioni, ma non per tutti, e si decide di eseguire il rollback della transizione.
+* Si è verificato un problema con il processo di transizione e non è possibile risolvere il problema con i messaggi di risposta agli errori nello strumento di transizione 7-Mode, nei messaggi degli eventi EMS di Data ONTAP e nella Knowledge base di NetApp.
++
+https://kb.netapp.com/["Knowledge base di NetApp"]
+
+
+
+*Informazioni correlate*
+
+xref:task_collecting_tool_logs.adoc[Download dei file di log di transizione]

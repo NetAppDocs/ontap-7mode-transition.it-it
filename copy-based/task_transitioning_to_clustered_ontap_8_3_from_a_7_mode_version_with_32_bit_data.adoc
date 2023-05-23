@@ -1,0 +1,25 @@
+---
+permalink: copy-based/task_transitioning_to_clustered_ontap_8_3_from_a_7_mode_version_with_32_bit_data.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, prepare, supported, released, 8.3 
+summary: Aggregati a 32 bit, volumi e copie Snapshot non sono supportati in ONTAP 8.3 e versioni successive. Pertanto, è necessario espandere gli aggregati a 32 bit a 64 bit, quindi individuare e rimuovere eventuali volumi a 32 bit e copie Snapshot dal sistema 7-Mode prima della transizione. Poiché tutte le versioni 7-Mode non supportano la capacità di espandere gli aggregati a 32 bit e rimuovere volumi a 32 bit e copie Snapshot, potrebbe essere necessario aggiornare il sistema 7-Mode prima della transizione. 
+---
+= Preparazione per la transizione a ONTAP 8.3 e versioni successive supportate
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Aggregati a 32 bit, volumi e copie Snapshot non sono supportati in ONTAP 8.3 e versioni successive. Pertanto, è necessario espandere gli aggregati a 32 bit a 64 bit, quindi individuare e rimuovere eventuali volumi a 32 bit e copie Snapshot dal sistema 7-Mode prima della transizione. Poiché tutte le versioni 7-Mode non supportano la capacità di espandere gli aggregati a 32 bit e rimuovere volumi a 32 bit e copie Snapshot, potrebbe essere necessario aggiornare il sistema 7-Mode prima della transizione.
+
+
+NOTE: Clustered Data ONTAP 8.2.x supporta aggregati a 32 bit, volumi e copie Snapshot. Pertanto, è possibile trasferire i dati a 32 bit dal sistema 7-Mode a un cluster di destinazione che esegue Data ONTAP 8.2.x. Tuttavia, dopo la transizione, se il cluster di destinazione deve essere aggiornato a ONTAP 8.3 o versione successiva, è necessario aggiornare tutti i dati a 32 bit esistenti nel cluster di destinazione al formato a 64 bit prima di aggiornare la versione ONTAP del cluster di destinazione.
+
+È necessario utilizzare il seguente flusso di lavoro per decidere se è necessario un aggiornamento prima della transizione.
+
+image::../media/32bit_upgrade_path_updated.gif[percorso di aggiornamento a 32 bit aggiornato]
+
+*Informazioni correlate*
+
+http://www.netapp.com/us/media/tr-3978.pdf["Report tecnico di NetApp 3978: Espansione in-place di aggregati a 32 bit per una panoramica e Best practice a 64 bit"]

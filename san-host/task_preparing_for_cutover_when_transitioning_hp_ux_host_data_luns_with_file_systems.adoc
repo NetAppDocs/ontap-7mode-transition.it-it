@@ -1,0 +1,49 @@
+---
+permalink: san-host/task_preparing_for_cutover_when_transitioning_hp_ux_host_data_luns_with_file_systems.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, cutover, phase, hp, ux, host, data, lun, file, system 
+summary: Se si sta passando un LUN di dati host HP con un file system da Data ONTAP in 7-Mode a Clustered Data ONTAP, è necessario eseguire alcuni passaggi prima di entrare nella fase di cutover. 
+---
+= Preparazione per la fase di cutover durante la transizione dei LUN dei dati host HP-UX con i file system
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si sta passando un LUN di dati host HP con un file system da Data ONTAP in 7-Mode a Clustered Data ONTAP, è necessario eseguire alcuni passaggi prima di entrare nella fase di cutover.
+
+Se si utilizza una configurazione FC, è necessario stabilire la connettività fabric e lo zoning ai nodi Data ONTAP in cluster.
+
+Se si utilizza una configurazione iSCSI, è necessario rilevare e accedere alle sessioni iSCSI dei nodi Clustered Data ONTAP.
+
+Per le transizioni basate sulla copia, eseguire questi passaggi dopo aver completato l'operazione Storage Cutover nel 7-Mode Transition Tool (7MTT). Le transizioni senza copia non sono supportate per gli host HP-UX.
+
+.Fasi
+. Arrestare l'i/o su tutti i punti di montaggio.
+. Chiudere ogni applicazione che accede alle LUN in base alle raccomandazioni del vendor dell'applicazione.
+. Smontare tutti i punti di montaggio:
++
+`*umount _mount_point_*`
+
+. Esportare il gruppo di volumi e scrivere il VGID e i volumi logici per il gruppo di volumi in un file di mappatura:
++
+`*vgexport -p -s -m /tmp/mapfile.vg01 vg01*`
+
+. Eseguire una copia di backup del file mapfile.vg01 su un'origine esterna.
+. Disattivare il gruppo di volumi:
++
+`*vgchange -a n _vg_name_*`
+
+. Esportare il gruppo di volumi:
++
+`*vgexport _vg_name_*`
+
+. Verificare che il gruppo di volumi sia stato esportato:
++
+`*vgdisplay*`
+
++
+Le informazioni sul gruppo di volumi esportati non devono essere visualizzate nell'output.
+
+

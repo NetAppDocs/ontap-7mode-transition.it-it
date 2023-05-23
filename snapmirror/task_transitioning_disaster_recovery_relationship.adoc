@@ -1,0 +1,64 @@
+---
+permalink: snapmirror/task_transitioning_disaster_recovery_relationship.html 
+sidebar: sidebar 
+keywords: ontap, 7, mode, transition, disaster, recovery, relationship, vfiler, units, snapmirror 
+summary: 'È possibile trasferire la relazione di disaster recovery tra l"unità vFiler primaria e l"unità vFiler secondaria nei sistemi 7-Mode a una relazione di disaster recovery tra SVM di origine e SVM di destinazione nei cluster.' 
+---
+= Transizione di una relazione di disaster recovery tra le unità vFiler
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile trasferire la relazione di disaster recovery (DR) tra l'unità vFiler primaria e l'unità vFiler secondaria nei sistemi 7-Mode a una relazione di disaster recovery tra SVM di origine e SVM di destinazione nei cluster.
+
+Durante il processo di transizione, l'unità vFiler primaria viene trasferita alla SVM di origine e l'unità vFiler secondaria viene trasferita alla SVM di destinazione.
+
+.Fasi
+. Trasferire l'unità vFiler primaria alla SVM di origine e l'unità vFiler secondaria alla SVM di destinazione.
+. Arrestare la SVM di destinazione utilizzando `vserver stop` comando.
++
+Non è necessario rinominare alcun volume o aggiungere nuovi volumi sulla SVM di destinazione.
+
+. Per ogni volume primario in transizione, creare una relazione SnapMirror a livello di volume con il volume secondario corrispondente utilizzando `snapmirror create` comando.
++
+[listing]
+----
+destination_cluster::> snapmirror create -source-path src_vserver:c_vol -destination-path dst_vserver:c_vol -type DP
+----
+. Risincronizzare le relazioni SnapMirror a livello di volume tra i volumi primari e secondari in transizione utilizzando `snapmirror resync` comando.
++
+Per una risincronizzazione corretta, deve esistere una copia Snapshot comune tra il volume primario e quello secondario.
+
++
+[listing]
+----
+destination_cluster::> snapmirror resync -destination-path
+dst_vserver:c_vol
+----
+. Verificare che l'operazione di risincronizzazione sia completa e che la relazione SnapMirror sia in `Snapmirrored` specificare utilizzando `snapmirror show` comando.
+. Creare una relazione di disaster recovery SVM tra le SVM di origine e di destinazione utilizzando `snapmirror create` con il `-identity-preserve` opzione impostata su `true`.
++
+[listing]
+----
+destination_cluster::> snapmirror create -source-path src_vserver: -destination-path dst_vserver: -type DP -throttle unlimited -policy DPDefault -schedule hourly -identity-preserve true
+----
+. Risincronizzare la SVM di destinazione dalla SVM di origine utilizzando `snapmirror resync` comando.
++
+[listing]
+----
+destination_cluster::> snapmirror resync dst_vserver:
+----
+. Verificare che l'operazione di risincronizzazione sia completa e che la relazione SnapMirror sia in `Snapmirrored` specificare utilizzando `snapmirror show` comando.
++
+[listing]
+----
+destination_cluster::> snapmirror show
+                                                                                    Progress
+Source               Destination     Mirror       Relationship  Total               Last
+Path           Type  Path            State        Status        Progress   Healthy  Updated
+--------       ---- ------------     -------      -------------- --------- ------- --------
+src_vserver     DP    dst_vserver    Snapmirrored  Idle           -         true    -
+----
+

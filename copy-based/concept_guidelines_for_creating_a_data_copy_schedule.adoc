@@ -1,0 +1,49 @@
+---
+permalink: copy-based/concept_guidelines_for_creating_a_data_copy_schedule.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, create, data, copy, schedule 
+summary: 7-Mode Transition Tool esegue uno scheduler che verifica la pianificazione attiva ogni 5 minuti. È necessario conoscere i requisiti per rendere attiva una pianificazione delle copie dei dati. È possibile gestire i trasferimenti SnapMirror in modo efficace seguendo alcune Best practice durante la configurazione dei diversi parametri di una pianificazione di copia dei dati. 
+---
+= Considerazioni per la creazione di una pianificazione di copia dei dati
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+7-Mode Transition Tool esegue uno scheduler che verifica la pianificazione attiva ogni 5 minuti. È necessario conoscere i requisiti per rendere attiva una pianificazione delle copie dei dati. È possibile gestire i trasferimenti SnapMirror in modo efficace seguendo alcune Best practice durante la configurazione dei diversi parametri di una pianificazione di copia dei dati.
+
+
+
+== Requisiti per rendere attiva una pianificazione di copia dei dati
+
+* Il servizio 7-Mode Transition Tool deve essere in esecuzione.
++
+Se il servizio 7-Mode Transition Tool viene riavviato, le operazioni SnapMirror non vengono eseguite fino a quando non vengono aggiunte le credenziali.
+
+* Per eseguire le operazioni di copia dei dati di SnapMirror, deve essere disponibile almeno una pianificazione di copia dei dati.
++
+Se non è disponibile alcuna pianificazione per un determinato intervallo di tempo, le operazioni di copia dei dati di SnapMirror non vengono eseguite durante tale periodo.
+
+* Se le relazioni di SnapMirror sono in stato di quiescenza, le operazioni di copia dei dati non vengono eseguite.
+* L'ora di sistema di 7-Mode e del cluster deve essere sincronizzata affinché i trasferimenti incrementali vengano eseguiti in base al programma di copia dei dati.
++
+Se l'ora del sistema 7-Mode è in ritardo rispetto all'ora del cluster, gli aggiornamenti vengono pianificati con maggiore frequenza rispetto alla frequenza di aggiornamento specificata. Se il tempo di sistema 7-Mode è superiore al tempo del cluster, gli aggiornamenti vengono ritardati rispetto alla frequenza di aggiornamento specificata.
+
+
+
+
+
+== Best practice durante la copia dei dati
+
+Per migliorare le performance di replica di SnapMirror, i sistemi di origine e di destinazione devono disporre di un utilizzo ottimale della CPU e della memoria disponibile. Inoltre, il traffico di rete non correlato all'attività di migrazione deve essere ridotto al minimo in modo da massimizzare il throughput e ridurre al minimo la latenza tra i sistemi di origine e di destinazione.
+
+
+
+== Priorità per i trasferimenti di dati
+
+Quando si pianificano le operazioni di copia dei dati, le operazioni di base o di risincronizzazione hanno la priorità sui trasferimenti incrementali.
+
+Quando si interrotte le operazioni di copia dei dati per il rilascio dei trasferimenti SnapMirror, i trasferimenti incrementali vengono prima interrotti, quindi le operazioni di baseline o risincronizzazione vengono interrotte.
+
+Per i trasferimenti incrementali, la priorità viene assegnata ai volumi che sono più arretrati rispetto al volume di origine in base al tempo trascorso dall'aggiornamento precedente.

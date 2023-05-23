@@ -1,0 +1,46 @@
+---
+permalink: copy-free/task_generating_an_assessment_report_by_importing_inventory_report_xml.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, inventory, report, xml, assessment, import 
+summary: 'È possibile importare il report XML dell"inventario generato da Inventory Collect Tool per valutare le funzionalità e le caratteristiche di host e controller. È quindi possibile identificare il funzionamento di questi host e controller nella versione di ONTAP selezionata per la transizione creando un report di valutazione.' 
+---
+= Generazione di un report di valutazione mediante l'importazione del report di inventario XML
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile importare il report XML dell'inventario generato da Inventory Collect Tool per valutare le funzionalità e le caratteristiche di host e controller. È quindi possibile identificare il funzionamento di questi host e controller nella versione di ONTAP selezionata per la transizione creando un report di valutazione.
+
+* È necessario eseguire Inventory Collect Tool e generare il file XML del report di inventario.
++
+
+NOTE: Per valutare host e controller per la transizione senza copia, è necessario utilizzare la versione più recente di Inventory Collect Tool per raccogliere l'inventario.
+
+* È necessario aver preparato i sistemi 7-Mode e gli host per la valutazione della transizione.
+
+
+I sistemi che si desidera valutare non devono essere raggiungibili durante l'importazione del report di inventario e l'esecuzione della valutazione della transizione.
+
+.Fasi
+. Accedere a 7-Mode Transition Tool, quindi fare clic su *Collect and Assess* (Raccogli e valuta) nella home page.
+. Fare clic su *Import Inventory Report XML*.
+. Fare clic su *Browse*, quindi selezionare il report XML generato da Inventory Collect Tool.
+. Fare clic su *Importa*.
++
+Viene visualizzato lo stato della valutazione del sistema `Imported;Ready`.
+
+. Selezionare il sistema per cui si desidera eseguire la valutazione della transizione.
+. Fare clic su *Crea report di valutazione della transizione*.
+. Nella finestra di dialogo Crea report di valutazione della transizione, selezionare la versione Data ONTAP del cluster di destinazione.
+. Specificare un prefisso per il nome del file dei report.
+. Fare clic su *genera report*.
++
+I report Assessment Workbook e AssessmentExecutiveSummary vengono generati in formato XML.
+
+. Visualizzare il report Assessment Workbook in Microsoft Excel e il report AssessmentExecutiveSummary in Microsoft Word utilizzando Microsoft Office 2007 o versioni successive.
++
+Per visualizzare il report di AssessmentWorkbook in Microsoft Excel, potrebbe essere necessario attivare le macro in Excel.
+
+

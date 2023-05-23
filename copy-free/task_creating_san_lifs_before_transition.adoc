@@ -1,0 +1,37 @@
+---
+permalink: copy-free/task_creating_san_lifs_before_transition.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, san, lifs, create 
+summary: Poiché le LIF FC e iSCSI non sono state eseguite dallo strumento di transizione 7-Mode, è necessario creare queste LIF sulle SVM prima della transizione. È necessario configurare le LIF SAN su entrambi i nodi che possiedono il LUN e il partner ha del nodo. 
+---
+= Creazione DI LIF SAN prima della transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Poiché le LIF FC e iSCSI non sono state eseguite dallo strumento di transizione 7-Mode, è necessario creare queste LIF sulle SVM prima della transizione. È necessario configurare le LIF SAN su entrambi i nodi che possiedono il LUN e il partner ha del nodo.
+
+La licenza SAN (FC o iSCSI) richiesta deve essere aggiunta al cluster.
+
+Per la ridondanza, è necessario creare LIF SAN sul nodo che ospita le LUN e sul suo partner ha.
+
+.Fasi
+. Creare una LIF FC o iSCSI sul nodo di destinazione a cui sono trasferiti i LUN, a seconda del protocollo utilizzato:
++
+`*network interface create*`
+
++
+Se si desidera riutilizzare l'indirizzo IP 7-Mode per le LIF iSCSI, è necessario creare le LIF in stato di inattività amministrativa. Dopo l'operazione di cutover, è possibile portare queste LIF nello stato di amministrazione.
+
+. Creare una LIF sul partner ha del nodo.
+. Verificare di aver configurato correttamente i file LIF:
++
+`*network interface show*`
+
+
+
+*Informazioni correlate*
+
+https://docs.netapp.com/ontap-9/topic/com.netapp.doc.dot-cm-sanag/home.html["Amministrazione SAN"]

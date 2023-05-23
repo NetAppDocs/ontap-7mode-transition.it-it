@@ -1,0 +1,61 @@
+---
+permalink: copy-free/task_exporting_7_mode_system_and_hardware_information.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, exporte, storage, configurations, halt 
+summary: La finestra di cutover per la transizione inizia dalla fase di esportazione. In questa fase, lo strumento raccoglie le informazioni di sistema, i dettagli dello shelf di dischi e le configurazioni di storage dai sistemi 7-Mode, quindi arresta i sistemi di storage 7-Mode. 
+---
+= Esportazione delle configurazioni di storage e interruzione dei sistemi 7-Mode
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+La finestra di cutover per la transizione inizia dalla fase di esportazione. In questa fase, lo strumento raccoglie le informazioni di sistema, i dettagli dello shelf di dischi e le configurazioni di storage dai sistemi 7-Mode, quindi arresta i sistemi di storage 7-Mode.
+
+* Il Service Processor (SP) o il Remote LAN Module (RLM) deve essere configurato con un indirizzo IPv4 sul sistema 7-Mode.
+* Tutti i client devono essere disconnessi dai sistemi 7-Mode (smontando le esportazioni NFS, scollegando le condivisioni CIFS e spegnendo gli host SAN), ma i servizi NAS e SAN applicabili devono essere in esecuzione sui sistemi 7-Mode.
++
+
+IMPORTANT: Non è necessario arrestare alcun servizio di protocollo perché sono necessari per raccogliere le configurazioni del protocollo dai sistemi di storage 7-Mode.
+
+* Tutti i dati scritti nei volumi 7-Mode durante questa operazione andranno persi.
+* Durante questa operazione, non è necessario eseguire alcuna operazione di gestione sui sistemi 7-Mode.
+* Lo strumento esegue le seguenti operazioni nella fase di esportazione:
++
+** Raccoglie tutte le configurazioni di volume e storage
+** Crea una copia Snapshot di ciascun aggregato in transizione
++
+Se si decide di tornare alla modalità 7 in qualsiasi fase della transizione, queste copie Snapshot vengono utilizzate dallo strumento per l'operazione di revert.
+
+** Avvia i controller 7-Mode in modalità di manutenzione
+** Rimuove le proprietà dei dischi dai controller 7-Mode
+** Disattiva l'assegnazione automatica dei dischi sui nodi del cluster di destinazione
+
+
+
+
+.Fasi
+. Fare clic su *Export & Halt* (Esporta e arresta).
++
+Viene visualizzato un messaggio che elenca importanti considerazioni per questa operazione.
+
+. Fare clic sulla casella di controllo *Conferma che l'accesso al client sia disconnesso*.
+. Fare clic su *Sì* per continuare con l'operazione di esportazione e interruzione.
++
+Vengono visualizzati i risultati dell'operazione.
+
+. Attendere il completamento dell'operazione ed eseguire le seguenti operazioni per salvare i risultati dell'operazione e raccogliere i log degli strumenti:
++
+.. Fare clic su *Save as CSV* (Salva come CSV) per salvare i risultati dell'operazione in un file.
+.. Fare clic su *Collect Tool Logs* (Raccogli log strumento) per creare un backup di tutti i file di log della transizione.
++
+Si consiglia di salvare i file di log dopo ogni operazione di transizione.
+
+.. Fare clic su *Close* (Chiudi) per chiudere la finestra dei risultati dell'operazione.
+
+
++
+Se il completamento dell'operazione richiede molto tempo, fare clic su *Esegui in background* per uscire dalla finestra dei risultati dell'operazione. Non modificare il progetto o eseguire altre attività quando l'operazione è in esecuzione in background. È quindi possibile visualizzare i risultati delle operazioni dalla scheda Operation History (Cronologia operazioni).
+
+

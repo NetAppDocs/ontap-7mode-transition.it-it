@@ -1,0 +1,24 @@
+---
+permalink: copy-free/task_transitioning_a_snapmirror_relationship.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, snapmirror, relationship 
+summary: È possibile eseguire prima la transizione della coppia ha secondaria, impostare una relazione SnapMirror sfalsata tra i volumi primari 7-Mode e i volumi secondari Clustered Data ONTAP, quindi eseguire la transizione della coppia ha primaria in un secondo momento. In alcuni scenari, è necessario eseguire la transizione in parallelo delle coppie ha secondaria e primaria di una relazione SnapMirror 7-Mode. 
+---
+= Transizione di una relazione SnapMirror
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile eseguire prima la transizione della coppia ha secondaria, impostare una relazione SnapMirror sfalsata tra i volumi primari 7-Mode e i volumi secondari Clustered Data ONTAP, quindi eseguire la transizione della coppia ha primaria in un secondo momento. In alcuni scenari, è necessario eseguire la transizione in parallelo delle coppie ha secondaria e primaria di una relazione SnapMirror 7-Mode.
+
+Se tutti i volumi primari appartengono a una coppia ha e tutti i volumi secondari appartengono all'altra coppia ha, è possibile eseguire la transizione utilizzando il metodo sfalsato.
+
+Se una coppia ha ha un mix di volumi primari e secondari, è necessario eseguire la transizione utilizzando il metodo Parallel.
+
+Dopo la transizione delle coppie ha primaria e secondaria, è necessario impostare manualmente la relazione SnapMirror del volume in Clustered Data ONTAP dopo la transizione. Per una risincronizzazione corretta, deve esistere almeno una copia Snapshot comune, creata in Data ONTAP 8.1 o versione successiva, tra il volume primario e il volume secondario della relazione SnapMirror.
+
+*Informazioni correlate*
+
+https://docs.netapp.com/us-en/ontap/concept_administration_overview.html["Gestione del cluster con System Manager"]

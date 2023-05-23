@@ -1,0 +1,48 @@
+---
+permalink: inventory-collect/task_generating_fc_zone_plan.html 
+sidebar: sidebar 
+keywords: ontap, 7, mode, generate, fc, zone, plan, transition 
+summary: Dopo aver raccolto informazioni sui sistemi Data ONTAP, gli host e gli switch FC, è possibile generare il piano di zona FC, che viene utilizzato per configurare gli switch nel cluster dopo la migrazione. 
+---
+= Generazione del piano di zona FC
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dopo aver raccolto informazioni sui sistemi Data ONTAP, gli host e gli switch FC, è possibile generare il piano di zona FC, che viene utilizzato per configurare gli switch nel cluster dopo la migrazione.
+
+* I sistemi 7-Mode, gli host e il cluster devono essere connessi allo switch.
+* È necessario raccogliere informazioni su cluster, SVM, LIF FCP e switch.
++
+Il cluster può essere collegato allo stesso switch del sistema 7-Mode o a un nuovo switch nello stesso fabric.
+
++
+xref:concept_supported_configurations_for_generating_an_fc_zone_plan.adoc[Configurazioni supportate per la generazione di un piano di zona FC]
+
+
+
+.Fasi
+. Nella CLI, accedere alla directory ICT.
+. Dalla CLI, generare il piano di zona FC:
++
+`*ict --cmd generate-fc-zones --source-filers _7-mode-ip1,7mode-ip2_ --dest-svm _cluster-name:vserver-name_ --fc-switches _switch-name:vsan-id1,vsan-id2_ 7mode_cdot_switch_inventory.xml*`
+
++
+È necessario immettere l'ID VSAN per gli switch Cisco.
+
++
+[listing]
+----
+...bin\ict>ict --cmd generate-fc-zones --source-filers system1,system2 --dest-svm vs1:fc_zone1
+ --fc-switches brocade-1,brocade-2 7mode_cdot_switch_inventory.xml
+----
++
+Il piano di zona FC contiene zone create in base alle configurazioni di igroup sui sistemi 7-Mode. Ogni zona contiene un singolo WWPN iniziatore e più WWPN di destinazione SVM.
+
+
+
+In una transizione basata su copia, è possibile utilizzare il piano di zona FC per configurare le zone durante la modalità di lettura/scrittura pre-uscita per verificare la configurazione del cluster utilizzando gli host di test o dopo la fase di cutover per fornire l'accesso ai dati agli host iniziatori dal cluster.
+
+In una transizione senza copia, è necessario utilizzare il piano di zona FC per configurare le zone in modo da raggruppare gli host e le destinazioni iniziatori per fornire l'accesso ai dati dal cluster durante la fase di configurazione di Apply.

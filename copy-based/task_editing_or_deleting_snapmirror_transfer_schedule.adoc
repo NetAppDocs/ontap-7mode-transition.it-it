@@ -1,0 +1,111 @@
+---
+permalink: copy-based/task_editing_or_deleting_snapmirror_transfer_schedule.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, edit, delete, data, copy, snapmirror, transfer 
+summary: È possibile modificare o eliminare i programmi di copia dei dati utilizzati per le operazioni di copia, aggiornamento e risincronizzazione di base di SnapMirror, se sono state configurate o modificate altre pianificazioni DR che richiedono la modifica del programma di copia dei dati di transizione. 
+---
+= Modifica o eliminazione di una pianificazione di copia dei dati per i trasferimenti SnapMirror
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+È possibile modificare o eliminare i programmi di copia dei dati utilizzati per le operazioni di copia, aggiornamento e risincronizzazione di base di SnapMirror, se sono state configurate o modificate altre pianificazioni DR che richiedono la modifica del programma di copia dei dati di transizione.
+
+Il progetto deve essere in fase di preparazione, copia dei dati o applicazione della configurazione (pre-over).
+
+* Dopo la modifica di un programma, sono necessari fino a 5 minuti per l'entrata in vigore del programma.
+* Se il limite di accelerazione viene modificato nel programma quando sono presenti trasferimenti attivi, il nuovo limite di accelerazione non è applicabile per i trasferimenti SnapMirror attualmente in esecuzione.
++
+Una volta completato il trasferimento corrente per una particolare relazione SnapMirror, viene preso in considerazione un nuovo limite di accelerazione per le operazioni successive per tale relazione SnapMirror.
+
+* Se si desidera che il limite di accelerazione sia effettivo immediatamente per i trasferimenti SnapMirror correnti, è necessario sospendere e riprendere il progetto.
+
+
+.Fasi
+. Dalla dashboard, selezionare un progetto, quindi fare clic su Configure Schedule (Configura pianificazione).
++
+Vengono visualizzate tutte le pianificazioni esistenti per il progetto.
+
++
+È inoltre possibile modificare o eliminare le pianificazioni dall'opzione Configura pianificazione.
+
+. Modificare o eliminare un programma:
++
+|===
+| Se si desidera... | Quindi... 
+
+
+ a| 
+Modificare una pianificazione esistente
+ a| 
+.. Fare clic su image:../media/edit_schedule.gif[""].
++
+Viene visualizzata la finestra di dialogo Modify Schedule (Modifica pianificazione).
+
++
+
+NOTE: È possibile modificare i parametri di pianificazione e SnapMirror per le operazioni di copia dei dati.
+
+.. Apportare le modifiche richieste, quindi fare clic su *Salva*.
+
+
+
+
+ a| 
+Eliminare un programma
+ a| 
+.. Fare clic su image:../media/delete_schedule.gif[""].
++
+La pianificazione viene eliminata dal riquadro.
+
++
+
+NOTE: Per i trasferimenti di dati è necessaria almeno una pianificazione. Pertanto, non è necessario eliminare tutti i piani di lavoro.
+
+
+
+|===
+
+
+
+
+== Esempio
+
+L'esempio seguente illustra come viene applicato il limite di accelerazione quando nel progetto sono presenti trasferimenti SnapMirror attivi.
+
+|===
+| Pianificazione | Numero di volumi e stato di copia dei dati | Numero massimo di trasferimenti SnapMirror simultanei | Limite di accelerazione | Acceleratore utilizzato da ciascun trasferimento 
+
+
+ a| 
+Prima di apportare modifiche
+ a| 
+Cinque volumi in attesa della linea di base
+ a| 
+Cinque
+ a| 
+500 Mbps
+ a| 
+100 Mbps
+
+
+
+ a| 
+Dopo la modifica
+ a| 
+* Per due volumi, la linea di base è in corso utilizzando un acceleratore a 100 Mbps
+* Per tre volumi, la linea di base viene completata e sono in attesa di aggiornamenti
+
+ a| 
+Cinque
+ a| 
+250 Mbps
+ a| 
+* Due volumi in linea di base continuano a utilizzare l'acceleratore a 100 Mbps
+* Tre volumi per i quali la linea di base è stata completata utilizzano l'acceleratore modificato a 50 Mbps per gli aggiornamenti
+
+
+|===
+Una volta completata la copia di riferimento per i due volumi, il nuovo limite di accelerazione di 50 Mbps viene utilizzato per le relazioni di questo volume SnapMirror durante la pianificazione delle successive operazioni di copia dei dati.

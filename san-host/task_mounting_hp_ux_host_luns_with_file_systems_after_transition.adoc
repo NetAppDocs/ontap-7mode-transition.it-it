@@ -1,0 +1,65 @@
+---
+permalink: san-host/task_mounting_hp_ux_host_luns_with_file_systems_after_transition.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, mount, hp, ux, host, lun, file, system 
+summary: Dopo la transizione dei LUN host HP-UX con file system da Data ONTAP in 7-Mode a Clustered Data ONTAP, è necessario montare i LUN. 
+---
+= Montaggio di LUN host HP-UX con file system dopo la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Dopo la transizione dei LUN host HP-UX con file system da Data ONTAP in 7-Mode a Clustered Data ONTAP, è necessario montare i LUN.
+
+Per le transizioni basate sulla copia, eseguire questi passaggi dopo aver completato l'operazione Storage Cutover nel 7-Mode Transition Tool (7MTT). Le transizioni senza copia non sono supportate per gli host HP-UX.
+
+.Fasi
+. Scopri le nuove LUN Clustered Data ONTAP:
++
+`*ioscan -fnC disk*`
+
+. Verificare che i LUN Data ONTAP in cluster siano stati rilevati:
++
+`*sanlun lun show*`
+
+. Verificare che il `lun-pathname` Per le LUN Data ONTAP in cluster è uguale a `lun-pathname` Per i LUN 7-Mode prima della transizione.
+. Verificare che l'output nella colonna modalità sia stato modificato da `7` a. `C`.
+. Utilizzare `mapfile` file per importare il gruppo di volumi:
++
+`*vgimport -s -v -m /tmp/mapfile.vg01 /dev/vg01"*`
+
+. Attivare i volumi logici:
++
+`*vgchange -a y _vg_name_*`
+
+. Convertire il nome file speciale dispositivo (DSF) legacy in DSF persistente:
++
+`*vgdsf -c /dev/vg01*`
+
+. Verificare che lo stato VG sia visualizzato come disponibile:
++
+`*vgdisplay*`
+
+. Montare manualmente ciascun dispositivo:
++
+`*mount -F vxfs -o largefiles _device_name mount_point_*`
+
+. Eseguire il comando fsck se richiesto.
+. Verificare i punti di montaggio:
++
+`*bdf*`
+
++
+L'esempio seguente mostra come visualizzare i punti di montaggio:
+
++
+[listing]
+----
+bash-2.05# bdf
+Filesystem          kbytes     used     avail     used   Mounted on
+/dev/vg01/lvol1   23592960   1050952   22189796    5%   /mnt/qa/vg01
+/dev/vg01/lvol2   23592960    588480   22645044    3%   /mnt/qa/vg02
+----
+

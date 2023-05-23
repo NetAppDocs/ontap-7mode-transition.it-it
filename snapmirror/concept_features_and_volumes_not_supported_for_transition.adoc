@@ -1,0 +1,43 @@
+---
+permalink: snapmirror/concept_features_and_volumes_not_supported_for_transition.html 
+sidebar: sidebar 
+keywords: ontap, 7, mode, transition, feature, volumes, supported, snapmirror 
+summary: Non è possibile eseguire la transizione di determinati volumi 7-Mode, come i volumi tradizionali, e di alcune funzionalità 7-Mode, come le relazioni sincrone SnapMirror, perché alcune funzionalità potrebbero non essere disponibili in Clustered Data ONTAP. 
+---
+= Funzionalità e volumi non supportati per la transizione
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Non è possibile eseguire la transizione di determinati volumi 7-Mode, come i volumi tradizionali, e di alcune funzionalità 7-Mode, come le relazioni sincrone SnapMirror, perché alcune funzionalità potrebbero non essere disponibili in Clustered Data ONTAP.
+
+È possibile trasferire un volume 7-Mode solo a una SVM.
+
+Non è possibile eseguire la transizione delle seguenti configurazioni o volumi 7-Mode:
+
+* Volumi limitati o offline
+* Volumi tradizionali
+* Volumi con mappatura dei caratteri NFS-to-CIFS (charmap)
+* Volumi con configurazioni Storage-Level Access Guard
+* Volumi che contengono qtree con configurazioni Storage-Level Access Guard
++
+Se il cluster di destinazione esegue Data ONTAP 8.3.1 o versioni successive, è possibile eseguire la transizione di volumi che contengono qtree con questa configurazione.
+
+* Volumi con `no_i2p` opzione attivata.
+* Volumi FlexCache
+* Volumi a 32 bit e volumi a 64 bit con copie Snapshot a 32 bit se il cluster di destinazione esegue Data ONTAP 8.3 o versione successiva
+* Volumi FlexClone
++
+I volumi FlexClone possono essere trasferiti come volumi FlexVol, ma la gerarchia dei cloni e l'efficienza dello storage andranno perse.
+
+* Volume root di un'unità vFiler, in cui il volume root si basa su un qtree che appartiene all'unità vFiler predefinita
+* Configurazione sincrona di SnapMirror
+* Relazioni di qtree SnapMirror
+* Configurazioni IPv6
+* Relazioni con SnapVault
+* Compressione di rete per SnapMirror
+* Ripristino del volume di destinazione su una copia Snapshot specifica (SnapMirror `break -s` comando)
+* Operazione di spostamento del volume
+

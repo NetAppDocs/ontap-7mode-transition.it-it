@@ -1,0 +1,21 @@
+---
+permalink: copy-based/task_deleting_a_project.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, delete, project 
+summary: Se non si desidera un progetto, è possibile eliminarlo dalla dashboard. 
+---
+= Eliminazione di un progetto
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se non si desidera un progetto, è possibile eliminarlo dalla dashboard.
+
+. Dal riquadro DashboardProjects Groups (gruppi di progetti DashboardProjects), fare clic sul gruppo di progetti a cui appartiene il progetto.
+. Dal pannello Group Summary (Riepilogo gruppo), fare clic su *Modify* (Modifica), quindi su *Delete* (Elimina).
++
+Non è possibile eliminare un progetto se il progetto ha avuto esito negativo durante la fase di cutover.
+
+

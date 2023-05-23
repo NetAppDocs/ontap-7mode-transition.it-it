@@ -1,0 +1,24 @@
+---
+permalink: san-host/index.html 
+sidebar: sidebar 
+keywords: ontap, san, host, transition, index 
+summary: Descrive le procedure pre-transizione e post-transizione per gli host VMware ESXi, Red Hat Linux e Windows durante la transizione di dati e configurazioni a ONTAP utilizzando il tool di transizione 7-Mode. 
+---
+= Guida ALLA transizione e alla correzione degli host SAN
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Se si stanno passando dati e configurazioni da Data ONTAP in 7-Mode a Clustered Data ONTAP 8.3 o versione successiva utilizzando 7-Mode Transition Tool (7MTT) 2.2 o versione successiva, è necessario eseguire le procedure di correzione per gli host SAN prima e dopo la transizione.
+
+La _7-Mode Transition Tool SAN host Transition and Remediation Guide_ fornisce i passaggi necessari per la pre-transizione e la post-transizione per gli host VMware ESXi, Windows, Red Hat Enterprise Linux (RHEL), HP-UX e AIX.
+
+*Informazioni correlate*
+
+xref:../copy-based/index.html[Transizione basata sulla copia]
+
+xref:../copy-free/index.html[Transizione senza copia]
+
+xref:../install-admin/index.html[Installazione e amministrazione dello strumento di transizione 7-Mode]

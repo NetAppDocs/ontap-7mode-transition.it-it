@@ -1,0 +1,44 @@
+---
+permalink: copy-free/concept_considerations_for_transitioning_unix_users_and_groups.html 
+sidebar: sidebar 
+keywords: ontap, transition, copy, free, netgroups, unix, users, groups 
+summary: La configurazione di netgroup viene eseguita solo se il file 7-Mode /etc/netgroup ha una dimensione inferiore a 5 MB. Gli utenti e i gruppi UNIX vengono trasferiti solo se il numero totale di utenti e gruppi UNIX sulla SVM non supera i limiti per utenti e gruppi in ONTAP. 
+---
+= Considerazioni per la transizione di netgroup e utenti e gruppi UNIX
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+La configurazione del netgroup viene eseguita solo se 7-Mode `/etc/netgroup` Le dimensioni del file sono inferiori a 5 MB. Gli utenti e i gruppi UNIX vengono trasferiti solo se il numero totale di utenti e gruppi UNIX sulla SVM non supera i limiti per utenti e gruppi in ONTAP.
+
+
+
+== Considerazioni per i netgroup
+
+Se il `/etc/netgroup` Il file in 7-Mode è maggiore di 5 MB, la configurazione del netgroup non è in fase di transizione. Per continuare con la transizione, è necessario eseguire una delle seguenti operazioni:
+
+* Escludere la transizione dei netgroup.
++
+xref:task_customizing_configurations_for_transition.adoc[Personalizzazione della transizione delle configurazioni 7-Mode]
+
+* Spostare la configurazione del netgroup sui server NIS o LDAP prima della transizione.
+
+
+
+
+== Considerazioni per utenti e gruppi UNIX
+
+Se il numero totale di utenti e gruppi UNIX in transizione supera il limite di utenti e gruppi UNIX in ONTAP, lo strumento di transizione 7-Mode blocca la transizione. Per continuare con la transizione, è necessario eseguire una delle seguenti operazioni:
+
+* Escludere la transizione di utenti e gruppi UNIX.
++
+xref:task_customizing_configurations_for_transition.adoc[Personalizzazione della transizione delle configurazioni 7-Mode]
+
+* Spostare gli utenti e i gruppi UNIX sui server NIS o LDAP prima della transizione.
+
+
+*Informazioni correlate*
+
+https://docs.netapp.com/ontap-9/topic/com.netapp.doc.cdot-famg-nfs/home.html["Gestione NFS"]

@@ -1,0 +1,43 @@
+---
+permalink: copy-based/task_configuring_zones_by_using_fc_zone_planner.html 
+sidebar: sidebar 
+keywords: ontap, copy, based, transition, configure, zone, fc, plan 
+summary: 'Una volta completata la transizione, è necessario configurare le zone utilizzando il piano di zona FC per raggruppare gli host e le destinazioni iniziatori per fornire l"accesso ai dati dal cluster.' 
+---
+= Configurazione delle zone mediante il piano di zona FC
+:allow-uri-read: 
+:icons: font
+:imagesdir: ../media/
+
+
+[role="lead"]
+Una volta completata la transizione, è necessario configurare le zone utilizzando il piano di zona FC per raggruppare gli host e le destinazioni iniziatori per fornire l'accesso ai dati dal cluster.
+
+* Gli host del cluster e dell'iniziatore devono essere connessi allo switch.
+* Il file script della zona FC deve essere accessibile.
+
+
+.Fasi
+. Accedere alla CLI dello switch.
+. Copiare ed eseguire i comandi di zona richiesti uno alla volta.
++
+Nell'esempio seguente vengono eseguiti i comandi di zona sullo switch:
+
++
+[listing]
+----
+switch1:admin>config terminal
+# Enable NPIV feature
+feature npiv
+zone name auto_transition_igroup_d31_194bf3 vsan 10
+member pwwn 21:00:00:c0:dd:19:4b:f3
+member pwwn 20:07:00:a0:98:32:99:07
+member pwwn 20:09:00:a0:98:32:99:07
+.......
+.......
+.......
+copy running-config startup-config
+----
+
+
+Gli host iniziatori possono accedere ai dati dal cluster.
