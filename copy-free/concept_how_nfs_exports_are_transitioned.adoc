@@ -34,7 +34,7 @@ Affinché i client NFS montino i qtree, i qtree devono appartenere a un volume c
 * Se lo stesso host viene specificato nella combinazione di elenchi di autorizzazioni di accesso di sola lettura, lettura/scrittura e root, è necessario valutare le regole di esportazione in transizione dopo la transizione per determinare il privilegio di accesso appropriato per gli host.
 
 
-http://www.netapp.com/us/media/tr-4067.pdf["Report tecnico di NetApp 4067: Guida all'implementazione e alle Best practice di NFS"]
+https://www.netapp.com/pdf.html?item=/media/10720-tr-4067.pdf["Report tecnico di NetApp 4067: Guida all'implementazione e alle Best practice di NFS"^]
 
 
 

@@ -2399,7 +2399,6 @@
   <block id="78d5370e8aa2de33bfb3726f9ee8f4bd" category="paragraph">I seguenti tipi di volumi non sono supportati per la transizione:</block>
   <block id="c430dd51b2ab30bb9d95b21ca0f8d42f" category="paragraph">È possibile utilizzare metodi di transizione basati su host per la transizione dei volumi tradizionali.</block>
   <block id="664f739c9dfce166b4c021cac0d8633e" category="inline-link">Report tecnico di NetApp 4052: Passaggio riuscito a Clustered Data ONTAP (Data ONTAP 8.2.x e 8.3)</block>
-  <block id="755b3c98012d25558d664e3aae2c2528" category="paragraph"><block ref="755b3c98012d25558d664e3aae2c2528" category="inline-link-rx"></block></block>
   <block id="056d78c845232f9f3c919b1d5a3acbb1" category="section-title">Stati del volume</block>
   <block id="4c0d2f9c23003e6c2b0d15a162dfdd45" category="paragraph">La transizione viene bloccata se uno dei volumi 7-Mode selezionati per la transizione si trova in uno dei seguenti stati:</block>
   <block id="8d9da4bc0e49a50e09ac9f7e56789d39" category="list-text">Offline</block>
@@ -3803,7 +3802,6 @@
   <block id="b94690f1d58e7f298c4e94a655b35110" category="paragraph">Affinché i client NFS montino i qtree, i qtree devono appartenere a un volume che disponga dell'autorizzazione di sola lettura. Senza i permessi di sola lettura a livello di volume, i client NFS non possono montare il qtree.</block>
   <block id="1b4bd805f1c43c7d5c9719dce981c2f4" category="list-text">Se lo stesso host viene specificato nella combinazione di elenchi di autorizzazioni di accesso di sola lettura, lettura/scrittura e root, è necessario valutare le regole di esportazione in transizione dopo la transizione per determinare il privilegio di accesso appropriato per gli host.</block>
   <block id="8fad4be94e9aa7ce4db57aef3f0d7941" category="inline-link">Report tecnico di NetApp 4067: Guida all'implementazione e alle Best practice di NFS</block>
-  <block id="2e5e5fdaff65cd094319505704237d70" category="paragraph"><block ref="2e5e5fdaff65cd094319505704237d70" category="inline-link-rx"></block></block>
   <block id="b014fe06ce5f68b47e31838c02f8644b" category="section-title">Esempio: Modifica del criterio di esportazione di un volume per consentire l'accesso a un qtree</block>
   <block id="c4d849bb273335cc15c5a5e062d19ca2" category="paragraph">Considerare la seguente regola di esportazione configurata nel sistema di storage 7-Mode (192.168.26.18) che consente l'accesso in lettura/scrittura al volume volstd10 e qtree qtree1 per il client NFS 192.168.10.10:</block>
   <block id="1907717ab9a8223ee3ce06ec78e360cc" category="paragraph">Dopo la transizione, la policy di esportazione del volume volsdt10 in ONTAP è la seguente:</block>
@@ -4137,7 +4135,6 @@
   <block id="ee938c4ccb225fb1eaa8be3c480458c0" category="paragraph">È necessario utilizzare il seguente flusso di lavoro per decidere se è necessario un aggiornamento prima della transizione.</block>
   <block id="92cd2f5e96983a715cf5b509f4aa5a2b" category="image-alt">percorso di aggiornamento a 32 bit aggiornato</block>
   <block id="13434f43b15c9640896f4fc73fa54221" category="inline-link">Report tecnico di NetApp 3978: Espansione in-place di aggregati a 32 bit per una panoramica e Best practice a 64 bit</block>
-  <block id="0a2da8e756e37983a5c9c20d332cfa66" category="paragraph"><block ref="0a2da8e756e37983a5c9c20d332cfa66" category="inline-link-rx"></block></block>
   <block id="7de995d7479a8f1e38d63551483d9753" category="summary">È necessario conoscere la modalità di transizione delle quote quando si esegue "Apply Configuration" (Applica configurazione) in modalità di sola lettura e lettura/scrittura.</block>
   <block id="9f2b86a6c65c4a42f57238182d77541e" category="paragraph">È necessario conoscere la modalità di transizione delle quote quando "`Apply Configuration`" (precutover) viene eseguito in modalità di sola lettura e lettura/scrittura.</block>
   <block id="8045869bdd3cd13383234aa849873994" category="paragraph">Le quote vengono applicate nei seguenti modi durante la fase di pre-consegna:</block>
@@ -7391,4 +7388,7 @@
   <block id="c73bbd3786350b0a8d3577d82afdf489" category="sidebar">Red Hat Enterprise Linux</block>
   <block id="84a6933c212881ac1351cccc03b06c5a" category="sidebar">Mappa dei comandi per gli amministratori 7-Mode</block>
   <block id="e8fb469abd5e30926d4d1c7fc20519c2" category="sidebar">La documentazione relativa alla transizione a 7-Mode include informazioni utili per installare e configurare 7-Mode Transition Tool, spostare i dati utilizzando i comandi di SnapMirror, eseguire una transizione basata su copie o senza copie, raccogliere informazioni per la transizione e completare le procedure pre e post transizione per gli host SAN.</block>
+  <block id="6819367dcff0e5919ebb17505dc3e140" category="paragraph"><block ref="6819367dcff0e5919ebb17505dc3e140" category="inline-link-rx"></block></block>
+  <block id="07c5daecfe0dafef7e4667a307affc19" category="paragraph"><block ref="07c5daecfe0dafef7e4667a307affc19" category="inline-link-rx"></block></block>
+  <block id="f7042196519d0be4fd9ec6a8bd4a4b28" category="paragraph"><block ref="f7042196519d0be4fd9ec6a8bd4a4b28" category="inline-link-rx"></block></block>
 </blocks>

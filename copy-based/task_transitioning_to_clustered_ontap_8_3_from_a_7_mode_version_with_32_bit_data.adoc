@@ -22,4 +22,4 @@ image::../media/32bit_upgrade_path_updated.gif[percorso di aggiornamento a 32 bi
 
 *Informazioni correlate*
 
-http://www.netapp.com/us/media/tr-3978.pdf["Report tecnico di NetApp 3978: Espansione in-place di aggregati a 32 bit per una panoramica e Best practice a 64 bit"]
+https://www.netapp.com/pdf.html?item=/media/19679-tr-3978.pdf["Report tecnico di NetApp 3978: Espansione in-place di aggregati a 32 bit per una panoramica e Best practice a 64 bit"^]
